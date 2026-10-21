@@ -71,7 +71,8 @@ class LlamaServer:
              "-ub", str(self.ubatch), "-b", str(max(2048, self.ubatch)), "-np", "1", "-fa", "auto",
              "--host", "127.0.0.1", "--port", str(config.SERVER_PORT), "--no-webui", "--metrics"]
         if self.draft:
-            c += ["-md", str(self.draft.path), "-ngld", str(self.ngl if self.ngl else 0),
+            # llama.cpp 0.7 defaults --spec-type to none: -md alone loads the draft but never drafts
+            c += ["-md", str(self.draft.path), "--spec-type", "draft-simple", "-ngld", str(self.ngl if self.ngl else 0),
                   "--spec-draft-n-max", str(self.draft_max), "--spec-draft-n-min", str(self.draft_min)]
         return c + self.extra
 
@@ -132,16 +133,38 @@ class LlamaServer:
         r.raise_for_status()
         return r.json()["content"]
 
-    def complete(self, prompt: str, *, n_predict: int, ignore_eos: bool = True, cache_prompt: bool = False,
-                 seed: int = 42, on_first=None, deadline_s: float | None = None) -> Completion:
-        """Stream a completion. on_first(t) is called the moment the first token arrives (for E4 phases)."""
+    def complete(self, prompt: str | list[int], *, n_predict: int, ignore_eos: bool = True, cache_prompt: bool = False,
+                 seed: int = 42, on_first=None, deadline_s: float | None = None,
+                 pace: tuple[int, float] | None = None) -> Completion:
+        """Stream a completion. on_first(t) is called the moment the first token arrives (for E4 phases).
+
+        pace=(chunk, gap_ms) prefills the prompt as a series of requests that each extend the cached prefix by
+        `chunk` tokens, sleeping gap_ms between them: a userland model of a frame-aware prefill scheduler."""
+        pre_n, pre_ms, chunks = 0, 0.0, 0
+        if pace:
+            chunk, gap_ms = pace
+            # a fresh nonce up front so nothing from the previous trial's cache matches: every trial starts cold
+            ids = self.tokenize(f"[{time.time_ns()}]\n") + (self.tokenize(prompt) if isinstance(prompt, str) else prompt)
+            t_send = time.time()
+            for k in range(chunk, len(ids), chunk):
+                r = self.client.post("/completion", json={"prompt": ids[:k], "n_predict": 0, "cache_prompt": True,
+                                                          "temperature": 0.0, "top_k": 1, "seed": seed})
+                r.raise_for_status()
+                tm = r.json().get("timings", {})
+                pre_n += tm.get("prompt_n", 0)
+                pre_ms += tm.get("prompt_ms", 0.0)
+                chunks += 1
+                if gap_ms:
+                    time.sleep(gap_ms / 1000)
+            prompt, cache_prompt = ids, True
         body = {"prompt": prompt, "n_predict": n_predict, "stream": True, "temperature": 0.0, "top_k": 1,
                 "seed": seed, "ignore_eos": ignore_eos, "cache_prompt": cache_prompt, "timings_per_token": False}
         parts: list[str] = []
         t_first = None
         final: dict = {}
         timed_out = False
-        t_send = time.time()
+        if not pace:
+            t_send = time.time()
         with self.client.stream("POST", "/completion", json=body) as r:
             r.raise_for_status()
             for line in r.iter_lines():
@@ -165,7 +188,14 @@ class LlamaServer:
             raise TimeoutError(f"completion exceeded {deadline_s:.0f} s ({len(parts)} tokens streamed)")
         if t_first is None and final:
             t_first = t_end  # zero-content completion; treat end as first token
-        return Completion(t_send, t_first, t_end, "".join(parts), final.get("timings", {}),
+        timings = final.get("timings", {})
+        if pace:
+            # fold the chunk requests in, so prompt_n/prompt_ms describe the whole paced prefill
+            timings = {**timings, "prompt_n": pre_n + timings.get("prompt_n", 0),
+                       "prompt_ms": pre_ms + timings.get("prompt_ms", 0.0), "chunks": chunks + 1}
+            if timings["prompt_ms"]:
+                timings["prompt_per_second"] = timings["prompt_n"] / timings["prompt_ms"] * 1000
+        return Completion(t_send, t_first, t_end, "".join(parts), timings,
                           final.get("stop_type", "") or str(final.get("stopped_eos", "")))
 
 

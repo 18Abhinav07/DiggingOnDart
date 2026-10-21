@@ -95,6 +95,9 @@ E2_MAX_TOTAL_GB = 26.0   # ballast + model file; beyond this the Mac itself beco
 E2_TRIAL_DEADLINE_S = 420
 E3_TARGET = "7B-Q4_K_M"
 E3_DRAFTS = [None, "0.5B-Q8_0", "1.5B-Q8_0"]
+# max drafted tokens per step. A smoke test on battery (7B-Q4 + 0.5B, one run each) gave
+# n2 0.89x, n4 1.10x, n8 0.65x, n16 0.42x vs no draft: draft length decides whether speculation pays
+E3_DRAFT_MAX = [4, 16]
 E3_TASKS = ["summarise", "extract"]
 E3_BALLAST_GB = [0, 8, 12, 15]
 E3_RUNS = 5
@@ -113,6 +116,19 @@ E4_CONDITIONS = [
     ("7B-Q4 gpu ub128", "7B-Q4_K_M", 99, 128, "light"),
     ("7B-Q4 gpu ub2048", "7B-Q4_K_M", 99, 2048, "light"),
     ("7B-Q4 gpu ub512 heavy-page", "7B-Q4_K_M", 99, 512, "heavy"),
+    # Stage 2 design inputs. ubatch is the size of one GPU submission inside llama.cpp: how small does it
+    # have to be before a frame fits between submissions, and what does that cost in prefill speed?
+    ("7B-Q4 gpu ub32", "7B-Q4_K_M", 99, 32, "light"),
+    ("7B-Q4 gpu ub64", "7B-Q4_K_M", 99, 64, "light"),
+    ("7B-Q4 gpu ub256", "7B-Q4_K_M", 99, 256, "light"),
+    ("7B-Q4 gpu ub1024", "7B-Q4_K_M", 99, 1024, "light"),
+    # userland paced prefill (chunk tokens, gap ms): the scheduler without touching llama.cpp. Each chunk is
+    # its own request extending the cached prefix, with a gap the compositor can use
+    ("7B-Q4 paced c256 g16", "7B-Q4_K_M", 99, 512, "light", (256, 16)),
+    ("7B-Q4 paced c128 g16", "7B-Q4_K_M", 99, 512, "light", (128, 16)),
+    ("7B-Q4 paced c64 g16", "7B-Q4_K_M", 99, 512, "light", (64, 16)),
+    ("7B-Q4 paced c128 g0", "7B-Q4_K_M", 99, 512, "light", (128, 0)),
+    ("7B-Q4 paced c128 g50", "7B-Q4_K_M", 99, 512, "light", (128, 50)),
 ]
 E4_PRIMARY = "7B-Q4 gpu ub512"  # the condition the Stage 2 decision rule reads
 E5_MODEL = "7B-Q4_K_M"

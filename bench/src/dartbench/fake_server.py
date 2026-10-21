@@ -78,6 +78,10 @@ def main() -> None:
             new = len(prompt) - reuse
             prompt_s = new / pp * (1 + rng.gauss(0, 0.03))
             time.sleep(max(0.0, prompt_s / SPEEDUP))
+            if not body.get("stream"):
+                # paced prefill sends n_predict=0 chunks without streaming
+                return self._json({"content": "", "stop": True, "timings": {
+                    "prompt_n": new, "prompt_ms": prompt_s * 1000, "predicted_n": 0, "cache_n": reuse}})
             self.send_response(200)
             self.send_header("Content-Type", "text/event-stream")
             self.send_header("Transfer-Encoding", "chunked")

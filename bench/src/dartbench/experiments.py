@@ -60,19 +60,19 @@ class Runner:
               n_predict: int, idx: int, warmup: bool = False, ignore_eos: bool = True,
               cache_prompt: bool = False, task: str = "summarise", ballast: Ballast | None = None,
               draft: config.Model | None = None, deadline_s: float | None = None,
-              on_first=None, extra: dict | None = None) -> dict:
+              on_first=None, extra: dict | None = None, pace: tuple[int, float] | None = None) -> dict:
         row = {"session_id": sid, "experiment": exp, "condition": cond, "model": srv.model.key,
                "size_b": srv.model.size_b, "quant": srv.model.quant, "draft_model": draft.key if draft else None,
                "ctx_tokens": n_tokens, "task": task, "ballast_gb": ballast.gb if ballast else 0,
                "ngl": srv.ngl, "ubatch": srv.ubatch, "cache": "warm" if cache_prompt else "cold",
                "trial_idx": idx, "warmup": int(warmup), "load_s": srv.load_s,
-               "model_mb": model_file_mb(srv.model), **(extra or {})}
+               "model_mb": model_file_mb(srv.model) + (model_file_mb(draft) if draft else 0), **(extra or {})}
         swap0, vm0 = sysinfo.swap_used_mb(), sysinfo.vm_counters()
         sampler = MemSampler(srv.pid)
         try:
             with sampler:
                 c = srv.complete(prompt, n_predict=n_predict, ignore_eos=ignore_eos, cache_prompt=cache_prompt,
-                                 seed=42 + idx, on_first=on_first, deadline_s=deadline_s)
+                                 seed=42 + idx, on_first=on_first, deadline_s=deadline_s, pace=pace)
             tm = c.timings
             row.update({
                 "t_start": c.t_send, "t_first": c.t_first, "t_end": c.t_end, "ttft_ms": c.ttft_ms,
@@ -281,22 +281,24 @@ def e3(r: Runner) -> None:
     n = r.runs(config.E3_RUNS)
     ballasts = [0] if r.quick else config.E3_BALLAST_GB
     target = M[config.E3_TARGET]
-    drafts = [None] + [d for d in r.models([d for d in config.E3_DRAFTS if d])]
+    nmaxes = config.E3_DRAFT_MAX[:1] if r.quick else config.E3_DRAFT_MAX
+    drafts = [(None, 0)] + [(d, k) for d in r.models([d for d in config.E3_DRAFTS if d]) for k in nmaxes]
     if not target.available:
         log("E3 skipped: target model missing")
         return
-    sid = r.session("E3", {"target": target.key, "drafts": [d.key if d else None for d in drafts],
+    sid = r.session("E3", {"target": target.key, "drafts": [d.key if d else None for d, _ in drafts], "draft_max": nmaxes,
                            "tasks": config.E3_TASKS, "ballast_gb": ballasts, "runs": n, "ctx": config.E3_CTX})
     status = "done"
     try:
         for gb in ballasts:
             log(f"E3 ballast {gb} GB")
             with Ballast(gb, fake=config.FAKE) as b:
-                for d in drafts:
-                    conds = {t: f"draft={d.key if d else 'none'} {t} ballast{gb}" for t in config.E3_TASKS}
+                for d, k in drafts:
+                    label = f"{d.key}/n{k}" if d else "none"
+                    conds = {t: f"draft={label} {t} ballast{gb}" for t in config.E3_TASKS}
                     if all(r.remaining("E3", c, n) == 0 for c in conds.values()):
                         continue
-                    with LlamaServer(target, draft=d, tag=f"b{gb}") as srv:
+                    with LlamaServer(target, draft=d, draft_max=k or 16, tag=f"b{gb}") as srv:
                         for task, cond in conds.items():
                             prompt, nt = prompts.build(srv, config.E3_CTX, task)
                             r.repeat(sid, srv, "E3", cond, prompt, nt, n, n_predict=256, ignore_eos=False,
@@ -342,7 +344,8 @@ def e4(r: Runner) -> None:
                     t0 = t_ms(); _phase_sleep(fc, idle_s); t1 = t_ms()
                     r.db.add_phase(sid, None, f"no-model {load}", "idle", t0, t1)
                     r.db.add_frames(sid, fc.drain())
-                    for label, mkey, ngl, ub, _ in group:
+                    for label, mkey, ngl, ub, _, *rest in group:
+                        pace = rest[0] if rest else None
                         log(f"E4 {label}")
                         with LlamaServer(M[mkey], ngl=ngl, ubatch=ub, tag="e4") as srv:
                             prompt, nt = prompts.build(srv, config.E4_CTX)
@@ -360,7 +363,7 @@ def e4(r: Runner) -> None:
                                 row = r.trial(sid, srv, "E4", label, prompt, nt, idx=i,
                                               n_predict=config.E4_GEN_TOKENS,
                                               on_first=lambda t: fc.set_fake_state("decode"),
-                                              extra={"task": f"frames-{load}"})
+                                              extra={"task": f"frames-{load}"}, pace=pace)
                                 if not row.get("error") and row.get("t_first"):
                                     r.db.add_phase(sid, row["id"], label, "prefill", row["t_start"] * 1000, row["t_first"] * 1000)
                                     r.db.add_phase(sid, row["id"], label, "decode", row["t_first"] * 1000, row["t_end"] * 1000)

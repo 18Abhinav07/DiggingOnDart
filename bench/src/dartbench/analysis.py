@@ -62,7 +62,11 @@ def trials(db: DB, exp: str, scope: str = "auto", ok_only: bool = True) -> list[
 
 
 def mem_mb(t: dict) -> float | None:
-    return t.get("peak_footprint_mb") or t.get("peak_rss_mb")
+    """Memory the model needs: mapped weights + the server's own footprint (KV cache, compute buffers).
+    llama.cpp mmaps the GGUF and Metal reads those pages in place, so they are file-backed and absent from
+    phys_footprint; every layer is touched per token, so the whole file is resident while it runs."""
+    fp = t.get("peak_footprint_mb") or t.get("peak_rss_mb")
+    return (fp or 0) + (t.get("model_mb") or 0) if fp or t.get("model_mb") else None
 
 
 def e2e_tps(t: dict) -> float | None:
@@ -207,7 +211,9 @@ def e3_view(db: DB, scope="auto") -> list[dict]:
     out = []
     for r in rows:
         b = base.get((r["task"], r["ballast_gb"]))
-        d = {"draft": r["draft"] or "none", "task": r["task"], "ballast_gb": r["ballast_gb"],
+        # the label in the condition carries the draft length: "draft=0.5B-Q8_0/n4 summarise ballast0"
+        label = r["condition"].split()[0].removeprefix("draft=")
+        d = {"draft": label if r["draft"] else "none", "task": r["task"], "ballast_gb": r["ballast_gb"],
              "gen_tps": r["gen_tps"].get("median"), "e2e_tps": r["e2e_tps"].get("median"),
              "accept": r.get("accept"), "sys_used_frac": (r["sys_used_mb"].get("median") or 0) / ram_mb(),
              "mem_mb": r["mem_mb"].get("median"), "n": r["n"]}
@@ -261,10 +267,17 @@ def e4_view(db: DB, scope="auto") -> dict:
             c["dur_s"][p["phase"]] += (p["t1_ms"] - p["t0_ms"]) / 1000
             load = "heavy" if "heavy" in p["condition"] else "light"
             c["budget_ms"] = budgets.get(load) or c.get("budget_ms")
+    # what each condition costs the model: the other half of the Stage 2 trade-off
+    cost = {}
+    for t in trials(db, "E4", scope):
+        cost.setdefault(t["condition"], []).append(t)
     out = []
     for c in conds.values():
         budget = c.get("budget_ms") or (1000 / 120)
-        row = {"condition": c["condition"], "budget_ms": budget, "phases": {}}
+        ts = cost.get(c["condition"], [])
+        row = {"condition": c["condition"], "budget_ms": budget, "phases": {},
+               "ttft": summarize([t["ttft_ms"] for t in ts]), "gen_tps": summarize([t["gen_tps"] for t in ts]),
+               "prompt_tps": summarize([t["prompt_tps"] for t in ts])}
         for ph, vals in c["phases"].items():
             row["phases"][ph] = frame_stats(vals, budget, c["loaf"][ph], c["dur_s"][ph])
         out.append(row)
