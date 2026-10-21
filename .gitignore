@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[oc]
+.venv/
+.pytest_cache/
+build/
+dist/
+*.egg-info
+
+# harness state that is per-machine or bulky
+bench/.brave-profile/
+bench/results/logs/
+bench/results/*.db
+bench/results/*.db-*
+!bench/results/m4pro-24gb.db.gz
+download.log
+.DS_Store
+
+# a reproduction's own outputs
+bench/reports/*-mine.*
+bench/reports/*-fake.*
+bench/reports/dashboard-*.html

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>dartbench frames</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body { margin: 0; background: #0d0f12; color: #c9d1d9; font: 15px/1.6 -apple-system, system-ui, sans-serif; }
+  canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; }
+  #hud { position: fixed; top: 12px; right: 12px; z-index: 2; background: #000a; padding: 8px 12px;
+         border-radius: 6px; font: 12px/1.4 ui-monospace, monospace; white-space: pre; }
+  main { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+  p { background: #0d0f12cc; padding: 6px 10px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="hud">starting</div>
+<main id="text"></main>
+<script>
+// Load: 'light' = animated gradient; 'heavy' = a raymarching shader that keeps the GPU busy, as a
+// WebGL-heavy page would. The page also scrolls continuously so the compositor has real work.
+const params = new URLSearchParams(location.search);
+const LOAD = params.get('load') || 'light';
+const INGEST = '/ingest';
+const hud = document.getElementById('hud');
+
+// ---------- scrolling text
+const lorem = 'Frame timing test page. The model runs in another process while this page animates. ';
+const main = document.getElementById('text');
+for (let i = 0; i < 400; i++) { const p = document.createElement('p'); p.textContent = `${i}. ` + lorem.repeat(3); main.appendChild(p); }
+
+// ---------- WebGL
+const canvas = document.getElementById('gl');
+const gl = canvas.getContext('webgl', { antialias: false, powerPreference: 'high-performance' });
+const vs = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }`;
+const fsLight = `precision mediump float; uniform float t; uniform vec2 r;
+  void main(){ vec2 u = gl_FragCoord.xy / r; gl_FragColor = vec4(0.05 + 0.05*sin(t + u.x*6.), 0.06 + 0.04*sin(t*.7 + u.y*5.), 0.09, 1.); }`;
+const fsHeavy = `precision highp float; uniform float t; uniform vec2 r;
+  float map(vec3 p){ p.xz = mod(p.xz, 2.) - 1.; return length(p) - .35 - .1*sin(p.y*4. + t); }
+  void main(){ vec2 u = (gl_FragCoord.xy - .5*r) / r.y; vec3 ro = vec3(0., 0., t), rd = normalize(vec3(u, 1.));
+    float d = 0.; for (int i = 0; i < 160; i++) { float h = map(ro + rd*d); if (h < .001 || d > 40.) break; d += h*.7; }
+    float c = 1. / (1. + d*d*.02); gl_FragColor = vec4(c*.25, c*.3, c*.45, 1.); }`;
+function sh(type, src){ const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+const prog = gl.createProgram();
+gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs));
+gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, LOAD === 'heavy' ? fsHeavy : fsLight));
+gl.linkProgram(prog); gl.useProgram(prog);
+const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+const uT = gl.getUniformLocation(prog, 't'), uR = gl.getUniformLocation(prog, 'r');
+function resize(){ const dpr = devicePixelRatio || 1; canvas.width = innerWidth*dpr; canvas.height = innerHeight*dpr; gl.viewport(0, 0, canvas.width, canvas.height); }
+addEventListener('resize', resize); resize();
+
+// ---------- frame log: absolute epoch ms so the collector can align with server-side phases
+let frames = [], loaf = [], last = null, n = 0, scrollY = 0;
+const origin = performance.timeOrigin;
+function tick(now){
+  if (last !== null) frames.push([origin + now, now - last]);
+  last = now; n++;
+  gl.uniform1f(uT, now / 1000); gl.uniform2f(uR, canvas.width, canvas.height);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  scrollY = (scrollY + 2) % (document.body.scrollHeight - innerHeight);
+  window.scrollTo(0, scrollY);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+try {
+  new PerformanceObserver(list => {
+    for (const e of list.getEntries()) loaf.push([origin + e.startTime, e.duration, e.blockingDuration || 0]);
+  }).observe({ type: 'long-animation-frame', buffered: true });
+} catch (e) { /* LoAF unavailable: rAF intervals still recorded */ }
+
+async function flush(){
+  const f = frames, l = loaf; frames = []; loaf = [];
+  const body = JSON.stringify({ frames: f, loaf: l, visible: document.visibilityState, load: LOAD,
+                                dpr: devicePixelRatio, w: innerWidth, h: innerHeight });
+  try { await fetch(INGEST, { method: 'POST', body, headers: { 'Content-Type': 'application/json' }, keepalive: true }); }
+  catch (e) { frames = f.concat(frames); loaf = l.concat(loaf); }
+  const recent = f.slice(-120).map(x => x[1]).sort((a, b) => a - b);
+  const med = recent.length ? recent[recent.length >> 1] : 0;
+  hud.textContent = `load ${LOAD}\nframes ${n}\nmedian ${med.toFixed(2)} ms\n${document.visibilityState}`;
+}
+setInterval(flush, 1000);
+</script>
+</body>
+</html>

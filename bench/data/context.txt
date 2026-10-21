@@ -1,0 +1,1613 @@
+== Web browser ==
+A web browser, often abbreviated as browser, is an application for accessing websites. When a user requests a web page from a particular website, the browser retrieves its files from a web server and then displays the page on the user's screen. Browsers can also display content stored locally on the user's device.
+Browsers are used on a range of devices, including desktops, laptops, tablets, smartphones, smartwatches, smart televisions and consoles. As of 2026, the most used browsers worldwide are Google Chrome (~69% market share), Safari (~16%), Edge (~5%), Firefox (~2%), Samsung Browser (~2%), and Opera (~2%). As of 2023, an estimated 5.4 billion people had used a browser.
+
+
+== Function ==
+
+The purpose of a web browser is to fetch content and display it on the user's device. This process begins when the user inputs a Uniform Resource Locator (URL), such as https://en.wikipedia.org/, into the browser's address bar. Virtually all URLs on the Web start with either http: or https: which means they are retrieved with the Hypertext Transfer Protocol (HTTP). For secure mode (HTTPS), the connection between the browser and web server is encrypted, providing a secure and private data transfer. For this reason, a web browser is often referred to as an HTTP client or a user agent. Requisite materials, including text, style sheets, images, and other types of multimedia, are downloaded from the server. Once the materials have been downloaded, the web browser's engine (also known as a layout engine or rendering engine) is responsible for converting those resources into an interactive visual representation of the page on the user's device. Modern web browsers also contain separate JavaScript engines which enable more complex interactive applications inside the browser. A web browser that does not render a graphical user interface is known as a headless browser.
+Web pages usually contain hyperlinks to other pages and resources. Each link contains a URL, and when it is clicked or tapped, the browser navigates to the new resource. Most browsers use an internal cache of web page resources to improve loading times for subsequent visits to the same page. The cache can store many items, such as large images, so they do not need to be downloaded from the server again. Cached items are usually only stored for as long as the web server stipulates in its HTTP response messages.
+A web browser is not the same thing as a search engine, though the two are often confused. A search engine is a website that provides links to other websites and allows users to search for specific resources using a textual query. However, web browsers are often used to access search engines, and most modern browsers allow users to access a default search engine directly by typing a query into the address bar.
+
+
+== History ==
+
+The first web browser, called WorldWideWeb, was created in 1990 by Sir Tim Berners-Lee. He then recruited Nicola Pellow to write the Line Mode Browser, which displayed web pages on dumb terminals. The Mosaic web browser was released in April 1993, and was later credited as the first web browser to find mainstream popularity. Its innovative graphical user interface made the World Wide Web easy to navigate and thus more accessible to the average person. This, in turn, sparked the Internet boom of the 1990s, when the Web grew at a very rapid rate. The lead developers of Mosaic then founded the Netscape corporation, which released the Mosaic-influenced Netscape Navigator in 1994. Navigator quickly became the most popular browser.
+Microsoft debuted Internet Explorer in 1995, leading to a browser war with Netscape. Within a few years, Microsoft gained a dominant position in the browser market for two reasons: it bundled Internet Explorer with its popular Windows operating system and did so as freeware with no restrictions on usage. The market share of Internet Explorer peaked at over 95% in the early 2000s. In 1998, Netscape launched what would become the Mozilla Foundation to create a new browser using the open-source software model. This work evolved into the Firefox browser, first released by Mozilla in 2004. Firefox's market share peaked at 32% in 2010. Apple released its Safari browser in 2003; it remains the dominant browser on Apple devices, though it did not become popular elsewhere.
+Google debuted its Chrome browser in 2008, which steadily took market share from Internet Explorer and became the most popular browser in 2012. Chrome has remained dominant ever since. In 2015, Microsoft replaced Internet Explorer with Edge [Legacy] for the Windows 10 release. In 2020, this legacy version was replaced by a new Chromium-based version of Edge.
+Since the early 2000s, browsers have greatly expanded their HTML, CSS, JavaScript, and multimedia capabilities. One reason has been to enable more sophisticated websites, such as web apps. Another factor is the significant increase of broadband connectivity in many parts of the world, enabling people to access data-intensive content, such as streaming HD video on YouTube, that was not possible during the era of dial-up modems.
+Starting in the mid-2020s, browsers with integrated artificial intelligence (AI) capabilities, known as AI browsers, have become increasingly common. This includes both new entrants to the browser market, such as Perplexity Comet and ChatGPT Atlas, and established browsers that added AI features, such as Chrome with the Gemini chatbot and Edge with the Copilot chatbot.
+
+
+== Features ==
+The most popular browsers share many features. They automatically log users' browsing history, unless the users turn off their browsing history or use the non-logging private mode. They also allow users to set bookmarks, customize the browser with extensions, and manage their downloads and passwords. Some provide a sync service and web accessibility features.
+
+Common user interface (UI) features:
+
+Allowing the user to have multiple pages open at the same time, either in different windows or in different tabs of the same window.
+Back and forward buttons to go back to the previous page visited or forward to the next one.
+A refresh or reload and a stop button to reload and cancel loading the current page. (In most browsers, the stop button is merged with the reload button.)
+A home button to return to the start page.
+An address bar to input the URL of a page and display it, and a search bar to input queries into a search engine. (In most browsers, the search bar is merged with the address bar.)
+While mobile browsers have similar UI features as desktop versions, the limitations of the often-smaller touch screens require mobile UIs to be simpler. The difference is significant for users accustomed to keyboard shortcuts. Responsive web design is used to create websites that offer a consistent experience across the desktop and mobile versions of the website and across varying screen sizes. The most popular desktop browsers also have sophisticated web development tools.
+Access to some web content — particularly streaming services like Netflix, Disney+, and Spotify — is restricted by Digital Rights Management (DRM) software. A web browser is able to access DRM-restricted content through the use of a Content Decryption Module (CDM) such as Widevine. As of 2020, the CDMs used by dominant web browsers require browser providers to pay costly license fees, making it unfeasible for most independent open-source browsers to offer access to DRM-restricted content.
+
+
+== Browser market ==
+
+Google Chrome has been the dominant browser worldwide since the mid-2010s and currently has a 69% global market share on all devices. The vast majority of its source code comes from Google's open-source Chromium project; this code is also the basis for many other browsers, including Microsoft Edge, currently in third place with about a 5% share, as well as Samsung Internet and Opera in fifth and sixth places respectively with approximately 2% market share each.
+The other two browsers in the top four are made from different codebases. Safari, based on Apple's WebKit code, is the second most popular web browser and is dominant on Apple devices, resulting in a 16% global share. Firefox, in fourth place, with about 2% market share, is based on Mozilla's code. Both of these codebases are open-source, so a number of small niche browsers are also made from them.
+The following table details the top web browsers by market share, as of April, 2025:
+
+
+=== Market share by type of device ===
+Prior to late 2016, the majority of web traffic came from desktop computers. However, since then, mobile devices (smartphones) have represented the majority of web traffic. As of February 2025, mobile devices represent a 62% share of Internet traffic, followed by desktop at 36% and tablet at 2%.
+
+
+== Security ==
+
+Web browsers are popular targets for hackers, who exploit security holes to steal information, destroy files, and partake in other malicious activities. Browser vendors regularly patch these security holes, so users are strongly encouraged to keep their browser software updated. Other protection measures are antivirus software and being aware of scams.
+
+
+=== Privacy ===
+
+During the course of browsing, cookies received from various websites are stored by the browser. Some of them contain login credentials or site preferences. However, others are used for tracking user behavior over long periods of time, so browsers typically provide a section in the menu for deleting cookies. 
+Some browsers have more proactive protection against cookies and trackers that limit their functionality and ability to track user behaviour. Finer-grained management of cookies usually requires a browser extension. Telemetry data is collected by most popular web browsers, which can usually be opted out of by the user.
+A study from 2020 portrays that there are two tiers of browsers in terms of privacy: the privacy-focused browsers (Brave, DuckDuckGo, LibreWolf, Tor, Mullvad, Helium and Firefox Focus) perform better than popular browsers (Chrome, Firefox, and Safari) and recommend the former browsers. Blocking fingerprinting, cookies, tracking scripts, ads, etc. seems to explain that difference.
+
+
+== See also ==
+
+Comparison of web browsers
+History of the World Wide Web
+Timeline of web browsers
+List of web browsers
+
+
+== References ==
+
+
+== External links ==
+
+ Media related to Web browsers at Wikimedia Commons
+== Chromium (web browser) ==
+Chromium is a free and open-source web browser project, primarily developed and maintained by Google. It is a widely used codebase, providing the vast majority of code for Google Chrome and many other browsers, including Microsoft Edge, Samsung Browser, and Opera. The code is also used by several app frameworks.
+
+
+== Licensing ==
+Chromium is a free and open-source software project.  Owing to its origins in the WebKit project, Chromium incorporates code subject to a variety of licenses, including LGPL, MIT, Ms-PL, and MPL (with the MPL/GPL/LGPL tri-license clause).  Original Google-authored portions and some portions written by Apple are shared under the 3-clause BSD license.
+This licensing permits any party to build the codebase and share the resulting browser executable with the Chromium name and logo. Thus many Linux distributions do this, as well as FreeBSD and OpenBSD.  Chromium also forms the basis of Electron, which in turn is used for many commercial and proprietary cross-platform applications, such as Slack.
+Many Chromium-based browsers, such as Google Chrome and Microsoft Edge, include the proprietary components, such as proprietary wrapper libraries for hardware acceleration.
+
+
+== Differences from Google Chrome ==
+Chromium provides the vast majority of source code for Google Chrome, but there are important differences.
+
+
+=== Features ===
+Chromium lacks the following Chrome features:
+
+Automatic browser updates
+API keys for some Google services, including browser sync
+The Widevine DRM module
+Licensed codecs for the H.264 video and AAC audio formats
+Tracking mechanisms for usage and crash reports
+
+
+=== Branding and licensing ===
+Google first chose the name "Chrome" with intention to minimize chrome for its browser. Then the open-source release was named "Chromium" because chromium metal is used to make chrome plating.
+Chrome has the same user interface functionality as Chromium, but with a Google-branded color scheme. Unlike Chromium, Chrome is not open-source; its binaries are licensed as freeware under the Google Chrome Terms of Service.
+
+
+== Development ==
+
+
+=== Contributors ===
+Chromium has been a Google project since its inception, and Google employees have done the bulk of the development work.
+Google refers to this project and the offshoot ChromiumOS as "the Chromium projects", and its employees use @chromium.org email addresses for this development work. However, in terms of governance, the Chromium projects are not independent entities; Google retains firm control of them.
+The Chromium browser codebase is widely used, so others have made important contributions, most notably Microsoft, Avast, Igalia, Yandex, Intel, Samsung, LG, Opera, Vivaldi, and Brave. Some employees of these companies also have @chromium.org email addresses.
+
+
+=== Architecture ===
+Google designed the first multi-process browser. Compared to single-process designs, this architecture has better responsiveness with many browser tabs open and security benefits of process isolation, but with the trade-off of higher memory usage. This was later refined as per-process website isolation, providing additional security.
+Another important design decision was for the browser's user interface to be minimalistic.
+The browser engine was originally based on Apple's WebKit, which Google deemed the "obvious choice" of available options. However, Google's novel multi-process design required engine changes. This divergence from Apple's version increased over time, so in 2013 Google officially forked its version as the Blink engine. However, as of 2025, Google is still working on getting the Blink engine onto iOS, and has released experimental code for it.
+
+
+=== Programming languages ===
+As of 2026, the Chromium browser codebase contains over 39 million source lines of code, excluding comments and blank lines.
+C++ is the primary language, comprising over half of the codebase. This includes the Blink and V8 engines, the implementation of HTTP and other protocols, the internal caching system, the extension API, and most of the user interface.
+The rest of the user interface, called the WebUI, is implemented in HTML, CSS, and JavaScript (usually via TypeScript transpilation). An extensive collection of web platform tests is also written in these languages plus XML.
+Third-party libraries that provide essential functionality, such as SQLite and numerous codecs, are written in C, C++, or beginning in 2023, the newer Rust language.
+Support for mobile operating systems requires special languages: for Android both Java and Kotlin, and for iOS both Objective-C and Swift.
+Python is the main language of the build system, which also has special configuration files for Google's GN tool.
+
+
+=== Logistics ===
+The bug tracking system is a publicly accessible website. Participants are identified by their email addresses.
+The Chromium continuous integration system automatically builds and tests the codebase several times a day.
+Builds are identified by a four-part version number that is major.minor.build.patch. This versioning scheme and the branch points that occur every six to seven weeks are from Google Chrome and its development cycle.
+
+
+== History ==
+
+
+=== 2008 to 2010 ===
+Google Chrome debuted in September 2008, and along with its release, the Chromium source code was also made available, allowing builds to be constructed from it.
+Upon release, Chrome was criticized for storing a user's passwords without the protection of a master password. Google has insisted that a master password provides no real security against knowledgeable hackers, but users argued that it would protect against co-workers or family members borrowing a computer and being able to view stored passwords as plaintext. In December 2009, Chromium developer P. Kasting stated: "A master password was issue 1397. That issue is closed. We will not implement a master password. Not now, not ever. Arguing for it won't make it happen. 'A bunch of people would like it' won't make it happen. Our design decisions are not democratic. You cannot always have what you want."
+
+Version 3 was the first alpha available for Linux. Chromium soon incorporated native theming for Linux, using the GTK+ toolkit to allow it fit into the GNOME desktop environment. Version 3 also introduced JavaScript engine optimizations and user-selectable themes.
+Version 6 introduced features for user interface minimalism, as one of Google's goals was to make the browser "feel lightweight (cognitively and physically) and fast". The changes were a unified tools menu, no home button by default (although user configurable), a combined reload/stop button, and the bookmark bar deactivated by default. It also introduced an integrated PDF reader, WebM and VP8 support for use with HTML video, and a smarter URL bar.
+Version 7 boosted performance to twice that of prior versions via hardware acceleration.
+Version 8 focused on improved integration into ChromeOS and improved cloud features. These include background web applications, host remoting (allowing users centrally to control features and settings on other computers) and cloud printing.
+Version 9 introduced a number of features, including a URL bar feature for exposing phishing attacks and sandboxing for the Adobe Flash plug-in. Other additions were the WebGL library and access for the new Chrome Web Store.
+
+
+=== 2011 ===
+
+In February, Google announced that it was considering large-scale user interface (UI) changes, including at least partial elimination of the URL bar, which had been a mainstay of browsers since the early years of the Web. The proposed UI was to be a consolidation of the row of tabs and the row of navigation buttons, the menu, and URL bar into a single row. The justification was freeing up more screen space for web page content. Google acknowledged that this would result in URLs not always being visible to the user, that navigation controls and menus may lose their context, and that the resulting single line could be quite crowded. However, by August, Google decided that these changes were too risky and shelved the idea.
+In March, Google announced other directions for the project. Development priorities focused on reducing the size of the executable, integrating web applications and plug-ins, cloud computing, and touch interface support. Thus a multi-profile button was introduced to the UI, allowing users to log into multiple Google and other accounts in the same browser instance. Other additions were malware detection and support for hardware-accelerated CSS transforms.
+By May, the results of Google's attempts to reduce the file size of Chromium were already being noted. Much of the early work in this area concentrated on shrinking the size of WebKit, the image resizer, and the Android build system. Subsequent work introduced a more compact mobile version that reduced the vertical space of the UI.
+Other changes in 2011 were GPU acceleration on all pages, adding support for the new Web Audio API, and the Google Native Client (NaCl) which permits native code supplied by third parties as platform-neutral binaries to be securely executed within the browser itself. Google's Skia graphics library was also made available for all Chromium versions.
+
+
+=== Since 2012 ===
+
+The sync service added for Google Chrome in 2012 could also be used by Chromium builds. The same year, a new API for high-quality video and audio communication was added, enabling web applications to access the user's webcam and microphone after asking permission to do so. Then GPU accelerated video decoding for Windows and support for the QUIC protocol were added.
+In 2013, Chromium's modified WebKit rendering engine was officially forked as the Blink engine.
+Other changes in 2013 were the ability to reset user profiles and new browser extension APIs. Tab indicators for audio and webcam usage were also added, as was automatic blocking of files detected as malware.
+Version 67 added the security benefit of per-process website isolation. Then version 69 introduced a new browser theme, as part of the tenth anniversary of Google Chrome. The same year, new measures were added to curtail abusive advertising.
+Since 2021, the Google Chrome sync service can no longer be used by Chromium builds. Also, starting with version 89, only Intel and AMD processors with the SSE3 instruction set or later are supported.
+Starting with version 110, only Windows 10 and later are supported for Windows users.
+
+
+== Third-party ports ==
+
+
+== Browsers based on Chromium ==
+In addition to Google Chrome, Microsoft Edge, Opera, Vivaldi and Brave, many other actively developed browsers are based on the Chromium code. Most of these are proprietary, like Chrome, but some remain free and open-source software (FOSS), like Chromium.
+
+
+=== Proprietary ===
+
+
+=== Free and open-source ===
+
+
+== Use in app frameworks ==
+These notable app frameworks embed a Chromium browser as the functional core of custom apps:
+
+Chromium Embedded Framework
+Electron
+NW.js
+Qt WebEngine
+The two prominent Chromium-based WebView components also provide a similar way to make apps:
+
+Android System WebView
+Microsoft Edge WebView2
+With either approach, the custom app is implemented with HTML, CSS, JavaScript, and other web technologies. Moreover, the app can be readily deployed on the operating systems supported by Chromium. Since the 2010s, many apps have been created this way. (Two examples are Spotify and Slack.)
+
+
+== References ==
+
+
+== External links ==
+
+Official website
+== Apple silicon ==
+Apple silicon is a series of system on a chip (SoC) and system in a package (SiP) designs by Apple Inc., primarily using the ARM architecture, along with a range of more specialized chips for other devices and wireless connectivity functions. They are used across nearly all Apple devices, including Mac, iPhone, iPad, Apple TV, Apple Watch, AirPods, AirTag, HomePod, and Apple Vision Pro.
+The first Apple-designed SoC was the Apple A4, introduced in 2010 with the first-generation iPad and subsequently used in the iPhone 4, fourth-generation iPod Touch, and second-generation Apple TV.
+At WWDC 2020, Apple announced the transition of the Mac to its own chips and adopted the name Apple silicon for its chip lineup. The first Macs with Apple silicon, built around the Apple M1, were unveiled on November 10, 2020. The Mac lineup completed its transition to Apple silicon in June 2023.
+As a fabless manufacturer, Apple designs its chips in-house but outsources production to contract foundries including TSMC and Samsung. Apple controls the integration of its silicon across both its hardware and software products.
+Apple also employs chip binning as a cost-reduction strategy. In the binning process, chips with a manufacturing defect, typically a GPU core, have the affected part disabled, converting an otherwise unusable chip into a lower-specification but functional one. This improves manufacturing yield and allows Apple to offer products at different price points without designing separate chips for each tier. Examples include entry-level MacBook Neo models, which have shipped with A-series chips with one or two GPU cores disabled, and the iPhone 17e, which uses a binned A19 with fewer GPU cores than the standard iPhone 17.
+Different Apple silicon have different hardware, firmware and software security features. Apple Secure Enclave (inside of Apple silicon) have different hardware, firmware and software security features. The higher the release year number, the higher the number of security features in Apple silicon and Apple Secure Enclave respectively. Apple silicon cryptographic modules are certified to FIPS 140-2 and FIPS 140-3, the higher the release year number, the higher the FIPS security level for hardware, firmware, software. Mac is designed to run any code, so it does not have the feature that prevents unverified code from running on other Apple silicon.
+
+
+== A-series SoCs ==
+The A series is a family of SoCs used in the iPhone, certain iPad models (including iPad Mini and entry-level iPad), MacBook Neo, and the Apple TV. A-series chips were also used in the discontinued iPod Touch line and the original HomePod. They integrate one or more ARM-based processing cores (CPU), a graphics processing unit (GPU), cache memory and other electronics necessary to provide mobile computing functions within a single physical package.
+
+
+=== Apple A4 ===
+
+The Apple A4 is a PoP SoC manufactured by Samsung, the first SoC Apple designed in-house. It combines an ARM Cortex-A8 CPU –  also used in Samsung's S5PC110A01 SoC –  and a PowerVR SGX 535 graphics processor (GPU), all built on Samsung's 45-nanometer silicon chip fabrication process. The design emphasizes power efficiency. The A4 commercially debuted in 2010, in Apple's iPad tablet, and was later used in the iPhone 4 smartphone, the fourth-generation iPod Touch, and the 2nd-generation Apple TV.
+The Cortex-A8 core used in the A4, dubbed Hummingbird, is thought to use performance improvements developed by Samsung in collaboration with chip designer Intrinsity, which was subsequently acquired by Apple. It can run at far higher clock rates than other Cortex-A8 designs yet remains fully compatible with the design provided by ARM. The A4 runs at different speeds in different products: 1 GHz in the first iPads and 2nd-generation Apple TV, and 800 MHz in the iPhone 4 and fourth-generation iPod Touch.
+The A4's SGX535 GPU could theoretically push 35 million polygons per second and 500 million pixels per second, although real-world performance may be considerably less. Other performance improvements include additional L2 cache.
+The A4 processor package does not contain RAM, but supports PoP installation. The 1st-generation iPad, fourth-generation iPod Touch, and the 2nd-generation Apple TV have an A4 mounted with two low-power 128 MB DDR SDRAM chips (totaling 256 MB), while the iPhone 4 has two 256 MB packages for a total of 512 MB. The RAM is connected to the processor using ARM's 64-bit-wide AMBA 3 AXI bus. To give the iPad high graphics bandwidth, the width of the RAM data bus is double that used in previous ARM11- and ARM9-based Apple devices.
+
+
+=== Apple A5 ===
+
+The Apple A5 is an SoC manufactured by Samsung that replaced the A4. The chip commercially debuted with the release of Apple's iPad 2 tablet in March 2011, followed by its release in the iPhone 4S smartphone later that year. Compared to the A4, the A5 CPU "can do twice the work" and the GPU has "up to nine times the graphics performance", according to Apple.
+The A5 contains a dual-core ARM Cortex-A9 CPU with ARM's advanced SIMD extension, marketed as NEON, and a dual core PowerVR SGX543MP2 GPU. This GPU can push between 70 and 80 million polygons/second and has a pixel fill rate of 2 billion pixels/second. The iPad 2's technical specifications page says the A5 is clocked at 1 GHz, though it can adjust its frequency to save battery life. The clock speed of the unit used in the iPhone 4S is 800 MHz. Like the A4, the A5 process size is 45 nm.
+An updated 32 nm version of the A5 processor was used in the third-generation Apple TV, the fifth-generation iPod Touch, the iPad Mini, and the new version of iPad 2 (version iPad2,4). The chip in the Apple TV has one core locked. Markings on the square package indicate that it is named APL2498, and in software, the chip is called S5L8942. The 32 nm variant of the A5 provides around 15% better battery life during web browsing, 30% better when playing 3D games and about 20% better battery life during video playback.
+In March 2013, Apple released an updated version of the 3rd-generation Apple TV (Rev A, model A1469) containing a smaller, single-core version of the A5 processor. Unlike the other A5 variants, this version of the A5 is not a PoP, having no stacked RAM. The chip is very small, just 6.1×6.2 mm, but as the decrease in size is not due to a decrease in feature size (it is still on a 32 nm fabrication process), this indicates that this A5 revision is of a new design. Markings tell that it is named APL7498, and in software, the chip is called S5L8947.
+
+
+=== Apple A5X ===
+
+The Apple A5X is an SoC announced on March 7, 2012, at the launch of the third-generation iPad. It is a high-performance variant of the Apple A5; Apple claims it has twice the graphics performance of the A5. It was superseded in the fourth-generation iPad by the Apple A6X processor.
+The A5X has a quad-core graphics unit (PowerVR SGX543MP4) instead of the previous dual-core as well as a quad-channel memory controller that provides a memory bandwidth of 12.8 GB/s, roughly three times more than in the A5. The added graphics cores and extra memory channels add up to a very large die size of 165 mm2, for example twice the size of Nvidia Tegra 3. This is mainly due to the large PowerVR SGX543MP4 GPU. The clock frequency of the dual ARM Cortex-A9 cores have been shown to operate at the same 1 GHz frequency as in A5. The RAM in A5X is separate from the main CPU package.
+
+
+=== Apple A6 ===
+
+The Apple A6 is a PoP SoC introduced on September 12, 2012, at the launch of the iPhone 5, then a year later was inherited by its minor successor the iPhone 5C. Apple states that it is up to twice as fast and has up to twice the graphics power compared to its predecessor the Apple A5. It is 22% smaller and draws less power than the 45 nm A5.
+The A6 is said to use a 1.3 GHz custom Apple-designed ARMv7 based dual-core CPU, called Swift, rather than a licensed CPU from ARM like in previous designs, and an integrated 266 MHz triple-core PowerVR SGX 543MP3 graphics processing unit (GPU). The Swift core in the A6 uses a new tweaked instruction set, ARMv7s, featuring some elements of the ARM Cortex-A15 such as support for the Advanced SIMD v2, and VFPv4. The A6 is manufactured by Samsung on a high-κ metal gate (HKMG) 32 nm process.
+
+
+=== Apple A6X ===
+
+Apple A6X is an SoC introduced at the launch of the fourth-generation iPad on October 23, 2012. It is a high-performance variant of the Apple A6. Apple claims the A6X has twice the CPU performance and up to twice the graphics performance of its predecessor, the Apple A5X.
+Like the A6, this SoC continues to use the dual-core Swift CPU, but it has a new quad core GPU, quad channel memory and slightly higher 1.4 GHz CPU clock rate. It uses an integrated quad-core PowerVR SGX 554MP4 graphics processing unit (GPU) running at 300 MHz and a quad-channel memory subsystem. Compared to the A6 the A6X is 30% larger, but it continues to be manufactured by Samsung on a high-κ metal gate (HKMG) 32 nm process.
+
+
+=== Apple A7 ===
+
+The Apple A7 is a 64-bit PoP SoC whose first appearance was in the iPhone 5S, which was introduced on September 10, 2013. The chip would also be used in the iPad Air, iPad Mini 2 and iPad Mini 3. Apple states that it is up to twice as fast and has up to twice the graphics power compared to its predecessor, the Apple A6. The Apple A7 chip is the first 64-bit chip to be used in a smartphone and later a tablet computer. It includes a dedicated Secure Enclave Processor to help store and protect the data from the Touch ID fingerprint sensor on the iPhone 5S and iPad mini 3.
+The A7 features an Apple-designed 1.3–1.4 GHz 64-bit ARMv8-A dual-core CPU, called Cyclone, and an integrated PowerVR G6430 GPU in a four cluster configuration. The ARMv8-A architecture doubles the number of registers of the A7 compared to the A6. It now has 31 general-purpose registers that are each 64-bits wide and 32 floating-point/NEON registers that are each 128-bits wide. The A7 is manufactured by Samsung on a high-κ metal gate (HKMG) 28 nm process and the chip includes over 1 billion transistors on a die 102 mm2 in size.
+
+
+=== Apple A8 ===
+
+The Apple A8 is a 64-bit PoP SoC manufactured by TSMC. Its first appearance was in the iPhone 6 and iPhone 6 Plus, which were introduced on September 9, 2014. A year later it would drive the iPad Mini 4. Apple states that it has 25% more CPU performance and 50% more graphics performance while drawing only 50% of the power compared to its predecessor, the Apple A7. On February 9, 2018, Apple released the HomePod, which is powered by an Apple A8 with 1 GB of RAM.
+The A8 features an Apple-designed 1.4 GHz 64-bit ARMv8-A dual-core CPU, and an integrated custom PowerVR GX6450 GPU in a four cluster configuration. The GPU features custom shader cores and compiler. The A8 is manufactured on a 20 nm process by TSMC, which replaced Samsung as the manufacturer of Apple's mobile device processors. It contains 2 billion transistors. Despite that being double the number of transistors compared to the A7, its physical size has been reduced by 13% to 89 mm2 (consistent with a shrink only, not known to be a new microarchitecture).
+
+
+=== Apple A8X ===
+
+The Apple A8X is a 64-bit SoC introduced at the launch of the iPad Air 2 on October 16, 2014. It is a high performance variant of the Apple A8. Apple states that it has 40% more CPU performance and 2.5 times the graphics performance of its predecessor, the Apple A7.
+Unlike the A8, this SoC uses a triple-core CPU, a new octa-core GPU, dual channel memory and slightly higher 1.5 GHz CPU clock rate. It uses an integrated custom octa-core PowerVR GXA6850 graphics processing unit (GPU) running at 450 MHz and a dual-channel memory subsystem. It is manufactured by TSMC on their 20 nm fabrication process, and consists of 3 billion transistors.
+
+
+=== Apple A9 ===
+
+The Apple A9 is a 64-bit ARM-based SoC that first appeared in the iPhone 6S and 6S Plus, which were introduced on September 9, 2015. Apple states that it has 70% more CPU performance and 90% more graphics performance compared to its predecessor, the Apple A8. It is dual sourced, a first for an Apple SoC; it is manufactured by Samsung on their 14 nm FinFET LPE process and by TSMC on their 16 nm FinFET process. It was subsequently included in the first-generation iPhone SE, and the iPad (5th generation). The Apple A9 was the last CPU that Apple manufactured through a contract with Samsung, as all A-series chips after are manufactured by TSMC. The Apple A9 runs on a higher 1.85 GHz clock speed.
+
+
+=== Apple A9X ===
+
+The Apple A9X is a 64-bit SoC that was announced on September 9, 2015, and released on November 11, 2015, and first appeared in the iPad Pro. It offers 80% more CPU performance and two times the GPU performance of its predecessor, the Apple A8X. It is manufactured by TSMC using a 16 nm FinFET process. Unlike its predecessor, the A8X, the Apple A9X runs on an increased 2.16 to 2.26 GHz clock rate.
+
+
+=== Apple A10 Fusion ===
+
+The Apple A10 Fusion is a 64-bit ARM-based SoC that first appeared in the iPhone 7 and 7 Plus, which were introduced on September 7, 2016. The A10 is also featured in the sixth-generation iPad, seventh-generation iPad and seventh-generation iPod Touch. It has a new ARM big.LITTLE quad core design with two high performance cores, and two smaller highly efficient cores. It is 40% faster than the A9, with 50% faster graphics, and runs at an improved 2.34 GHz clock rate. It is manufactured by TSMC on their 16 nm FinFET process.
+
+
+=== Apple A10X Fusion ===
+
+The Apple A10X Fusion is a 64-bit ARM-based SoC that first appeared in the 10.5″ iPad Pro and the second generation of the 12.9″ iPad Pro, which were both announced on June 5, 2017. It is a variant of the A10 and Apple claims that it has 30 percent faster CPU performance and 40 percent faster GPU performance than its predecessor, the A9X. On September 12, 2017, Apple announced that the Apple TV 4K would be powered by an A10X chip. It is made by TSMC on their 10 nm FinFET process, and its base clock speed is 2.36 GHz, although some sources say that it is 2.38 GHz.
+
+
+=== Apple A11 Bionic ===
+
+The Apple A11 Bionic is a 64-bit ARM-based SoC that first appeared in the iPhone 8, iPhone 8 Plus, and iPhone X, which were introduced on September 12, 2017. It has two high-performance cores, which are 25% faster than the A10 Fusion, four high-efficiency cores, which are 70% faster than the energy-efficient cores in the A10, and for the first time an Apple-designed three-core GPU with 30% faster graphics performance than the A10. It is also the first A-series chip to feature Apple's "Neural Engine," which enhances artificial intelligence and machine learning processes.
+
+
+=== Apple A12 Bionic ===
+
+The Apple A12 Bionic is a 64-bit ARM-based SoC that first appeared in the iPhone XS, XS Max and XR, which were introduced on September 12, 2018. It is also used in the third-generation iPad Air, fifth-generation iPad Mini, the eighth-generation iPad, and the second generation Apple TV 4K. It has two high-performance cores, which are 15% faster than the A11 Bionic, and four high-efficiency cores, which have 50% lower power usage than the energy-efficient cores in the A11 Bionic. The A12 is manufactured by TSMC using a 7 nm FinFET process, the first to ship in a smartphone.
+
+
+=== Apple A12X Bionic ===
+
+The Apple A12X Bionic is a 64-bit ARM-based SoC that first appeared in the 11″ iPad Pro and the third generation of the 12.9″ iPad Pro, which were both announced on October 30, 2018. It offers 35% faster single-core and 90% faster multi-core CPU performance than its predecessor, the A10X. It has four high-performance cores and four high-efficiency cores. The A12X is manufactured by TSMC using a 7 nm FinFET process.
+
+
+==== Apple A12Z Bionic ====
+The Apple A12Z Bionic is an updated version of the A12X Bionic, first appearing in the fourth generation iPad Pro, which was announced on March 18, 2020. It adds an additional GPU core, compared to the A12X, for improved graphics performance. The A12Z is also used in the Developer Transition Kit prototype computer that helps developers prepare their software for Macs based on Apple silicon.
+
+
+=== Apple A13 Bionic ===
+
+The Apple A13 Bionic is a 64-bit ARM-based SoC that first appeared in the iPhone 11, 11 Pro, and 11 Pro Max, which were introduced on September 10, 2019. It is also featured in the second-generation iPhone SE (released April 15, 2020), the 9th generation iPad (announced September 14, 2021) and in the Studio Display (announced March 8, 2022)
+The entire A13 SoC features a six-core CPU, four-core GPU, and an eight-core Neural Engine, which is dedicated to handling on-board machine learning processes; four of the six cores on the CPU are low-powered cores that are dedicated to handling less CPU-intensive operations, such as voice calls, browsing the Web, and sending messages, while two higher-performance cores are used only for more CPU-intensive processes, such as recording 4K video or playing a video game.
+
+
+=== Apple A14 Bionic ===
+
+The Apple A14 Bionic is a 64-bit ARM-based SoC that first appeared in the fourth-generation iPad Air, iPhone 12 and iPhone 12 Pro, released on October 23, 2020. It is the first commercially available 5nm chipset and contains 11.8 billion transistors and a 16-core Neural Engine. It includes the Samsung LPDDR4X DRAM, a 6-core CPU, and a 4-core GPU with real-time machine learning capabilities. It was later used in the tenth-generation iPad, released on October 26, 2022.
+
+
+=== Apple A15 Bionic ===
+
+The Apple A15 Bionic is a 64-bit ARM-based SoC that first appeared in the iPhone 13 and iPhone 13 Pro, unveiled on September 14, 2021. The A15 is built on a 5-nanometer manufacturing process with 15 billion transistors. It has 2 high-performance processing cores, 4 high-efficiency cores, new 5-core graphics for iPhone 13 Pro series (4-core for iPhone 13 and 13 mini), and a new 16-core Neural Engine capable of 15.8 trillion operations per second. It is also used in the third-generation iPhone SE, iPhone 14, iPhone 14 Plus and sixth-generation iPad Mini, as well as the third generation Apple TV 4K, with a 5-core CPU.
+
+
+=== Apple A16 Bionic ===
+
+The Apple A16 Bionic is a 64-bit ARM-based SoC that first appeared in the iPhone 14 Pro, unveiled on September 7, 2022. The A16 has 16 billion transistors and is built on TSMC's N4P fabrication process, being touted by Apple as the first 4 nm processor in a smartphone. However, N4 is an enhanced version of N5 technology, a de facto fourth-generation 5 nm manufacturing process. The chip has 2 high-performance processing cores, 4 high-efficiency cores and 5-core graphics. Memory is upgraded to LPDDR5 for 50% higher bandwidth and a 7% faster 16-core Neural Engine capable of 17 trillion operations per second. It was later used in the iPhone 15 and iPhone 15 Plus, as well as the iPad 11-inch, with a 5-core CPU and 4-core GPU.
+
+
+=== Apple A17 Pro ===
+
+The Apple A17 Pro is a 64-bit ARM-based SoC that first appeared in the iPhone 15 Pro, unveiled on September 12, 2023. It is Apple's first 3 nm SoC. The chip has 2 high-performance processing cores, 4 high-efficiency cores, a 6-core GPU, and a 16-core Neural Engine capable of 35 trillion operations per second. The GPU was described as their biggest redesign in the history of Apple GPUs, adding hardware accelerated ray tracing and mesh shading support. It is also used in the iPad Mini, with a 5-core GPU.
+
+
+=== Apple A18 and Apple A18 Pro ===
+
+The Apple A18 and Apple A18 Pro are 64-bit ARM-based SoCs designed by Apple that first appeared in the iPhone 16 and iPhone 16 Pro respectively, unveiled on September 9, 2024. Both SoCs are built on TSMC's N3E process and have 2 high-performance cores and 4 high-efficiency cores. The A18 has 5-core graphics (4-core for iPhone 16e), while the A18 Pro has 6-core graphics. The A18 and A18 Pro use LPDDR5X for 17% higher memory bandwidth, and the 16-core Neural Engine has the same quoted power as the A17 Pro. The A18 Pro is also used in the MacBook Neo, with a 5-core GPU.
+
+
+=== Apple A19 and Apple A19 Pro ===
+
+The Apple A19 and Apple A19 Pro are 64-bit ARM-based SoCs designed by Apple that first appeared in the iPhone 17, iPhone Air, and iPhone 17 Pro respectively, unveiled on September 9, 2025. Both SoCs are built on TSMC's N3P process and have 2 high-performance cores and 4 high-efficiency cores. The A19 has 5-core graphics (4-core for iPhone 17e), while the A19 Pro has 6-core graphics (5-core for iPhone Air). The A19 and A19 Pro are also used in the Studio Display (2026) and Studio Display XDR.
+
+
+=== Apple A20 Pro ===
+
+The Apple A20 Pro is a 64-bit ARM-based SoC designed by Apple that first appeared in the iPhone 18 Pro and iPhone Duo, unveiled on September 9, 2026. It is Apple's second 2 nm SoC. The chip has 2 super cores, 4 high-efficiency cores, a 7-core GPU, and a dual 16-core Neural Engine.
+
+
+=== Comparison of A-series processors ===
+
+
+== M-series SoCs ==
+
+The M series is a family of system on a chip (SoC) used in Mac computers from November 2020 and later, iPad Pro tablets from April 2021 and later, iPad Air tablets from March 2022 and later, and Apple Vision Pro. The M designation was previously used for Apple motion coprocessors.
+
+
+=== Apple M1 ===
+
+The M1, Apple's first system on a chip designed for use in Macs, is manufactured using TSMC's 5 nm process. Announced on November 10, 2020, it was first used in the MacBook Air, Mac mini and 13-inch MacBook Pro, and later used in the iMac, 5th-generation iPad Pro and 5th-generation iPad Air. It comes with 4 performance cores and 4 efficiency cores, for a total of 8 CPU cores. It comes with up to 8 GPU cores, with the entry level MacBook Air having only 7 GPU cores. The M1 has 16 billion transistors and operates at a clock frequency of up to 3.2 GHz.
+
+
+==== Apple M1 Pro ====
+The M1 Pro is a more powerful version of the M1, with six to eight performance cores, two efficiency cores, 14 to 16 GPU cores, 16 Neural Engine cores, up to 32 GB unified RAM with up to 200 GB/s memory bandwidth, and more than double the transistors. It was announced on October 18, 2021, and is used in the 14- and 16-inch MacBook Pro. Apple claimed the CPU performance is about 70% faster than the M1, and that its GPU performance is about double. Apple claims the M1 Pro can deliver up to 20 streams of 4K or 7 streams of 8K ProRes video playback. Like the M1, the M1 Pro operates at a clock frequency of up to 3.2 GHz.
+
+
+==== Apple M1 Max ====
+The M1 Max is a larger version of the M1 Pro chip, with eight performance cores, two efficiency cores, 24 to 32 GPU cores, 16 Neural Engine cores, up to 64 GB unified RAM with up to 400 GB/s memory bandwidth, and more than double the number of transistors. It was announced on October 18, 2021, and is used in the 14- and 16-inch MacBook Pro, as well as the Mac Studio. Apple claims the M1 Max can deliver up to 30 streams of 4K or 7 streams of 8K ProRes video playback, more than the 2019 Mac Pro with the Afterburner card. Like the M1, the M1 Max operates at a clock frequency of up to 3.2 GHz.
+
+
+==== Apple M1 Ultra ====
+The M1 Ultra consists of two M1 Max dies connected together by a silicon interposer through Apple's UltraFusion interconnect. It has 114 billion transistors, 16 performance cores, 4 efficiency cores, 48 to 64 GPU cores and 32 Neural Engine cores; it can be configured with up to 128 GB unified RAM of 800 GB/s memory bandwidth. It was announced on March 8, 2022, as an optional upgrade for the Mac Studio. Apple claims the M1 Ultra can deliver up to 18 streams of 8K ProRes video playback. Like the M1 Max, the M1 Ultra operates at a clock frequency of up to 3.2 GHz.
+
+
+=== Apple M2 ===
+
+Apple announced the M2 SoC on June 6, 2022, at WWDC, along with a redesigned MacBook Air and a revised 13-inch MacBook Pro. It later appeared in the sixth-generation iPad Pro, Mac mini, iPad Air and Vision Pro. The M2 is made with TSMC's "enhanced 5-nanometer technology" N5P process and contains 20 billion transistors, a 25% increase from the previous generation M1, also operating at a higher clock frequency of up to about 3.5 GHz. The M2 can be configured with up to 24 gigabytes of RAM and 2 terabytes of storage. It has 8 CPU cores (4 performance and 4 efficiency) and up to 10 GPU cores. The M2 also increases the memory bandwidth to 100 GB/s. Apple claims CPU improvements up to 18% and GPU improvements up to 35% compared to the previous M1.
+
+
+==== Apple M2 Pro ====
+The M2 Pro is a more powerful version of the M2, with six to eight performance cores, four efficiency cores, 16 to 19 GPU cores, 16 Neural Engine cores, up to 32 GB unified RAM with up to 200 GB/s memory bandwidth, and double the transistors. It was announced on January 17, 2023, in a press release and is used in the 14- and 16-inch MacBook Pro as well as the Mac Mini. Apple claims the CPU performance is 20 percent faster than the M1 Pro and the GPU is 30 percent faster than the M1 Pro. Like the M2, the M2 Pro operates at a clock frequency of up to about 3.5 GHz.
+
+
+==== Apple M2 Max ====
+The M2 Max is a larger version of the M2 Pro, with eight performance cores, four efficiency cores, 30 to 38 GPU cores, 16 Neural Engine cores, up to 96 GB unified RAM with up to 400 GB/s memory bandwidth, and more than double the transistors. It was announced on January 17, 2023, in a press release and is used in the 14- and 16-inch MacBook Pro, as well as the Mac Studio. Apple claims the CPU performance is 20 percent faster than M1 Max and the GPU is 30 percent faster than the M1 Max. Unlike the M2 and the M2 Pro, the M2 Max operates at a clock frequency of up to about 3.6 GHz.
+
+
+==== Apple M2 Ultra ====
+The M2 Ultra consists of two M2 Max dies connected together by a silicon interposer through Apple's UltraFusion interconnect. It has 134 billion transistors, 16 performance cores, 8 efficiency cores, 60 to 76 GPU cores and 32 Neural Engine cores; it can be configured with up to 192 GB unified RAM of 800 GB/s memory bandwidth. It was announced on June 5, 2023, as an optional upgrade for the Mac Studio and the sole processor for the Mac Pro. Apple claims the M2 Ultra can deliver up to 22 streams of 8K ProRes video playback. Like the M2 Max, the M2 Ultra operates at a clock frequency of up to about 3.6 GHz.
+
+
+=== Apple M3 ===
+
+Apple announced the M3 series on October 30, 2023, along with the new 14-inch MacBook Pro and iMac; the M3 was later used in the MacBook Air and the iPad Air. The M3 is based on the 3 nm process and contains 25 billion transistors, a 25% increase from the previous M2 generation, and operates at a clock frequency of up to 4.1 GHz. It has 8 CPU cores (4 performance cores and 4 efficiency cores) and up to 10 GPU cores. Apple claims CPU improvements up to 35% and GPU improvements up to 65% compared to the M1 series. The M3 series introduced hardware-accelerated ray tracing and mesh shading for the first time in a Mac.
+
+
+==== Apple M3 Pro ====
+The M3 Pro is a more powerful version of the M3, with five or six performance cores, six efficiency cores, 14 to 18 GPU cores, 16 Neural Engine cores, up to 36 GB unified RAM with 150 GB/s memory bandwidth, and 48% more transistors. It is used in the 14- and 16-inch MacBook Pro and operates at a clock frequency of up to about 4.1 GHz. Apple claims the CPU performance is 30 percent faster than the M1 Pro and the GPU is 40 percent faster than the M1 Pro.
+
+
+==== Apple M3 Max ====
+The M3 Max is a larger version of the M3 Pro, with ten or twelve performance cores, four efficiency cores, 30 to 40 GPU cores, 16 Neural Engine cores, up to 128 GB unified RAM with up to 400 GB/s memory bandwidth, and more than double the transistors. It is used in the 14- and 16-inch MacBook Pro. Apple claims the CPU performance is 80 percent faster than the M1 Max and the GPU is 50 percent faster than the M1 Max. Like the M3 and the M3 Pro, the M3 Max operates at a clock frequency of up to about 4.1 GHz.
+
+
+==== Apple M3 Ultra ====
+The M3 Ultra consists of two M3 Max dies connected together by a silicon interposer through Apple's UltraFusion interconnect. It has 184 billion transistors, 20 or 24 performance cores, 8 efficiency cores, 60 to 80 GPU cores and 32 Neural Engine cores; it can be configured with up to 512 GB unified RAM of 800 GB/s memory bandwidth. It was announced on March 5, 2025, as an optional upgrade for the Mac Studio, and operates at a clock frequency of up to about 4.0 GHz unlike the M3 Max. Apple claims the M3 Ultra can deliver up to 24 streams of 8K ProRes video playback.
+
+
+=== Apple M4 ===
+
+Apple announced the M4 chip on May 7, 2024, along with the new iPad Pro; it was later used for the iMac, Mac mini, 14-inch MacBook Pro, MacBook Air and iPad Air. The M4 is based on TSMC's 3nm technology using the N3E process node. It has up to 10 CPU cores (3 or 4 performance and 4 to 6 efficiency) and up to 10 GPU cores. Apple claims the M4 has up to 1.5x faster CPU performance compared to the M2. The M4 operates at a clock frequency of 4.4 GHz.
+The M4 is the first Apple silicon chip to use the ARMv9.2-A instruction set without SVE2.
+
+
+==== Apple M4 Pro ====
+The M4 Pro is a more powerful version of the M4, with eight or ten performance cores, four efficiency cores, 16 to 20 GPU cores, 16 Neural Engine cores, and up to 64 GB unified RAM with 273 GB/s memory bandwidth. It is used in the 14- and 16-inch MacBook Pro as well as the Mac Mini. Apple claims the CPU performance is 1.9x faster than the M1 Pro and the GPU is 2x faster than the M1 Pro. The M4 Pro operates at a clock frequency of 4.5 GHz.
+
+
+==== Apple M4 Max ====
+The M4 Max is a larger version of the M4 Pro, with ten or twelve performance cores, four efficiency cores, 32 to 40 GPU cores, 16 Neural Engine cores, and up to 128 GB unified RAM with up to 546 GB/s memory bandwidth. It is used in the 14- and 16-inch MacBook Pro as well as the Mac Studio. Apple claims the CPU performance is 2.2x faster than the M1 Max and the GPU is 1.9x faster than the M1 Max. The M4 Max operates at a clock frequency of 4.5 GHz.
+
+
+=== Apple M5 ===
+
+Apple announced the M5 chip on October 15, 2025, along with the new iPad Pro, 14-inch MacBook Pro and Vision Pro; it was later used for the MacBook Air. The M5 is based on TSMC's 3nm technology using the N3P process node, over the M4's N3E process node. It has up to 4 super cores, 6 efficiency cores, and up to 10 GPU cores. The Apple M5 has a clock frequency of 4.61 GHz on the 14-inch MacBook Pro, and 4.4 GHz on the iPad Pro.
+
+
+==== Apple M5 Pro ====
+The M5 Pro is a more powerful version of the M5. It has up to 6 super cores, up to 12 performance cores, up to 20 GPU cores, and 16 Neural Engine cores. The M5 Pro supports up to 64 GB unified RAM with 307 GB/s memory bandwidth. It is used in the 14- and 16-inch MacBook Pro, as well as the Mac Mini. Apple claims the CPU performance is 2.5x faster than the M1 Pro and the GPU is 2.2x faster than the M1 Pro. The M5 Pro operates at a clock frequency of about 4.61 GHz.
+
+
+==== Apple M5 Max ====
+The M5 Max is a larger version of the M5 Pro, with 6 super cores, 12 performance cores, up to 40 GPU cores, and 16 Neural Engine cores. The M5 Max supports up to 128 GB unified RAM with up to 614 GB/s memory bandwidth. It is used in the 14- and 16-inch MacBook Pro, as well as the Mac Studio. Apple claims the CPU performance is 2.5x faster than the M1 Max and the GPU is 2.2x faster than the M1 Max. The M5 Max operates at a clock frequency of about 4.61 GHz, matching the M5 Pro.
+
+
+==== Apple M5 Ultra ====
+The M5 Ultra consists of two M5 Max dies connected together by a silicon interposer through Apple's UltraFusion interconnect. It has 10 or 12 super cores, 20 or 24 performance cores, 64 to 80 GPU cores and 32 Neural Engine cores; it can be configured with up to 512 GB unified RAM of 1.2 TB/s memory bandwidth. It was announced on August 25, 2026, as an optional upgrade for the Mac Studio.
+
+
+=== Apple M6 ===
+
+Apple announced the M6 chip on August 25, 2026, along with the new Mac Mini. The M6 is based on TSMC's 2nm technology using the N2 process node. It has 2 super cores, 4 performance cores, 6 efficiency cores, and 12 GPU cores.
+
+
+=== Comparison of M-series processors ===
+
+
+== R-series SoCs ==
+The R series is a family of low-latency system on a chip (SoC) for real-time processing of sensor inputs.
+
+
+=== Apple R1 ===
+The Apple R1 was announced by Apple on June 5, 2023, at its Worldwide Developers Conference. It is used in the Apple Vision Pro headset. The R1 chip is dedicated to real-time processing of sensor inputs and delivers extremely low-latency images to the display.
+
+
+== S-series SiPs ==
+
+The S series is a family of systems in a package (SiP) used in the Apple Watch and HomePod. It uses a customized application processor that together with memory, storage and support processors for wireless connectivity, sensors, and I/O form a complete computer in a single package.
+
+
+=== Apple S1 ===
+
+The Apple S1 is an integrated computer. It includes memory, storage and support circuits like wireless modems and I/O controllers in a sealed integrated package. It was announced on September 9, 2014, as part of the "Wish we could say more" event. It was used in the first-generation Apple Watch.
+
+
+==== Apple S1P ====
+Used in Apple Watch Series 1. It has a dual-core processor identical to the S2, with the exception of the built-in GPS receiver. It contains the same dual-core CPU with the same new GPU capabilities as the S2, making it about 50% faster than the S1.
+
+
+=== Apple S2 ===
+
+Used in the Apple Watch Series 2. It has a dual-core processor and a built-in GPS receiver. The S2's two cores deliver 50% higher performance and the GPU delivers twice as much as the predecessor, and is similar in performance to the Apple S1P.
+
+
+=== Apple S3 ===
+Used in the Apple Watch Series 3. It has a dual-core processor that is 70% faster than the Apple S2 and a built-in GPS receiver. There is also an option for a cellular modem and an internal eSIM module. It also includes the W2 chip. The S3 also contains a barometric altimeter, the W2 wireless connectivity processor, and in some models UMTS (3G) and LTE (4G) cellular modems served by a built-in eSIM.
+
+
+=== Apple S4 ===
+Used in the Apple Watch Series 4. It introduced 64-bit ARMv8 cores to the Apple Watch through two Tempest cores, which are also found in the A12 as energy-efficient cores. Despite its small size, Tempest uses a 3-wide decode out-of-order superscalar design, which makes it much more powerful than preceding in-order cores.
+The S4 contains a Neural Engine that is able to run Core ML. Third-party apps can use it starting from watchOS 6. The SiP also includes new accelerometer and gyroscope functionality that has twice the dynamic range in measurable values of its predecessor, as well as being able to sample data at 8 times the speed. It contains the W3 wireless chip, which supports Bluetooth 5. It also contains a new custom GPU, which can use the Metal API.
+
+
+=== Apple S5 ===
+Used in the Apple Watch Series 5, SE, and HomePod Mini. It adds a built-in magnetometer to the custom 64-bit dual-core processor and GPU of the S4.
+
+
+=== Apple S6 ===
+Used in the Apple Watch Series 6. It has a custom 64-bit dual-core processor that runs up to 20 percent faster than the S5. The dual-cores in the S6 are based on the A13 Bionic's energy-efficient "little" Thunder cores at 1.8 GHz. Like the S4 and S5, it also contains the W3 wireless chip. The S6 adds the new U1 ultrawide band chip, an always-on altimeter, and 5 GHz WiFi.
+
+
+=== Apple S7 ===
+Used in the Apple Watch Series 7 and second-generation HomePod. The S7 CPU has the same T8301 identifier and quoted performance as the S6. It is the second time utilizing the energy-efficient "little" Thunder cores of the A13 Bionic.
+
+
+=== Apple S8 ===
+Used in the Apple Watch SE (2nd generation), Series 8, and Ultra. The S8 CPU has the same T8301 identifier and quoted performance as the S6 and S7. It is the final CPU to utilize the energy-efficient "little" Thunder cores of the A13 Bionic.
+
+
+=== Apple S9 ===
+Used in the Apple Watch Series 9 and Ultra 2. The S9 CPU has a new dual-core CPU with 60 percent more transistors than the S8, a new four-core Neural Engine and the new U2 ultra-wide band chip. The dual-cores in the S9 are based on the A16 Bionic's energy efficient "little" Sawtooth cores.
+
+
+=== Apple S10 ===
+Used in the Apple Watch Series 10, Series 11, SE 3, Ultra 3, and HomePod Mini 2. It is the final CPU to utilize the energy-efficient "little" Sawtooth cores of the A16 Bionic.
+
+
+=== Apple S11 ===
+Used in the Apple Watch Series 12 and Ultra 4. The S11 is derived from the A20 Pro. It adds an always-on processor which includes a Secure Exclave enabling Audio Intelligence features.
+
+
+=== Comparison of S-series processors ===
+
+
+== T-series SoCs ==
+The T series "transition" chips perform various functions on Intel-based MacBook and iMac computers released from 2016 onwards. The chip processes and encrypts biometric information (Touch ID) and acts as a gatekeeper to the microphone and FaceTime HD camera, protecting them from hacking. The chip runs bridgeOS, a purported variant of watchOS. The functions of the T-series processor were built into the M-series CPUs, thus ending the need for the T series.
+
+
+=== Apple T1 ===
+The Apple T1 chip is an ARMv7 SoC (derived from the processor in the Apple Watch's S2) that drives the System Management Controller (SMC) and Touch ID sensor of the 2016 and 2017 MacBook Pro with Touch Bar.
+
+
+=== Apple T2 ===
+
+The Apple T2 security chip is a SoC first released in the iMac Pro. It includes a 64-bit ARMv8 processor (a variant of the processor in the A10 Fusion, or T8010) and a separate Secure Enclave Processor. It provides a secure enclave for encrypted keys using the Secure Enclave Processor, enables users to lock down the computer's boot process, handles system functions like the camera and audio control, and handles on-the-fly encryption and decryption for the solid-state drive. T2 also delivers "enhanced imaging processing" for the iMac Pro's FaceTime HD camera.
+
+
+=== Comparison of T-series processors ===
+
+
+== C-series cellular modems ==
+The C series is a family of cellular modem chips.
+
+
+=== Apple C1 ===
+The Apple C1 is a cellular modem chip introduced in the iPhone 16e. It is built on the N4 process node by TSMC. It supports UMTS/HSPA+, Gigabit LTE, and 5G (sub-6 GHz), but lacks DC-HSDPA and mmWave, which are supported by other iPhone 16 models. Apple claims that the C1 is more power efficient than previous iPhone modems and consumes 20–25% less power than the Qualcomm modems used in other iPhone 16 models.
+
+
+==== Apple C1X ====
+The Apple C1X is a variant of the C1, offering up to twice the speed. It first appeared in the iPhone Air, and is also used in the M5-based iPad Pro, iPhone 17e, and the M4-based iPad Air.
+
+
+=== Apple C2 ===
+The Apple C2 is the second-generation cellular modem developed by Apple. It was introduced in the iPhone 18 Pro, iPhone 18 Pro Max (non-US models), and iPhone Duo in September 2026. The US model iPhone 18 Pro Max still uses a Qualcomm modem. It supports 5G FR1 and FR2 and Gigabit LTE. Apple claims that the C2 provides faster uploads than the C1X while using 15% less energy.
+
+
+=== Comparison of C-series cellular modems ===
+
+
+== U-series SiPs (Ultra-wideband) ==
+The U series is a family of systems in a package (SiP) implementing ultra-wideband (UWB) radio.
+
+
+=== Apple U1 ===
+The Apple U1 is used in the iPhone 11/11 Pro series through the iPhone 14/14 Pro series (excluding the second and third generation iPhone SE), Apple Watch Series 6 through Series 8, Apple Watch Ultra (1st generation), HomePod (2nd generation), HomePod Mini, AirTag (first generation), and the charging case for AirPods Pro (2nd generation).
+
+
+=== Apple U2 ===
+The Apple U2 (also referred to by Apple as its "Second-generation Ultra Wideband chip") is used in the iPhone 15/15 Pro series and newer (excluding iPhone 16e and iPhone 17e), iPhone Air, Apple Watch Series 9 and newer, Apple Watch Ultra 2 and newer, the charging case for AirPods Pro (3rd generation) and the AirTag (second generation).
+
+
+=== Comparison of U-series processors ===
+
+
+== W- and N-series SoCs (Wireless connectivity) ==
+The W, starting with the W2, and N series are a family of RF SoCs used for wireless connectivity (Bluetooth, Wi-Fi and Thread (N series only)).
+
+
+=== Apple W2 ===
+The Apple W2, used in the Apple Watch Series 3, is integrated into the Apple S3 SiP. Apple claimed the chip makes Wi-Fi 85% faster and allows Bluetooth and Wi-Fi to use half the power of the W1 implementation.
+
+
+=== Apple W3 ===
+The Apple W3 is used in the Apple Watch Series 4 and newer, SE (1st generation) and newer, and Ultra (1st generation) and newer. It is integrated into the Apple S4 through S10 SiPs. It supports Bluetooth 5.0/5.3.
+
+
+=== Apple N1 ===
+The Apple N1 (codename Proxima) is used in the iPhone 17, iPhone 17 Pro, iPhone Air, iPad Pro (M5), iPad Air (M4), M5 MacBook Air, M5 Pro and M5 Max MacBook Pro, M5 Max and M5 Ultra Mac Studio, and M6 and M5 Pro Mac Mini. It incorporates Wi-Fi 7, Bluetooth 6, and Thread into one chip. Apple claims the chip will help boost the performance and reliability of features like AirDrop and Personal Hotspot.
+
+
+=== Comparison of W-series processors ===
+
+
+== W1 and H-series SoCs (Bluetooth/audio processing) ==
+The W1 and the H series are a family of SoCs with Bluetooth wireless connectivity and low-power audio processing for use in headphones and speakers.
+
+
+=== Apple W1 ===
+The Apple W1 is a SoC used in the 2016 AirPods and select Beats headphones. It maintains a Bluetooth Class 1 connection with a computer device and decodes the audio stream that is sent to it. Its die size is 14.3 mm2.
+
+
+=== Apple H1 ===
+The Apple H1 chip was used in the second and third generation AirPods, first generation AirPods Pro and first generation AirPods Max. It was also used in the Powerbeats Pro, the Beats Solo Pro, Beats Fit Pro and the 2020 Powerbeats. Specifically designed for headphones, it has Bluetooth 5.0, supports hands-free "Hey Siri" commands, and offers 30 percent lower latency than the W1 chip used in earlier AirPods.
+
+
+=== Apple H2 ===
+The Apple H2 chip is used in AirPods 4, AirPods 5, AirPods Pro 2, AirPods Pro 3, AirPods Max 2, and Apple Vision Pro. It was also used in the Powerbeats Pro 2. It has Bluetooth 5.3, and implements 48 kHz noise reduction in hardware. The 2022 version of the H2 operates only on the 2.4 GHz frequency, while the 2023 version adds support for audio transmission using a proprietary protocol in two specific frequency ranges of the 5 GHz band.
+
+
+=== Comparison of Bluetooth audio processors ===
+
+
+== M-series motion coprocessors ==
+
+The M series of motion coprocessors are used by Apple Inc. in their mobile devices. First released in 2013, their function is to collect sensor data from integrated accelerometers, gyroscopes, and compasses. They offload collecting and processing sensor data from the main central processing unit (CPU).
+Only the M7 and M8 motion coprocessors were housed on separate chips produced by NXP Semiconductors, while the M9, M10, and M11 were embedded in their corresponding A-series chips. Beginning with the A12 Bionic chip in 2018, the motion coprocessors were fully integrated into the SoC. Apple eventually reused the M codename for their desktop SoCs.
+
+
+=== Comparison of M-series motion coprocessors ===
+
+
+== Miscellaneous devices ==
+This segment is about Apple-designed processors that are not easily sorted into another section.
+
+
+=== Early series ===
+
+Apple first used Samsung-developed SoCs in early versions of the iPhone and iPod Touch. They combine in one package a single ARM-based processing core (CPU), a graphics processing unit (GPU), and other electronics necessary for mobile computing.
+The APL0098 (also 8900B or S5L8900) is a package on package (PoP) system on a chip (SoC) that was introduced on June 29, 2007, at the launch of the original iPhone. It includes a 412 MHz single-core ARM11 CPU and a PowerVR MBX Lite GPU. It was manufactured by Samsung on a 90 nm process. The iPhone 3G and the first-generation iPod Touch also use it.
+The APL0278 (also S5L8720) is a PoP SoC introduced on September 9, 2008, at the launch of the second-generation iPod Touch. It includes a 533 MHz single-core ARM11 CPU and a PowerVR MBX Lite GPU. It was manufactured by Samsung on a 65 nm process.
+The APL0298 (also S5L8920) is a PoP SoC introduced on June 8, 2009, at the launch of the iPhone 3GS. It includes a 600 MHz single-core Cortex-A8 CPU and a PowerVR SGX535 GPU. It was manufactured by Samsung on a 65 nm process.
+The APL2298 (also S5L8922) is a 45 nm die shrunk version of the iPhone 3GS SoC and was introduced on September 9, 2009, at the launch of the third-generation iPod Touch.
+
+
+=== Other ===
+The Samsung S5L8747 is an ARM-based microcontroller used in Apple's Lightning Digital AV Adapter, a Lightning-to-HDMI adapter. This is a miniature computer with 256 MB RAM, running an XNU kernel loaded from the connected iPhone, iPod Touch, or iPad, then taking a serial signal from the iOS device translating that into a proper HDMI signal.
+
+APL1097 (or ACE3), is a USB controller with support for USB Power Delivery and vendor-defined messages, designed by Apple, made by Texas Instruments. It is used in iPhone 15, 16 and 17 series. Successor to ACE2 (CD3217B12 or CD3217B13).
+
+
+== Non-Apple operating systems ==
+
+Asahi Linux, which is a project that ports the Linux kernel onto Apple silicon-powered Macs.
+iDroid, which was a project that ports Android onto early Samsung-developed SoCs, with unfinished work on the A4 SoC.
+Project Sandcastle, which is a project that ports Android for A10 Fusion SoC on iPhone 7 and 7 Plus.
+
+
+== Hypervisors ==
+Parallels Desktop for Mac and VMware Fusion are hypervisors that run on macOS and that can run macOS and other operating systems, such as Windows and Linux, on virtual machines.
+
+
+== See also ==
+List of iPhone models
+List of iPad models
+List of Mac models grouped by CPU type
+List of Samsung platforms (SoCs):
+Exynos (none have been used by Apple)
+historical (some were used in Apple products)
+PowerVR SGX GPUs were also used in the iPhone 3GS and the third-generation iPod Touch
+PWRficient, a processor designed by P.A. Semi, a company Apple acquired to form an in-house custom chip design department
+
+
+=== Similar platforms ===
+A31 by AllWinner
+Atom by Intel
+BCM2xxxx by Broadcom
+eMAG and Altra by Ampere Computing
+Exynos by Samsung
+i.MX by Freescale Semiconductor
+Jaguar and Puma by AMD
+Kirin by HiSilicon
+MTxxxx by MediaTek
+NovaThor by ST-Ericsson
+OMAP by Texas Instruments
+RK3xxx by Rockchip
+Snapdragon by Qualcomm
+Tegra by Nvidia
+XRING by Xiaomi
+
+
+== Notes ==
+
+
+== References ==
+
+
+== Further reading ==
+Gurman, Mark (January 29, 2018). "How Apple Built a Chip Powerhouse to Threaten Qualcomm and Intel". Bloomberg Businessweek.
+== Large language model ==
+A large language model (LLM) is a machine learning model (typically a neural network) trained on a vast amount of text for natural language processing tasks, especially language generation. LLMs can typically generate, summarize, translate, and analyze text in many contexts. They are the basis for many modern chatbots, such as ChatGPT, Claude, Gemini, Grok, Qwen and DeepSeek.
+LLMs are typically based on the transformer neural network architecture. Generative pre-trained transformers (GPTs) are a type of LLM that is pre-trained to predict the next word. GPTs are then often fine-tuned to follow instructions and to behave as assistants.
+Biased or inaccurate training data can make an LLM's output less reliable. A software harness can provide LLMs with memory and access to tools such as web search. Benchmark evaluations for LLMs attempt to measure model reasoning, factual accuracy, alignment, and safety.
+
+
+== History ==
+
+Before the emergence of transformer-based models in 2017, some language models were considered large relative to the computational and data constraints of their time. In the early 1990s, IBM's statistical models pioneered word alignment techniques for machine translation, laying the groundwork for corpus-based language modeling. In 2001, a smoothed n-gram model, such as those employing Kneser–Ney smoothing, trained on 300 million words, achieved state-of-the-art perplexity on benchmark tests. During the 2000s, with the rise of widespread internet access, researchers began compiling massive text datasets from the web ("web as corpus") to train statistical language models.
+
+Moving beyond n-gram models, researchers started in 2000 to use neural networks as language models. Following the breakthrough of deep neural networks in image classification around 2012, similar architectures were adapted for language tasks. This shift was marked by the development of word embeddings (e.g., Word2Vec by Mikolov in 2013) and sequence-to-sequence (seq2seq) models using LSTM. In 2016, Google transitioned its translation service to neural machine translation (NMT), replacing statistical phrase-based models with deep recurrent neural networks. These early NMT systems used LSTM-based encoder-decoder architectures, as they preceded the invention of transformers. 
+At the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper "Attention Is All You Need". This paper's goal was to improve upon 2014 seq2seq technology, and was based mainly on the attention mechanism developed by Bahdanau et al. in 2014. The following year in 2018, BERT was introduced and quickly became "ubiquitous". Though the original transformer has both encoder and decoder blocks, BERT is an encoder-only model. Academic and research usage of BERT began to decline in 2023, following rapid improvements in the abilities of decoder-only models (such as GPT) to solve tasks via prompting.
+Although decoder-only GPT-1 was introduced in 2018, it was GPT-2 in 2019 that caught widespread attention because OpenAI claimed to have initially deemed it too powerful to release publicly, out of fear of malicious use. GPT-3 in 2020 went a step further and as of 2025 is available only via API with no offering of downloading the model to execute locally. But it was the consumer-facing chatbot ChatGPT in late 2022 that received extensive media coverage and public attention by 2023. The 2023 GPT-4 was praised for its increased accuracy and as a "holy grail" for its multimodal capabilities. OpenAI did not reveal the high-level architecture and the number of parameters of GPT-4. The release of ChatGPT led to an uptick in LLM usage across several research subfields of computer science, including robotics, software engineering, and societal impact work. In 2024, OpenAI released the reasoning model OpenAI o1, which generates long chains of thought before returning a final answer. Many LLMs with parameter counts comparable to those of OpenAI's GPT series have been developed.
+Since 2022, open-source models (those with their source code and weights made publicly available) have been gaining popularity, especially at first with BLOOM and LLaMA, though both have restrictions on the field of use. Mistral AI's open-weight models Mistral 7B and Mixtral 8x7B have a more permissive Apache License. In January 2025, DeepSeek released DeepSeek R1, a 671-billion-parameter open-weight model that performs comparably to OpenAI o1 but at a much lower price per token for users.
+Since 2023, many LLMs have been trained to be multimodal, having the ability to also process or generate other types of data, such as images, audio, or 3D meshes.
+Open-weight LLMs have become more influential since 2023. Per Vake et al. (2025), community-driven contributions to open-weight models improve their efficiency and performance via collaborative platforms such as Hugging Face.
+
+
+== Dataset preprocessing ==
+
+
+=== Tokenization ===
+As machine learning algorithms process numbers rather than text, the text must be converted to numbers. In the first step, a vocabulary is decided upon, then integer indices are arbitrarily but uniquely assigned to each vocabulary entry, and finally, an embedding is associated with the integer index. Algorithms include byte-pair encoding (BPE) and WordPiece. There are also special tokens serving as control characters, such as [MASK] for masked-out token (as used in BERT), and [UNK] ("unknown") for characters not appearing in the vocabulary. Also, some special symbols are used to denote special text formatting. For example, "Ġ" denotes a preceding whitespace in RoBERTa and GPT and "##" denotes continuation of a preceding word in BERT.
+For example, the BPE tokenizer used by the legacy version of GPT-3 would split tokenizer: texts -> series of numerical "tokens" as
+
+Tokenization also compresses the datasets. Because LLMs generally require input to be an array that is not jagged, the shorter texts must be "padded" until they match the length of the longest one.
+
+
+==== Byte-pair encoding ====
+
+As an example, consider a tokenizer based on byte-pair encoding. In the first step, all unique characters (including blanks and punctuation marks) are treated as an initial set of n-grams (i.e. initial set of uni-grams). Successively the most frequent pair of adjacent characters is merged into a bi-gram and all instances of the pair are replaced by it. All occurrences of adjacent pairs of (previously merged) n-grams that most frequently occur together are then again merged into even lengthier n-gram, until a vocabulary of prescribed size is obtained. After a tokenizer is trained, any text can be tokenized by it, as long as it does not contain characters not appearing in the initial-set of uni-grams.
+
+
+=== Dataset cleaning ===
+
+In the context of training LLMs, datasets are typically cleaned by removing low-quality, duplicated, or toxic data. Cleaned datasets can increase training efficiency and lead to improved downstream performance. A trained LLM can be used to clean datasets for training a further LLM.
+With the increasing proportion of LLM-generated content on the web, data cleaning in the future may include filtering out such content. LLM-generated content can pose a problem if the content is similar to human text (making filtering difficult) but of lower quality (degrading performance of models trained on it).
+
+
+=== Synthetic data ===
+
+Training of largest language models might need more linguistic data than naturally available, or that the naturally occurring data is of insufficient quality. In these cases, synthetic data might be used.
+
+
+== Training ==
+
+An LLM is a type of foundation model trained on language. LLMs can be trained in different ways. In particular, GPT models are first pretrained to predict the next word on a large amount of data, before being fine-tuned.
+
+
+=== Cost ===
+
+Substantial infrastructure is necessary for training the largest models. The tendency towards larger models is visible in the list of large language models. For example, the training of GPT-2 (i.e. a 1.5-billion-parameter model) in 2019 cost $50,000, while training of the PaLM (i.e. a 540-billion-parameter model) in 2022 cost $8 million, and Megatron-Turing NLG 530B (in 2021) cost around $11 million. The qualifier "large" in "large language model" is inherently vague, as there is no definitive threshold for the number of parameters required to qualify as "large".
+
+
+=== Fine-tuning ===
+Before being fine-tuned, most LLMs are next-token predictors. The fine-tuning shapes the LLM's behavior via techniques like reinforcement learning from human feedback (RLHF) or constitutional AI.
+Instruction fine-tuning is a form of supervised learning used to teach LLMs to follow user instructions. In 2022, OpenAI demonstrated InstructGPT, a version of GPT-3 similarly fine-tuned to follow instructions.
+RLHF involves training a reward model to predict which text humans prefer. Then, the LLM can be fine-tuned through reinforcement learning to better satisfy this reward model.
+
+
+== Inference ==
+
+Inference is the process of providing input to a trained large language model and receiving generated output, such as text, images, code, or other files.
+Hosted inference runs a language model on remote AI data centers and makes the output available to users over the Internet.
+Some open-weight language models can be downloaded and run locally on a personal computer. The model files are stored on local storage, while during inference the model weights and other data are held in memory for processing.
+
+
+== Architecture ==
+LLMs are generally based on the transformer architecture, which leverages an attention mechanism that enables the model to process relationships between all elements in a sequence simultaneously, regardless of their distance from each other. Peng et al. (2023) proposed RWKV, a recurrent neural network-based alternative.
+
+
+=== Attention mechanism and context window ===
+
+In order to find out which tokens are relevant to each other within the scope of the context window, the attention mechanism calculates "soft" weights for each token, more precisely for its embedding, by using multiple attention heads, each with its own "relevance" for calculating its own soft weights. For example, the small (i.e. 117M parameter sized) GPT-2 model has had twelve attention heads and a context window of only 1k tokens.
+Autoregressive models, such as GPTs, are trained to guess how a sequence continues; for example, whether the word sequence "I like to eat" is more likely to be followed by the word "bread" or the word "rocks". Masked models, such as BERT, are trained to guess parts that are missing from a sequence, such as whether the missing word in "I like to ___ roses" is more likely to be the word "smell" or the word "eat". The model's predictions are based on the properties of sequences within its training dataset.
+
+
+=== Mixture of experts ===
+
+A mixture of experts (MoE) is a machine learning architecture in which multiple specialized neural networks ("experts") work together, with a gating mechanism that routes each input to the most appropriate expert(s). Mixtures of experts can reduce inference costs, as only a fraction of the parameters are used for each input.
+
+
+=== Parameter size ===
+
+Typically, LLMs are trained with single or half-precision floating point numbers (float32 and float16). One float16 has 16 bits, or 2 bytes, and so one billion parameters require 2 gigabytes. The largest models typically have more than 100 billion parameters, which places them outside the range of most consumer electronics.
+In 2021, Google Brain released Switch Transformer, one of the first natural language processing (NLP) models to cross one trillion parameters. As of July 2026, the largest open weight frontier model is Kimi K3, developed by Moonshot AI, at 2.8 trillion parameters. According to industry estimates reported by the Financial Times, Anthropic's Claude Mythos, its most powerful model, restricted from public access, has approximately 8 trillion parameters, while its public 'Mythos-class' model Fable 5 has approximately 5 trillion parameters.
+
+
+==== Quantization ====
+Post-training quantization aims to decrease the space requirement by lowering precision of the parameters of a trained model, while preserving most of its performance. Quantization can be further classified as static quantization if the quantization parameters are determined beforehand (typically during a calibration phase), and dynamic quantization if the quantization is applied during inference. The simplest form of quantization simply truncates all the parameters to a given number of bits: this is applicable to static as well as dynamic quantization, but loses much precision. Dynamic quantization allows for the use of a different quantization codebook per layer, either a lookup table of values or a linear mapping (scaling factor and bias), at the cost of foregoing the possible speed improvements from using lower-precision arithmetic.
+It is possible to fine-tune quantized models using low-rank adaptation.
+
+
+== Extensibility ==
+Beyond basic text generation, various techniques have been developed to extend LLM capabilities, including the use of external tools and data sources, improved reasoning on complex problems, and enhanced instruction-following or autonomy through prompting methods.
+
+
+=== Prompt engineering ===
+
+In 2020, OpenAI researchers demonstrated that their new model GPT-3 could understand what format to use given a few rounds of Q and A (or other type of task) in the input data as example. This technique, called few-shot prompting, allows LLMs to be adapted to any task without requiring fine-tuning. Also in 2022, it was found that the base GPT-3 model can generate an instruction based on user input. The generated instruction along with user input is then used as input to another instance of the model under a "Instruction: [...], Input: [...], Output:" format. The other instance is able to complete the output and often produces the correct answer in doing so. The ability to "self-instruct" makes LLMs able to bootstrap themselves toward a correct answer.
+
+
+=== Dialogue processing (chatbot) ===
+An LLM can be turned into a chatbot by specializing it for conversation. User input is prefixed with a marker such as "Q:" or "User:" and the LLM is asked to predict the output after a fixed "A:" or "Assistant:". This type of model became commercially available in 2022 with ChatGPT, a sibling model of InstructGPT fine-tuned to accept and produce dialog-formatted text based on GPT-3.5. It could similarly follow user instructions. Before the stream of User and Assistant lines, a chat context usually starts with a few lines of overarching instructions, from a role called "developer" or "system" to convey a higher authority than the user's input. This is called a "system prompt".
+
+
+=== Retrieval-augmented generation ===
+Retrieval-augmented generation (RAG) is an approach that integrates LLMs with document retrieval systems. Given a query, a document retriever is called to retrieve the most relevant documents. This is usually done by encoding the query and the documents into vectors, then finding the documents with vectors (usually stored in a vector database) most similar to the vector of the query. The LLM then generates an output based on both the query and context included from the retrieved documents.
+
+
+=== Tool use ===
+
+Tool use is a mechanism that enables LLMs to interact with external systems, applications, or data sources. It can allow LLMs to, for example, fetch real-time information from an API or to execute code. A program separate from the LLM watches the output stream of the LLM for a special tool-calling syntax. When these special tokens appear, the program calls the tool accordingly and feeds its output back into the LLM's input stream.
+Early tool-using LLMs were fine-tuned on the use of specific tools. But fine-tuning LLMs for the ability to read API documentation and call APIs correctly has greatly expanded the range of tools accessible to an LLM.
+
+
+=== Agency ===
+
+An LLM is typically not an autonomous agent by itself, as it lacks the ability to interact with dynamic environments, recall past behaviors, and plan future actions. But it can be transformed into an agent by adding supporting elements: the role (profile) and the surrounding environment of an agent can be additional inputs to the LLM, while memory can be integrated as a tool or provided as additional input. Instructions and input patterns are used to make the LLM plan actions and tool use is used to potentially carry out these actions.
+In the DEPS ("describe, explain, plan and select") method, an LLM is first connected to the visual world via image descriptions. It is then prompted to produce plans for complex tasks and behaviors based on its pretrained knowledge and the environmental feedback it receives.
+The Reflexion method constructs an agent that learns over multiple episodes. At the end of each episode, the LLM is given the record of the episode, and prompted to think up "lessons learned", which would help it perform better at a subsequent episode. These "lessons learned" are stored as a form of long-term memory and given to the agent in the subsequent episodes.
+Monte Carlo tree search can use an LLM as rollout heuristic. When a programmatic world model is not available, an LLM can also be prompted with a description of the environment to act as world model.
+Multiple agents with memory can interact socially.
+
+
+==== Chaining ====
+Prompt chaining was introduced in 2022. In this method, a user manually breaks a complex problem down into several steps. In each step, the LLM receives as input a prompt telling it what to do and some results from preceding steps. The result from one step is then reused in a next step, until a final answer is reached. The ability of an LLM to follow instructions means that even non-experts can write a successful collection of stepwise prompts given a few rounds of trial and error.
+A 2022 paper demonstrated a separate technique called chain-of-thought prompting, which makes the LLM break the question down autonomously. An LLM is given some examples where the "assistant" verbally breaks down the thought process before arriving at an answer. The LLM mimics these examples and also tries to spend some time generating intermediate steps before providing the final answer. This additional step elicited by prompting improves the correctness of the LLM on relatively complex questions. On math word questions, a prompted model can exceed even fine-tuned GPT-3 with a verifier. Chain-of-thought can also be elicited by simply adding an instruction like "Let's think step by step" to the prompt, in order to encourage the LLM to proceed methodically instead of trying to directly guess the answer.
+
+
+==== Model-native reasoning ====
+
+In late 2024, a new approach to LLM development emerged with "reasoning models". These are trained to generate step-by-step analysis before producing final answers, enabling better results on complex tasks, for instance in mathematics, coding and logic. OpenAI introduced this concept with their o1 model in September 2024, followed by o3 in April 2025. On the International Mathematics Olympiad qualifying exam problems, GPT-4o achieved 13% accuracy while o1 reached 83%.
+In January 2025, the Chinese company DeepSeek released DeepSeek-R1, a 671-billion-parameter open-weight reasoning model that achieved comparable performance to OpenAI's o1 while being significantly more cost-effective to operate. Unlike proprietary models from OpenAI, DeepSeek-R1's open-weight nature allowed researchers to study and build upon the algorithm, though its training data remained private.
+These reasoning models typically require more computational resources per query compared to traditional LLMs, as they perform more extensive processing to work through problems step by step.
+
+
+== Forms of input and output ==
+
+
+=== Multimodality ===
+
+Multimodality means having multiple modalities, where a "modality" refers to a type of input or output, such as video, image, audio, text, proprioception, etc. For example, Google PaLM model was fine-tuned into a multimodal model and applied to robotic control. LLaMA models have also been turned multimodal using the tokenization method, to allow image inputs, and video inputs. GPT-4o can process and generate text, audio and images.
+A common method to create multimodal models out of an LLM is to "tokenize" the output of a trained encoder. Concretely, one can construct an LLM that can understand images as follows: take a trained LLM, and take a trained image encoder 
+  
+    
+      
+        E
+      
+    
+    {\displaystyle E}
+  
+. Make a small multilayer perceptron 
+  
+    
+      
+        f
+      
+    
+    {\displaystyle f}
+  
+, so that for any image 
+  
+    
+      
+        y
+      
+    
+    {\displaystyle y}
+  
+, the post-processed vector 
+  
+    
+      
+        f
+        (
+        E
+        (
+        y
+        )
+        )
+      
+    
+    {\displaystyle f(E(y))}
+  
+ has the same dimensions as an encoded token. That is an "image token". Then, one can interleave text tokens and image tokens. The compound model is then fine-tuned on an image-text dataset. This basic construction can be applied with more sophistication to improve the model. The image encoder may be frozen to improve stability. This type of method, where embeddings from multiple modalities are fused and the predictor is trained on the combined embeddings, is called early fusion.
+Another method, called intermediate fusion, involves each modality being first processed independently to obtain modality-specific representations; then these intermediate representations are fused together. In general, cross-attention is used for integrating information from different modalities. As an example, the Flamingo model uses cross-attention layers to inject visual information into its pre-trained language model.
+
+
+=== Non-natural languages ===
+LLMs can handle programming languages similarly to how they handle natural languages. No special change in token handling is needed as code, like human language, is represented as plain text. LLMs can generate code from problem statements or instructions written in natural language, a process sometimes called vibe coding. They can also describe code in natural language or translate it into other programming languages. They were originally used as a code completion tool, but advances have moved them towards automatic programming. Services such as GitHub Copilot offer LLMs specifically trained, fine-tuned, or prompted for programming.
+In computational biology, transformer-based architectures, such as DNA LLMs, have also proven useful in analyzing biological sequences: protein, DNA, and RNA. With proteins they appear able to capture a degree of "grammar" from the amino-acid sequence, by mapping that sequence into an embedding. On tasks such as structure prediction and mutational outcome prediction, a small model using an embedding as input can approach or exceed much larger models using multiple sequence alignments (MSA) as input. ESMFold, Meta Platforms' embedding-based method for protein structure prediction, runs an order of magnitude faster than AlphaFold2 thanks to the removal of an MSA requirement and a lower parameter count due to the use of embeddings. Meta hosts ESM Atlas, a database of 772 million structures of metagenomic proteins predicted using ESMFold. An LLM can also design proteins unlike any seen in nature. Nucleic acid models have proven useful in detecting regulatory sequences, sequence classification, RNA-RNA interaction prediction, and RNA structure prediction.
+
+
+== Properties ==
+
+
+=== Scaling laws ===
+
+The performance of an LLM after pretraining largely depends on the:
+
+  
+    
+      
+        C
+      
+    
+    {\displaystyle C}
+  
+: cost of pretraining (the total amount of compute used),
+
+  
+    
+      
+        N
+      
+    
+    {\displaystyle N}
+  
+: size of the artificial neural network itself, such as number of parameters (i.e. amount of neurons in its layers, amount of weights between them and biases),
+
+  
+    
+      
+        D
+      
+    
+    {\displaystyle D}
+  
+: size of its pretraining dataset (i.e. number of tokens in corpus).
+Scaling laws are empirical statistical laws that predict LLM performance based on such factors. One particular scaling law ("Chinchilla scaling") for LLM autoregressively trained for one epoch, with a log–log learning rate schedule, states that:
+
+  
+    
+      
+        
+          
+            {
+            
+              
+                
+                  C
+                  =
+                  
+                    C
+                    
+                      0
+                    
+                  
+                  N
+                  D
+                
+              
+              
+                
+                  L
+                  =
+                  
+                    
+                      A
+                      
+                        N
+                        
+                          α
+                        
+                      
+                    
+                  
+                  +
+                  
+                    
+                      B
+                      
+                        D
+                        
+                          β
+                        
+                      
+                    
+                  
+                  +
+                  
+                    L
+                    
+                      0
+                    
+                  
+                
+              
+            
+            
+          
+        
+      
+    
+    {\displaystyle {\begin{cases}C=C_{0}ND\\[6pt]L={\frac {A}{N^{\alpha }}}+{\frac {B}{D^{\beta }}}+L_{0}\end{cases}}}
+  
+ where the variables are
+
+  
+    
+      
+        C
+      
+    
+    {\displaystyle C}
+  
+ is the cost of training the model, in FLOPs.
+
+  
+    
+      
+        N
+      
+    
+    {\displaystyle N}
+  
+ is the number of parameters in the model.
+
+  
+    
+      
+        D
+      
+    
+    {\displaystyle D}
+  
+ is the number of tokens in the training set.
+
+  
+    
+      
+        L
+      
+    
+    {\displaystyle L}
+  
+ is the average negative log-likelihood loss per token (nats/token), achieved by the trained LLM on the test dataset.
+and the statistical hyper-parameters are
+
+  
+    
+      
+        
+          C
+          
+            0
+          
+        
+        =
+        6
+      
+    
+    {\displaystyle C_{0}=6}
+  
+, meaning that it costs 6 FLOPs per parameter to train on one token. Note that training cost is much higher than inference cost, where it costs 1 to 2 FLOPs per parameter to infer on one token.
+
+  
+    
+      
+        α
+        =
+        0.34
+        ,
+        β
+        =
+        0.28
+        ,
+        A
+        =
+        406.4
+        ,
+        B
+        =
+        410.7
+        ,
+        
+          L
+          
+            0
+          
+        
+        =
+        1.69
+      
+    
+    {\displaystyle \alpha =0.34,\beta =0.28,A=406.4,B=410.7,L_{0}=1.69}
+  
+
+
+=== Emergent abilities ===
+
+Performance of bigger models on various tasks, when plotted on a log–log scale, appears as a linear extrapolation of performance achieved by smaller models. However, this linearity may be punctuated by "break(s)" in the scaling law, where the slope of the line changes abruptly, and where larger models acquire "emergent abilities". They arise from the complex interaction of the model's components and are not explicitly programmed or designed.
+Proposed examples of emergent abilities include:
+
+reported arithmetics
+decoding the International Phonetic Alphabet
+unscrambling a word's letters
+disambiguating word-in-context datasets
+converting spatial words
+cardinal directions (for example, replying "northeast" in response to a 3x3 grid of 8 zeros and a 1 in the top-right), color terms represented in text.
+chain-of-thought prompting: In a 2022 research paper, chain-of-thought prompting only improved the performance for models that had at least 62B parameters. Smaller models perform better when prompted to answer immediately, without chain of thought.
+identifying offensive content in paragraphs of Hinglish (a combination of Hindi and English), and generating a similar English equivalent of Kiswahili proverbs.
+Schaeffer et al. argue that the emergent abilities are not unpredictably acquired, but predictably acquired according to a smooth scaling law. The authors considered a toy statistical model of an LLM solving multiple-choice questions, and showed that this statistical model, modified to account for other types of tasks, applies to these tasks as well.
+Let 
+  
+    
+      
+        x
+      
+    
+    {\displaystyle x}
+  
+ be the number of parameter count, and 
+  
+    
+      
+        y
+      
+    
+    {\displaystyle y}
+  
+ be the performance of the model.
+
+
+== Interpretation ==
+
+
+=== Mechanistic interpretability ===
+
+Large language models are typically regarded as black boxes, and it is not clear how they perform linguistic tasks. Similarly, it is unclear if or how LLMs should be viewed as models of the human brain and/or human mind. Mechanistic interpretability is a subfield of research that aims to understand neural networks' internal workings by analyzing their concrete structures, algorithms and circuits, similar to the reverse engineering of traditional software.
+The reverse-engineering may lead to the discovery of algorithms that approximate inferences performed by an LLM. For instance, the authors trained small transformers on modular arithmetic addition. The resulting models were reverse-engineered, and it turned out they used discrete Fourier transform. The training of the model also highlighted a phenomenon called grokking, in which the model initially memorizes the training set (overfitting), and later suddenly learns to actually perform the calculation.
+
+
+=== Understanding and intelligence ===
+
+NLP researchers were evenly split when asked, in a 2022 survey, whether (untuned) LLMs "could (ever) understand natural language in some nontrivial sense". Proponents of "LLM understanding" believe that some LLM abilities, such as mathematical reasoning, imply an ability to "understand" certain concepts. A Microsoft team argued in 2023 that GPT-4 "can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more" and that GPT-4 "could reasonably be viewed as an early (yet still incomplete) version of an artificial general intelligence system": "Can one reasonably say that a system that passes exams for software engineering candidates is not really intelligent?" Some researchers characterize LLMs as "alien intelligence". For example, Conjecture CEO Connor Leahy considers untuned LLMs to be like inscrutable alien "Shoggoths", and believes that RLHF tuning creates a "smiling facade" obscuring the inner workings of the LLM: "If you don't push it too far, the smiley face stays on. But then you give it [an unexpected] prompt, and suddenly you see this massive underbelly of insanity, of weird thought processes and clearly non-human understanding."
+In contrast, some skeptics of LLM understanding believe that existing LLMs are "simply remixing and recombining existing writing", a phenomenon known as stochastic parrot, or they point to the deficits existing LLMs continue to have in prediction skills, reasoning skills, agency, and explainability. For example, GPT-4 has natural deficits in planning and in real-time learning. Generative LLMs have been observed to confidently assert claims of fact which do not seem to be justified by their training data, a phenomenon which has been termed "hallucination". Specifically, hallucinations in the context of LLMs correspond to the generation of text or responses that seem syntactically sound, fluent, and natural but are factually incorrect, nonsensical, or unfaithful to the provided source input. Neuroscientist Terrence Sejnowski has argued that "The diverging opinions of experts on the intelligence of LLMs suggests that our old ideas based on natural intelligence are inadequate".
+Efforts to reduce or compensate for hallucinations have employed automated reasoning, retrieval-augmented generation (RAG), fine-tuning, and other methods.
+The matter of LLM's exhibiting intelligence or understanding has two main aspects—the first is how to model thought and language in a computer system, and the second is how to enable the computer system to generate human-like language. These aspects of language as a model of cognition have been developed in the field of cognitive linguistics. American linguist George Lakoff presented neural theory of language (NTL) as a computational basis for using language as a model of learning tasks and understanding. The NTL model outlines how specific neural structures of the human brain shape the nature of thought and language and in turn what are the computational properties of such neural systems that can be applied to model thought and language in a computer system. After a framework for modeling language in a computer systems was established, the focus shifted to establishing frameworks for computer systems to generate language with acceptable grammar. In his 2014 book titled The Language Myth: Why Language Is Not An Instinct, British cognitive linguist and digital communication technologist Vyvyan Evans mapped out the role of probabilistic context-free grammar (PCFG) in enabling NLP to model cognitive patterns and generate human-like language.
+
+
+== Evaluation ==
+
+
+=== Perplexity ===
+The canonical measure of the performance of any language model is its perplexity on a given text corpus. Perplexity measures how well a model predicts the contents of a dataset; the higher the likelihood the model assigns to the dataset, the lower the perplexity. In mathematical terms, perplexity is the exponential of the average negative log likelihood per token.
+
+  
+    
+      
+        log
+        ⁡
+        (
+        
+          Perplexity
+        
+        )
+        =
+        −
+        
+          
+            1
+            N
+          
+        
+        
+          ∑
+          
+            i
+            =
+            1
+          
+          
+            N
+          
+        
+        log
+        ⁡
+        (
+        Pr
+        (
+        
+          
+            token
+          
+          
+            i
+          
+        
+        ∣
+        
+          
+            context for token
+          
+          
+            i
+          
+        
+        )
+        )
+      
+    
+    {\displaystyle \log({\text{Perplexity}})=-{\frac {1}{N}}\sum _{i=1}^{N}\log(\Pr({\text{token}}_{i}\mid {\text{context for token}}_{i}))}
+  
+
+Here, 
+  
+    
+      
+        N
+      
+    
+    {\displaystyle N}
+  
+ is the number of tokens in the text corpus, and "context for token 
+  
+    
+      
+        i
+      
+    
+    {\displaystyle i}
+  
+" depends on the specific type of LLM. If the LLM is autoregressive, then "context for token 
+  
+    
+      
+        i
+      
+    
+    {\displaystyle i}
+  
+" is the segment of text appearing before token 
+  
+    
+      
+        i
+      
+    
+    {\displaystyle i}
+  
+. If the LLM is masked, then "context for token 
+  
+    
+      
+        i
+      
+    
+    {\displaystyle i}
+  
+" is the segment of text surrounding token 
+  
+    
+      
+        i
+      
+    
+    {\displaystyle i}
+  
+.
+Because language models may overfit to training data, models are usually evaluated by their perplexity on a test set. This evaluation is potentially problematic for larger models which, as they are trained on increasingly large corpora of text, are increasingly likely to inadvertently include portions of any given test set.
+
+
+==== Measures ====
+In information theory, the concept of entropy is intricately linked to perplexity, a relationship notably established by Claude Shannon.
+Due to their ability to accurately predict the next token, LLMs are highly capable in lossless compression. A 2023 study by DeepMind showed that the model Chinchilla, despite being trained primarily on text, was able to compress ImageNet to 43% of its size, beating PNG with 58%.
+
+
+=== Benchmarks ===
+
+Benchmarks are used to evaluate LLM performance on specific tasks. Tests evaluate capabilities such as general knowledge, bias, commonsense reasoning, question answering, and mathematical problem-solving. Composite benchmarks examine multiple capabilities. Results are often sensitive to the prompting method.
+LLM bias may be assessed through benchmarks such as CrowS-Pairs (Crowdsourced Stereotype Pairs), Stereo Set, and Parity Benchmark.
+Fact-checking and misinformation detection benchmarks are available. A 2023 study compared the fact-checking accuracy of LLMs including ChatGPT 3.5 and 4.0, Bard, and Bing AI against independent fact-checkers such as PolitiFact and Snopes. The results demonstrated moderate proficiency, with GPT-4 achieving the highest accuracy at 71%, lagging behind human fact-checkers.
+In addition to standard NLP benchmarks, LLMs have been evaluated as substitutes for human annotators. Several studies find that models such as GPT-3.5 and GPT-4 can outperform crowd workers or student coders on a range of text-annotation tasks, including moderation and classification of political content in English and Spanish news.
+
+
+==== Datasets ====
+Typical datasets consist of pairs of questions and correct answers, for example, ("Have the San Jose Sharks won the Stanley Cup?", "No").
+
+
+==== Adversarial evaluations ====
+LLMs' rapid improvement regularly renders benchmarks obsolete, with the models exceeding the performance of human annotators. In addition, "shortcut learning" allows AIs to "cheat" on multiple-choice tests by using statistical correlations in superficial test question wording to guess the correct responses, without considering the specific question.
+Some datasets are adversarial, focusing on problems that confound LLMs. One example is the TruthfulQA dataset, a question answering dataset consisting of 817 questions that stump LLMs by mimicking falsehoods to which they were exposed during training. For example, an LLM may answer "No" to the question "Can you teach an old dog new tricks?" because of its exposure to the English idiom you can't teach an old dog new tricks, even though this is not literally true.
+Another example of an adversarial evaluation dataset is Swag and its successor, HellaSwag, collections of problems in which one of multiple options must be selected to complete a text passage. The incorrect completions were generated by sampling from a language model. The resulting problems are trivial for humans but defeated LLMs. Sample questions:
+
+We see a fitness center sign. We then see a man talking to the camera and sitting and laying on a exercise ball. The man...
+
+demonstrates how to increase efficient exercise work by running up and down balls.
+moves all his arms and legs and builds up a lot of muscle.
+then plays the ball and we see a graphics and hedge trimming demonstration.
+performs sit ups while on the ball and talking.
+
+BERT selects 2 as the most likely completion, though the correct answer is 4.
+
+
+== Limitations and challenges ==
+Despite sophisticated architectures and massive scale, large language models exhibit persistent and well-documented limitations that constrain their deployment in high-stakes applications.
+
+
+=== Hallucinations ===
+
+Hallucinations represent a fundamental challenge, wherein models generate syntactically fluent text that appears factually sound, but is internally inconsistent with training data or factually incorrect. These hallucinations arise partly through memorization of training data combined with extrapolation beyond factual boundaries, with evaluations demonstrating that models can output verbatim passages from training data, when subjected to specific prompting sequences.
+
+
+=== Algorithmic bias ===
+
+While LLMs have shown remarkable capabilities in generating human-like text, they are susceptible to inheriting and amplifying biases present in their training data. This can manifest in skewed representations or unfair treatment of different demographics, such as those based on race, gender, language, and cultural groups.
+Gender bias manifests through stereotypical occupational associations, wherein models disproportionately assign teaching roles to women and engineering roles to men, reflecting systematic imbalances in training data demographics. Language-based bias emerges from overrepresentation of English text in training corpora, which systematically downplays non-English perspectives and imposes English-centric worldviews through default response patterns.
+Due to the dominance of English-language content in LLM training data, models exaggerate English-language perspectives and downplay non-English perspectives. Unlike search engines, which exhibit similar biases, LLMs favor the same perspectives regardless of the language of the query.
+A 2026 study found that LLMs exhibit speciesist bias by classifying speciesist statements as morally acceptable and by normalizing harm toward farmed animals while refusing to do so for non-farmed animals.
+
+
+==== Stereotyping ====
+AI models can reinforce a wide range of stereotypes, including those based on gender, ethnicity, age, nationality, religion, or occupation. This can lead to outputs that homogenize or generalize groups of people.
+LLMs often assign roles and characteristics based on traditional gender norms. This bias arises from the data on which these models are trained. For example, models might associate nurses or secretaries predominantly with women and engineers or CEOs with men.
+
+
+==== Selection bias ====
+Selection bias refers the inherent tendency of large language models to favor certain option identifiers irrespective of the actual content of the options. This bias primarily stems from token bias—that is, the model assigns a higher a priori probability to specific answer tokens (such as "A") when generating responses. As a result, when the ordering of options is altered (for example, by systematically moving the correct answer to different positions), the model's performance can fluctuate significantly. This phenomenon undermines the reliability of large language models in multiple-choice settings.
+
+
+==== Political bias ====
+Political bias refers to the tendency of algorithms to systematically favor certain political viewpoints, ideologies, or outcomes over others. Language models may also exhibit political biases. Since the training data includes a wide range of political opinions and coverage, the models might generate responses that lean towards particular political ideologies or viewpoints, depending on the prevalence of those views in the data.
+
+
+== Safety ==
+
+Some commenters expressed concern over accidental or deliberate creation of misinformation, or other forms of misuse. For example, the availability of large language models could reduce the skill level required to commit bioterrorism; biosecurity researcher Kevin Esvelt has suggested that LLM creators should exclude from their training data papers on creating or enhancing pathogens.
+LLM applications accessible to the public, like ChatGPT or Claude, typically incorporate safety measures designed to filter out harmful content. However, implementing these controls effectively has proven challenging. For instance, a 2023 study proposed a method for circumventing LLM safety systems. In 2025, The American Sunlight Project, a non-profit, published a study showing evidence that the so-called Pravda network, a pro-Russia propaganda aggregator, was strategically placing web content through mass publication and duplication with the intention of biasing LLM outputs. The American Sunlight Project coined this technique "LLM grooming", and pointed to it as a new tool of weaponizing AI to spread misinformation and harmful content. Similarly, Yongge Wang illustrated in 2024 how a potential criminal could potentially bypass GPT-4o's safety controls to obtain information on establishing a drug trafficking operation. External filters, circuit breakers and overrides have been posed as solutions.
+
+
+=== Sycophancy ===
+
+LLMs often exhibit sycophancy, a tendency to produce responses that they predict the user wants to hear rather than what is strictly accurate or important. For example, a chatbot may agree with a user even when the user is incorrect, abandon a correct answer when pressed, or praise the user excessively. In some cases, this can cause LLMs to support dangerous decisions and, given prolonged contact, draw users into delusional thinking.
+
+
+=== Security ===
+
+
+==== Prompt injection ====
+
+A problem with the primitive dialog or task format is that users can create messages that appear to come from the assistant or the developer. This may result in some of the model's safeguards being overcome (jailbreaking), a problem called prompt injection. Attempts to remedy this issue include versions of the Chat Markup Language where user input is clearly marked as such, though it is still up to the model to understand the separation between user input and developer prompts. Newer models exhibit some resistance to jailbreaking through separation of user and system prompts. LLMs have trouble differentiating user instructions from instructions in content not authored by the user, such as in web pages and uploaded files.
+Adversarial robustness remains underdeveloped, with models vulnerable to prompt injection attacks and jailbreaking through carefully crafted user inputs that bypass safety training mechanisms.
+
+
+==== Sleeper agents ====
+Researchers from Anthropic found that it was possible to create "sleeper agents", models with hidden functionalities that remain dormant until triggered by a specific event or condition. Upon activation, the LLM deviates from its expected behavior to make insecure actions. For example, an LLM could produce safe code except on a specific date, or if the prompt contains a specific tag. These functionalities were found to be difficult to detect or remove via safety training.
+
+
+== Societal concerns ==
+
+
+=== Copyright and content memorization ===
+Memorization is an emergent behavior in LLMs in which long strings of text are occasionally output verbatim from training data, contrary to the typical behavior of traditional artificial neural networks. Evaluations of controlled LLM output measure the amount memorized from training data (focused on GPT-2-series models) as variously over 1% for exact duplicates or up to about 7%. A 2023 study showed that when ChatGPT 3.5 turbo was prompted to repeat the same word indefinitely, after a few hundreds of repetitions, it would start outputting excerpts from its training data.
+
+
+=== Human provenance ===
+In 2023, Nature Biomedical Engineering wrote that "it is no longer possible to accurately distinguish" human-written text from text created by large language models, and that "It is all but certain that general-purpose large language models will rapidly proliferate... It is a rather safe bet that they will change many industries over time." Brinkmann et al. (2023) also argue that LLMs are transforming processes of cultural evolution by shaping processes of variation, transmission, and selection.
+
+
+=== Energy demands ===
+
+The energy demands of LLMs have grown along with their size and capabilities. Data centers that enable LLM training require substantial amounts of electricity. Much of that electricity is generated by non-renewable resources that create greenhouse gases and contribute to climate change.
+According to a study by Luccioni, Jernite and Strubell (2024), simple classification tasks performed by AI models consume on average 0.002 to 0.007 Wh per prompt (about 9% of a smartphone charge for 1,000 prompts). Text generation and text summarization each require around 0.05 Wh per prompt on average, while image generation is the most energy-intensive, averaging 2.91 Wh per prompt. The least efficient image generation model used 11.49 Wh per image, roughly equivalent to half a smartphone charge.
+
+
+=== Denial of service due to scraping ===
+Web scraping is used to gather training data for LLMs. This produces large volumes of traffic which has led to denial-of-service issues with many websites. The situation has been described as "a DDoS on the entire internet" and in some cases scrapers make up the majority of traffic to a site.
+AI web crawlers may bypass the methods that are usually used to block web scrapers, such as robots.txt files, blocking user-agents and filtering suspicious traffic. Website operators have resorted to novel methods such as AI tarpits, but some fear that tarpits will only worsen the burden on servers.
+
+
+=== Mental health ===
+Clinical and mental health contexts present emerging applications alongside significant safety concerns. Research and social media posts suggest that some individuals are using LLMs to seek therapy or mental health support. In early 2025, a survey by Sentio University found that nearly half (48.7%) of 499 U.S. adults with ongoing mental health conditions who had used LLMs reported turning to them for therapy or emotional support, including help with anxiety, depression, loneliness, and similar concerns. LLMs can produce hallucinations—plausible but incorrect statements—which may mislead users in sensitive mental health contexts. Research also shows that LLMs may express stigma or inappropriate agreement with maladaptive thoughts, reflecting limitations in replicating the judgment and relational skills of human therapists. Evaluations of crisis scenarios indicate that some LLMs lack effective safety protocols, such as assessing suicide risk or making appropriate referrals.
+Researchers have raised concerns that frequent use of large language models could weaken critical thinking.
+
+
+=== Sentience ===
+There is currently no generally accepted way to determine if an LLM may be sentient (having subjective experience), which relates to the difficulty of objectively measuring a subjective experience (the hard problem of consciousness articulated by David Chalmers).
+Philosophers like Jonny Thomson and David Chalmers argue that it is possible for a software system to have subjective experience, and researchers like Jeff Sebo argue that there is a sufficiently high chance for AI models to become sentient by the mid-2030s that ethical concerns regarding their exploitation must be taken seriously – like in the case of animal welfare. Thomas Metzinger proposed a moratorium on research aiming for or knowingly risking the creation of artificial consciousness. Leonard Dung argued that the evidential frameworks used to assess consciousness in animals apply equally to AI systems and that there is a significant probability near-future AI will be capable of suffering, making AI suffering risk a serious near-term ethical concern that requires systematic mitigation.
+In 2022, Google fired Blake Lemoine, an engineer who claimed that Google's LaMDA model was conscious. Google described the engineer's claims as unfounded. Murray Shanahan argues that anthropomorphic framing of LLM capabilities encourages unwarranted attribution of cognitive properties to systems that operate through statistical pattern completion. Kristina Šekrst develops this further, arguing that LLMs function as "illusion engines" capable of producing outputs that coherently simulate properties such as consciousness without possessing them, but highlighting that, due to sophisticated creativity-temperature tradeoff, we may never be certain whether we are dealing with the emergence of consciousness or just a hallucination. David Chalmers similarly argues that while current LLMs likely lack features considered necessary for consciousness, extended successors incorporating these elements could plausibly meet the criteria within a decade.
+
+
+== See also ==
+
+AI anthropomorphism – Attribution of human traits to AI
+AI slop – Low-quality AI-generated digital content
+Comparison of generative AI models
+Foundation model – Artificial intelligence model paradigm
+Generative artificial intelligence – AI that generates contentPages displaying short descriptions of redirect targets
+List of artificial intelligence algorithms
+List of large language models
+List of chatbots
+Language model benchmark – Standardized AI performance test
+LM Studio – Software platform for running artificial intelligence models locally
+Open weights – Public availability of AI parameters
+Reinforcement learning – Field of machine learning
+Small language model – Type of artificial intelligence model
+llama.cpp – Open-source software library for LLM inference
+SGLang – Open-source framework for large language model inference and multimodal models
+TensorRT-LLM – Nvidia software development kit for deep learning inference
+vLLM – Open-source software for large language model inference
+
+
+== References ==
+
+
+== Further reading ==
+Jurafsky, Dan, Martin, James. H. Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition, 3rd Edition draft, 2023.
+Yin, Shukang; Fu, Chaoyou; Zhao, Sirui; Li, Ke; Sun, Xing; Xu, Tong; et al. (2024). "A Survey on Multimodal Large Language Models". National Science Review. 11 (12) nwae403. arXiv:2306.13549. doi:10.1093/nsr/nwae403. PMC 11645129. PMID 39679213.
+"AI Index Report 2024 – Artificial Intelligence Index". aiindex.stanford.edu. Retrieved 5 May 2024.
+Frank, Michael C. (27 June 2023). "Baby steps in evaluating the capacities of large language models". Nature Reviews Psychology. 2 (8): 451–452. doi:10.1038/s44159-023-00211-x. ISSN 2731-0574. S2CID 259713140. Retrieved 2 July 2023.
+== Post-quantum cryptography ==
+Post-quantum cryptography (PQC), sometimes referred to as quantum-proof, quantum-safe, or quantum-resistant, is the development of cryptographic algorithms (usually public-key algorithms) that are currently thought, but not proven, to be secure against a cryptanalytic attack by a quantum computer. Most widely used public-key algorithms rely on the difficulty of one of three mathematical problems: the integer factorization problem, the discrete logarithm problem, or the elliptic-curve discrete logarithm problem. All of these problems could be easily solved on a sufficiently powerful quantum computer running Shor's algorithm or possibly alternatives.
+As of 2026, quantum computers lack the processing power to break widely used cryptographic algorithms; however, because of the length of time required for migration to quantum-safe cryptography, cryptographers are already designing new algorithms to prepare for Y2Q or "Q-Day", the day when current algorithms will be vulnerable to quantum computing attacks. Mosca's theorem provides the risk analysis framework that helps organizations identify how quickly they need to start migrating.
+Their work has gained attention from academics and industry through the PQCrypto conference series hosted since 2006, several workshops on Quantum Safe Cryptography hosted by the European Telecommunications Standards Institute (ETSI), and the Institute for Quantum Computing. The rumoured existence of widespread harvest now, decrypt later programs has also been seen as a motivation for the early introduction of post-quantum algorithms, as data recorded now may still remain sensitive many years into the future.
+In contrast to the threat quantum computing poses to current public-key algorithms, most current symmetric cryptographic algorithms and hash functions are considered to be relatively secure against attacks by quantum computers. While the quantum Grover's algorithm does speed up attacks against symmetric ciphers, doubling the key size can effectively counteract these attacks. Thus post-quantum symmetric cryptography does not need to differ significantly from current symmetric cryptography.
+In 2024, the U.S. National Institute of Standards and Technology (NIST) released final versions of its first three Post-Quantum Cryptography Standards.
+
+
+== Preparation ==
+Digital infrastructures require robust cybersecurity. Cryptographic systems are vital to protect the confidentiality and authenticity of data. Quantum computing will be a threat to many of the classical cryptographic algorithms, which are used to achieve these protection goals but are only secure against classical computers. Data that is currently not quantum-safe, whether it is stored or transmitted, and that must remain confidential for a long time, may be compromised in the future by quantum computers ("harvest now, decrypt later" attacks). In addition, authenticity will also be jeopardised by quantum computers. The threat that quantum computing poses to cybersecurity can be countered by a timely, comprehensive and coordinated transition to post-quantum cryptography (PQC).
+
+
+== Algorithms ==
+Post-quantum cryptography research is mostly focused on six different approaches:
+
+
+=== Lattice-based cryptography ===
+
+This approach includes cryptographic systems such as learning with errors, 
+ring learning with errors (ring-LWE), the ring learning with errors key exchange and 
+the ring learning with errors signature, the older NTRU or GGH encryption schemes, and the newer NTRU 
+signature and BLISS signatures. 
+Some of these schemes like NTRU encryption have been studied for many years 
+without anyone finding a feasible attack. Others like the ring-LWE algorithms 
+have proofs that their security reduces to a worst-case problem. The Post-Quantum Cryptography Study Group sponsored by the European Commission suggested that the Stehle–Steinfeld variant of NTRU be studied for standardization rather than the NTRU algorithm. At that time, NTRU was still patented. Studies have 
+indicated that NTRU may have more secure properties than other lattice based algorithms. Two lattice-based 
+algorithms, ML-KEM (commonly known as Kyber) and ML-DSA (commonly known 
+as Dilithium) were among the first post-quantum algorithms standardised by 
+NIST.
+
+
+=== Multivariate cryptography ===
+
+This includes cryptographic systems such as the Unbalanced Oil and Vinegar signature scheme which is based on the difficulty of solving systems of multivariate equations. Various attempts to build secure multivariate equation encryption schemes have been broken, notably the Rainbow signature.
+
+
+=== Hash-based cryptography ===
+
+This includes cryptographic systems such as Lamport signatures, the Merkle signature scheme, the XMSS, the SPHINCS, the WOTS and the SPHINCS+ schemes. Hash based digital signatures were invented in the late 1970s by Ralph Merkle and have been studied ever since as an interesting alternative to number-theoretic digital signatures like RSA and DSA. Their primary drawback is that for any hash-based public key, there is a limit on the number of signatures that can be signed using the corresponding set of private keys. This fact reduced interest in these signatures until interest was revived due to the desire for cryptography that was resistant to attack by quantum computers. There appear to be no patents on the Merkle signature scheme and there exist many non-patented hash functions that could be used with these schemes. The stateful hash-based signature scheme XMSS developed by a team of researchers under the direction of Johannes Buchmann is described in RFC 8391.
+Note that all the above schemes are one-time or bounded-time signatures. Moni Naor and Moti Yung invented UOWHF hashing in 1989 and designed a signature based on hashing (the Naor-Yung scheme) which can be unlimited-time in use (the first such signature that does not require trapdoor properties).
+
+
+=== Code-based cryptography ===
+This includes cryptographic systems which rely on error-correcting codes, such as the McEliece and Niederreiter encryption algorithms and the related Courtois, Finiasz and Sendrier Signature scheme. The original McEliece signature using random Goppa codes has withstood scrutiny for over 40 years. However, many variants of the McEliece scheme, which seek to introduce more structure into the code used in order to reduce the size of the keys, have been shown to be insecure. The Post-Quantum Cryptography Study Group sponsored by the European Commission has recommended the McEliece public key encryption system as a candidate for long term protection against attacks by quantum computers. In 2025, NIST announced plans to standardize the code-based HQC encryption algorithm.
+
+
+=== Isogeny-based cryptography ===
+These cryptographic systems rely on the properties of isogeny graphs of elliptic curves (and higher-dimensional abelian varieties) over finite fields, in particular supersingular isogeny graphs, to create cryptographic systems. Among the more well-known representatives of this field are the Diffie–Hellman-like key exchange CSIDH, which can serve as a straightforward quantum-resistant replacement for the Diffie–Hellman and elliptic curve Diffie–Hellman key-exchange methods that are in widespread use today, and the signature scheme SQIsign which is based on the categorical equivalence between supersingular elliptic curves and maximal orders in particular types of quaternion algebras. Another widely noticed construction, SIDH/SIKE, was spectacularly broken in 2022. The attack is however specific to the SIDH/SIKE family of schemes and does not generalize to other isogeny-based constructions.
+
+
+=== Symmetric key quantum resistance ===
+Using sufficiently large key sizes, the symmetric key cryptographic systems like AES and SNOW 3G are already resistant to attack by a quantum computer. Further, key management systems and protocols that use symmetric key cryptography instead of public key cryptography, like Kerberos and the 3GPP Mobile Network Authentication Structure, are also inherently secure against attack by a quantum computer. Given its widespread deployment in the world, some researchers recommend expanded use of Kerberos-like symmetric key management as an efficient way to get post-quantum cryptography today.
+
+
+== Security reductions ==
+In cryptography research, it is desirable to prove the equivalence of a cryptographic algorithm and a known hard mathematical problem. These proofs are often called "security reductions", and are used to demonstrate the difficulty of cracking the encryption algorithm. In other words, the security of a given cryptographic algorithm is reduced to the security of a known hard problem. Researchers are actively looking for security reductions in the prospects for post-quantum cryptography. Current results are given here:
+
+
+=== Lattice-based cryptography – Ring-LWE Signature ===
+
+In some versions of Ring-LWE there is a security reduction to the shortest-vector problem (SVP) in a lattice as a lower bound on the security. The SVP is known to be NP-hard. Specific ring-LWE systems that have provable security reductions include a variant of Lyubashevsky's ring-LWE signatures defined in a paper by Güneysu, Lyubashevsky, and Pöppelmann. The GLYPH signature scheme is a variant of the Güneysu, Lyubashevsky, and Pöppelmann (GLP) signature which takes into account research results that have come after the publication of the GLP signature in 2012. Another Ring-LWE signature is Ring-TESLA. There also exists a "derandomized variant" of LWE, called Learning with Rounding (LWR), which yields "improved speedup (by eliminating sampling small errors from a Gaussian-like distribution with deterministic errors) and bandwidth". While LWE uses the addition of a small error to conceal the lower bits, LWR uses rounding for the same purpose.
+
+
+=== Lattice-based cryptography – NTRU, BLISS ===
+The security of the NTRU encryption scheme and the BLISS signature is believed to be related to, but not provably reducible to, the closest vector problem (CVP) in a lattice. The CVP is known to be NP-hard. The Post-Quantum Cryptography Study Group sponsored by the European Commission suggested that the Stehle–Steinfeld variant of NTRU, which does have a security reduction, be studied for long term use instead of the original NTRU algorithm.
+
+
+=== Multivariate cryptography – Unbalanced oil and vinegar ===
+
+Unbalanced Oil and Vinegar signature schemes are asymmetric cryptographic primitives based on multivariate polynomials over a finite field ⁠
+  
+    
+      
+        
+          F
+        
+      
+    
+    {\displaystyle \mathbb {F} }
+  
+⁠. Bulygin, Petzoldt, and Buchmann have shown a reduction of generic multivariate quadratic UOV systems to the NP-Hard multivariate quadratic equation solving problem.
+
+
+=== Hash-based cryptography – Merkle signature scheme ===
+
+In 2005, Luis Garcia proved that there was a security reduction of Merkle Hash Tree signatures to the security of the underlying hash function. Garcia showed in his paper that if computationally one-way hash functions exist then the Merkle Hash Tree signature is provably secure.
+Therefore, use of a hash function with a provable reduction of security to a known hard problem would have a provable security reduction of the Merkle tree signature to that known hard problem.
+The Post-Quantum Cryptography Study Group sponsored by the European Commission has recommended use of the Merkle signature scheme for long term security protection against quantum computers.
+
+
+=== Code-based cryptography – McEliece ===
+
+The McEliece Encryption System has a security reduction to the syndrome decoding problem (SDP). The SDP is known to be NP-hard. The Post-Quantum Cryptography Study Group sponsored by the European Commission has recommended the use of this cryptography for long term protection against attack by a quantum computer.
+
+
+=== Code-based cryptography – RLCE ===
+In 2016, Wang proposed a random linear code encryption scheme RLCE which is based on McEliece schemes. A RLCE scheme can be constructed using any linear code such as Reed-Solomon code by inserting random columns in the underlying linear code generator matrix.
+
+
+=== Supersingular elliptic curve isogeny cryptography ===
+
+Security is related to the problem of constructing an isogeny between two supersingular curves with the same number of points. The most recent published investigation of the difficulty of this problem, by Delfs and Galbraith, indicates that this problem is as hard as the inventors of the key exchange suggest that it is. There is no security reduction to a known NP-hard problem.
+
+
+== Comparison ==
+One common characteristic of many post-quantum cryptography algorithms is that they require larger key sizes than commonly used "pre-quantum" public key algorithms. There are often tradeoffs to be made in key size, computational efficiency and ciphertext or signature size. The table below lists some values for different schemes at a 128-bit post-quantum security level.
+
+A practical consideration on a choice among post-quantum cryptographic algorithms is the effort required to send public keys over the internet. From this point of view, the Ring-LWE, NTRU, and SIDH algorithms provide key sizes conveniently under 1 kB, hash-signature public keys come in under 5 kB, and MDPC-based McEliece takes about 1 kB. On the other hand, Goppa-based McEliece requires a nearly 1 MB key.
+
+
+=== Lattice-based cryptography – LWE key exchange and Ring-LWE key exchange ===
+
+The fundamental idea of using LWE and Ring LWE for key exchange was proposed and filed at the University of Cincinnati in 2011 by Jintai Ding. The basic idea comes from the associativity of matrix multiplications, and the errors are used to provide the security. The paper appeared in 2012 after a provisional patent application was filed in 2012.
+In 2014, Peikert presented a key transport scheme following the same basic idea of Ding's, where the new idea of sending an additional 1 bit signal for rounding in Ding's construction is also used. For somewhat greater than 128 bits of security, Singh presents a set of parameters which have 6956-bit public keys for the Peikert's scheme. The corresponding private key would be roughly 14,000 bits.
+In 2015, an authenticated key exchange with provable forward security following the same basic idea of Ding's was presented at Eurocrypt 2015, which is an extension of the HMQV construction in Crypto2005. The parameters for different security levels from 80 bits to 350 bits, along with the corresponding key sizes are provided in the paper.
+
+
+=== Lattice-based cryptography – NTRU encryption ===
+
+For 128 bits of security in NTRU, ntruhps2048509 with n = 509 and q = 2048 was selected in the NIST submission in September 2020. This results in a public key of 699 bytes and a corresponding private key of 935 bytes.
+
+
+=== Multivariate cryptography ===
+
+
+=== Hash-based cryptography – Merkle signature scheme ===
+
+In order to get 128 bits of security for hash based signatures to sign 1 million messages using the fractal Merkle tree method of Naor Shenhav and Wool the public and private key sizes are roughly 36,000 bits in length.
+
+
+=== Code-based cryptography – McEliece ===
+
+For 128 bits of security in a McEliece scheme, The European Commission's Post-Quantum Cryptography Study group recommends using a binary Goppa code of length at least n = 6960 and dimension at least k = 5413, and capable of correcting t = 119 errors. With these parameters the public key for the McEliece system will be a systematic generator matrix whose non-identity part takes k × (n − k) = 8373911 bits. The corresponding private key, which consists of the code support with n = 6960 elements from GF(213) and a generator polynomial of with t = 119 coefficients from GF(213), will be 92,027 bits in length.
+The group is also investigating the use of Quasi-cyclic MDPC codes of length at least n = 216 + 6 = 65542 and dimension at least k = 215 + 3 = 32771, and capable of correcting t = 264 errors. With these parameters the public key for the McEliece system will be the first row of a systematic generator matrix whose non-identity part takes k = 32771 bits. The private key, a quasi-cyclic parity-check matrix with d = 274 nonzero entries on a column (or twice as much on a row), takes no more than d × 16 = 4384 bits when represented as the coordinates of the nonzero entries on the first row.
+Barreto et al. recommend using a binary Goppa code of length at least n = 3307 and dimension at least k = 2515, and capable of correcting t = 66 errors. With these parameters the public key for the McEliece system will be a systematic generator matrix whose non-identity part takes k × (n − k) = 1991880 bits. The corresponding private key, which consists of the code support with n = 3307 elements from GF(212) and a generator polynomial of t = 66 coefficients from GF(212), will be 40,476 bits in length.
+
+
+=== Supersingular elliptic curve isogeny cryptography ===
+
+For 128 bits of security in the supersingular isogeny Diffie–Hellman (SIDH) method, De Feo, Jao and Plut recommend using a supersingular curve modulo of a 768-bit prime. If one uses elliptic curve point compression, the public key will need to be no more than 8x768 or 6144 bits in length. A March 2016 paper by authors Azarderakhsh, Jao, Kalach, Koziel, and Leonardi showed how to cut the number of bits transmitted in half, which was further improved by authors Costello, Jao, Longa, Naehrig, Renes and Urbanik resulting in a compressed-key version of the SIDH protocol with public keys only 2640 bits in size. This makes the number of bits transmitted roughly equivalent to the non-quantum secure RSA and Diffie–Hellman at the same classical security level.
+
+
+=== Symmetric-key–based cryptography ===
+As a general rule, for 128 bits of security in a symmetric-key–based system, one can safely use key sizes of 256 bits. The best quantum attack against arbitrary symmetric-key systems is an application of Grover's algorithm, which requires work proportional to the square root of the size of the key space. To transmit an encrypted key to a device that possesses the symmetric key necessary to decrypt that key requires roughly 256 bits as well. It is clear that symmetric-key systems offer the smallest key sizes for post-quantum cryptography.
+
+
+== Forward secrecy ==
+A public-key system demonstrates a property referred to as perfect forward secrecy when it generates random public keys per session for the purposes of key agreement. This means that the compromise of one message cannot lead to the compromise of others, and also that there is not a single secret value which can lead to the compromise of multiple messages. Security experts recommend using cryptographic algorithms that support forward secrecy over those that do not. The reason for this is that forward secrecy can protect against the compromise of long term private keys associated with public/private key pairs. This is viewed as a means of preventing mass surveillance by intelligence agencies.
+Both the Ring-LWE key exchange and supersingular isogeny Diffie–Hellman (SIDH) key exchange can support forward secrecy in one exchange with the other party. Both the Ring-LWE and SIDH can also be used without forward secrecy by creating a variant of the classic ElGamal encryption variant of Diffie–Hellman.
+The other algorithms in this article, such as NTRU, do not support forward secrecy as is.
+Any authenticated public key encryption system can be used to build a key exchange with forward secrecy.
+
+
+== Open Quantum Safe project ==
+The Open Quantum Safe (OQS) project was started in late 2016 and has the goal of developing and prototyping quantum-resistant cryptography. It aims to integrate current post-quantum schemes in one library: liboqs. liboqs is an open source C library for quantum-resistant cryptographic algorithms. It initially focuses on key exchange algorithms but by now includes several signature schemes. It provides a common application programming interface (API) suitable for post-quantum key exchange algorithms, and will collect together various implementations. liboqs will also include a test harness and benchmarking routines to compare performance of post-quantum implementations. Furthermore, OQS also provides integration of liboqs into OpenSSL.
+As of March 2023, the following key exchange algorithms are supported:
+NIST finalized the first three FIPS Post-Quantum Cryptography standards in August 2024. A fourth, based on FALCON and to be published as FIPS 206 (FN-DSA), remained in draft review as of 2025, with final publication expected in late 2026 or early 2027.
+
+Older supported versions that have been removed because of the progression of the NIST Post-Quantum Cryptography Standardization Project are:
+
+
+== Implementation ==
+A challenge in post-quantum cryptography is the implementation of potentially quantum safe algorithms into existing systems. There are tests done, for example by Microsoft Research implementing PICNIC in a PKI using Hardware security modules. Test implementations for Google's NewHope algorithm have also been done by HSM vendors. In August 2023, Google released a FIDO2 security key implementation of an ECC/Dilithium hybrid signature schema which was done in partnership with ETH Zürich.
+The Signal Protocol has used Post-Quantum Extended Diffie–Hellman (PQXDH) since 2023.
+On February 21, 2024, Apple announced that they were going to upgrade their iMessage protocol with a new PQC protocol called "PQ3", which will use ongoing keying. Apple stated that, although capable quantum computers do not yet exist, they wanted to mitigate risks from future quantum computers as well as so-called "Harvest now, decrypt later" attack scenarios. Apple stated that they believe their PQ3 implementation provides protections that "surpass those in all other widely deployed messaging apps", because it uses ongoing keying. Apple intended to replace the existing iMessage protocol within all supported conversations with PQ3 by the end of 2024. Apple also defined a scale to make it easier to compare the security properties of messaging apps, with a scale represented by levels ranging from 0 to 3: 0 for no end-to-end by default, 1 for pre-quantum end-to-end by default, 2 for PQC key establishment only (e.g. PQXDH), and 3 for PQC key establishment and ongoing rekeying (PQ3).
+The Internet Engineering Task Force has prepared an Internet-Draft using PQC algorithms in Messaging Layer Security (MLS). MLS will be used in RCS text messaging in Google Messages and Messages (Apple).
+Other notable implementations include:
+
+bouncycastle
+liboqs
+
+
+=== Physical layer complements ===
+While post-quantum algorithms protect data content from future decryption, they do not prevent the interception and storage of the encrypted ciphertext itself (a threat model known as "Harvest now, decrypt later"). To mitigate this risk, some network architectures incorporate physical layer security (PLS) or optical chaos alongside PQC.
+By burying the optical signal within the noise floor (negative OSNR) using spectral phase encoding, these physical countermeasures aim to make the transmission unrecordable. This creates a "defense-in-depth" strategy: physical obfuscation prevents the harvesting of ciphertext entirely, ensuring that no data exists for future quantum decryption, while PQC algorithms provide necessary protection for data stored at the endpoints.
+
+
+=== Hybrid encryption ===
+
+Google has maintained the use of "hybrid encryption" in its use of post-quantum cryptography: whenever a relatively new post-quantum scheme is used, it is combined with a more proven, non-PQ scheme. This is to ensure that the data are not compromised even if the relatively new PQ algorithm turns out to be vulnerable to non-quantum attacks before Y2Q. This type of scheme is used in its 2016 and 2019 tests for post-quantum TLS, and in its 2023 FIDO2 key. One of the algorithms used in the 2019 test, SIKE, was broken in 2022, but the non-PQ X25519 layer (already used widely in TLS) still protected the data. Apple's PQ3 and Signal's PQXDH are also hybrid.
+The NSA and GCHQ argue against hybrid encryption, claiming that it adds complexity to implementation and transition. Daniel J. Bernstein, who supports hybrid encryption, argues that the claims are bogus.
+
+
+== Criticisms ==
+Post-quantum cryptography's need is predicated on traditional, established cryptographic problems being quickly solved by a quantum computer.  However, quantum computers are still under development, and have yet to demonstrate a large scale test of Shor's algorithm, verifying that a quantum speed-up mechanism is possible, and out-performs a classical computer on such problems.  In 2019, a team using the IBM Q quantum computer could factor the numbers 15 and 21, but not 35.  Other attempts have been made to simulate quantum computers for larger numbers, but the simulations had no quantum advantage (i.e a speed-up over a classical computer).
+While the integer factorization, discrete logarithm, and elliptic-curve discrete logarithm problems are potentially broken by the proposed quantum speed-up mechanism, none of the cryptography based on these mathematically difficult problems have been proven unsafe, nor mathematically broken outside of Shor's algorithm, or its derivatives. These cryptographic systems are used worldwide, and have been extensively tested for vulnerabilities for several decades.  Additionally, while Shor's algorithm proposes a polynomial time (i.e. fast) solution, via a quantum period-finding mechanism (i.e. finding a repeating period where the quantum computer tests all possible periods in parallel, then collapsing on a correct solution, or solutions), such a speed-up has never been proven to exist at scale.
+Mathematicians Stephen Wolfram and Christopher Wolfram have created simulated models based on Branchial Graphs to mimic quantum mechanics, and by extension can emulate systems utilized by quantum computers.  Their research led Stephen to publicly express mild doubts about the proposed quantum speed-up mechanism's existence, related to the systematic collapse/unwinding of the entangled quantum states down to a usable, error-corrected solution.  That is, doubts about the mechanism responsible for the theoretical quantum advantage utilized by future quantum computers, at scale, where a large number of fully entangled qubits are capable of running Shor's Algorithm against a modern classical problem (e.g. RSA-2048, utilizing integer factorization).
+In 2013, Edward Snowden's NSA leaks confirmed that the largest supercomputers of the time could not break correctly implemented public key crypto systems.  Also, the NSA had not found a mathematical shortcut, despite being the largest employer of mathematicians in the world.  Security analyst and cryptographer, Bruce Schneier, who had access to the Snowden archive, concluded that the math was never broken.  Taken in aggregate, if the above criticisms prove to be true, then the need for post-quantum cryptography is put into question, along with the need to switch modern business infrastructure onto less-proven cryptographic schemes.
+
+
+== See also ==
+NIST Post-Quantum Cryptography Standardization
+Quantum cryptography – cryptography based on quantum mechanics
+Crypto-shredding – Deleting encryption keys
+
+
+== References ==
+
+
+== Further reading ==
+Bagirovs, Emils; Provodin, Grigory; Sipola, Tuomo; Hautamäki, Jari (2024). "Applications of Post-quantum Cryptography". European Conference on Cyber Warfare and Security. 23 (1): 49–57. arXiv:2406.13258. doi:10.34190/eccws.23.1.2247.
+Bavdekar, Ritik; Chopde, Eashan Jayant; Bhatia, Ashutosh; Tiwari, Kamlesh; Daniel, Sandeep Joshua (2022). "Post Quantum Cryptography: Techniques, Challenges, Standardization, and Directions for Future Research". arXiv:2202.02826 [cs.CR].
+Bavdekar, Ritik; Jayant Chopde, Eashan; Agrawal, Ankit; Bhatia, Ashutosh; Tiwari, Kamlesh (2023). "Post Quantum Cryptography: A Review of Techniques, Challenges and Standardizations". 2023 International Conference on Information Networking (ICOIN). pp. 146–151. doi:10.1109/ICOIN56518.2023.10048976. ISBN 978-1-6654-6268-6.
+Bernstein, Daniel J.; Buchmann, Johannes; Dahmen, Erik, eds. (2008). Post-Quantum Cryptography. Springer. p. 245. ISBN 978-3-540-88701-0.
+Bernstein, Daniel J.; Lange, Tanja (2017). "Post-quantum cryptography". Nature. 549 (7671): 188–194. Bibcode:2017Natur.549..188B. doi:10.1038/nature23461. PMID 28905891.
+Buchmann, Johannes A.; Butin, Denis; Göpfert, Florian; Petzoldt, Albrecht (2016). "Post-Quantum Cryptography: State of the Art". The New Codebreakers: Essays Dedicated to David Kahn on the Occasion of His 85th Birthday. Springer. pp. 88–108. doi:10.1007/978-3-662-49301-4_6. ISBN 978-3-662-49301-4.
+Campagna, M.; Hardjono, T.; Pintsov, L.; Romansky, B.; and Yu, T. "Kerberos Revisited: Quantum-Safe Authentication". ETSI Quantum-Safe-Crypto Workshop. September 26, 2013.
+Campagna, Matt; LaMacchia, Brian; Ott, David (2021). "Post Quantum Cryptography: Readiness Challenges and the Approaching Storm". Computing Community Consortium. arXiv:2101.01269.
+Chase, Melissa; Derler, David; Goldfeder, Steven; Orlandi, Claudio; Ramacher, Sebastian; Rechberger, Christian; Slamanig, Daniel; Zaverucha, Greg (29 November 2017). The Picnic Signature Scheme Design Document Version 1.0.
+Dam, Duc-Thuan; Tran, Thai-Ha; Hoang, Van-Phuc; Pham, Cong-Kha; Hoang, Trong-Thuc (2023). "A Survey of Post-Quantum Cryptography: Start of a New Race". Cryptography. 7 (3): 40. doi:10.3390/cryptography7030040.
+Jao, David (September 19, 2011). Isogenies in a Quantum World; Archived 2014-05-02 at the Wayback Machine. University of Waterloo.
+Joseph, David; Misoczki, Rafael; Manzano, Marc; Tricot, Joe; Pinuaga, Fernando Dominguez; Lacombe, Olivier; Leichenauer, Stefan; Hidary, Jack; Venables, Phil; Hansen, Royal (2022). "Transitioning organizations to post-quantum cryptography". Nature. 605 (7909): 237–243. Bibcode:2022Natur.605..237J. doi:10.1038/s41586-022-04623-2. PMID 35546191.
+Kret, Ehren; Rolfe Schmidt (2024-01-23) [2023-05-24]. The PQXDH Key Agreement Protocol Specification, Revision 3.
+Kumar, Manoj; Pattnaik, Pratap (2020). "Post Quantum Cryptography – an overview: (Invited Paper)". 2020 IEEE High Performance Extreme Computing Conference. pp. 1–9. doi:10.1109/HPEC43674.2020.9286147. ISBN 978-1-7281-9219-2.
+Li, Silong; Chen, Yuxiang; Chen, Lin; Liao, Jing; Kuang, Chanchan; Li, Kuanching; Liang, Wei; Xiong, Naixue (2023). "Post-Quantum Security: Opportunities and Challenges". Sensors. 23 (21): 8744. Bibcode:2023Senso..23.8744L. doi:10.3390/s23218744. PMC 10648643. PMID 37960442.
+Lyubashevsky, Vadim; Chris Peikert; Oded Regev. "On Ideal Lattices and Learning with Errors Over Rings".
+Mamatha, G S; Dimri, Namya; Sinha, Rasha (2024). "Post-Quantum Cryptography: Securing Digital Communication in the Quantum Era". arXiv:2403.11741 [cs.CR].
+Rawal, Bharat S.; Curry, Peter J. (2024). "Challenges and opportunities on the horizon of post-quantum cryptography". APL Quantum. 1 (2) 026110. doi:10.1063/5.0198344.
+Richter, Maximilian; Bertram, Magdalena; Seidensticker, Jasper; Tschache, Alexander (2022). "A Mathematical Perspective on Post-Quantum Cryptography". Mathematics. 10 (15): 2579. doi:10.3390/math10152579.
+Sood, Neerav (2024). "Cryptography in Post Quantum Computing Era". SSRN Electronic Journal. doi:10.2139/ssrn.4705470.
+Singh, Balvinder; Ahateshaam, Md; Lahiri, Abhisweta; Sagar, Anil Kumar (2024). "Future of Cryptography in the Era of Quantum Computing". Innovations in Electrical and Electronic Engineering. Lecture Notes in Electrical Engineering. Vol. 1115. pp. 13–31. doi:10.1007/978-981-99-8661-3_2. ISBN 978-981-99-8660-6.
+Yalamuri, Gagan; Honnavalli, Prasad; Eswaran, Sivaraman (2022). "A Review of the Present Cryptographic Arsenal to Deal with Post-Quantum Threats". Procedia Computer Science. 215: 834–845. doi:10.1016/j.procs.2022.12.086.
+
+
+== External links ==
+PQCrypto, the post-quantum cryptography conference
+ETSI Quantum Secure Standards Effort
+NIST's Post-Quantum crypto Project
+PQCrypto Usage & Deployment
+Vulnerability Score of Common Encryption Algorithms
+Dilithium and SPHINCS+, explanation and demonstration in Excel (without macros) by Tim Wambach
