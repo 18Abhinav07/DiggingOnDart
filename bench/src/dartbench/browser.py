@@ -21,7 +21,8 @@ FLAGS = [
 
 class Browser:
     def __init__(self, extra_urls: list[str] | None = None, tabs: bool = True):
-        self.urls = (list(config.TABS) if tabs else []) + (extra_urls or [])
+        # Chromium makes the first URL the active tab; the frame page must be it, or it renders hidden and rAF stops
+        self.urls = (extra_urls or []) + (list(config.TABS) if tabs else [])
         self.proc: subprocess.Popen | None = None
 
     @staticmethod

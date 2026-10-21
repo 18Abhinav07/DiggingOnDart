@@ -337,7 +337,7 @@ def e4(r: Runner) -> None:
                 with Browser(extra_urls=[fc.url(load)]):
                     _activate_browser()
                     if not fc.wait_for_page():
-                        raise RuntimeError("frame page never reported; is Brave showing it in front?")
+                        raise RuntimeError(f"frame page not visible ({fc.healthy()[1]}); is Brave showing it in front?")
                     time.sleep(3)
                     fc.drain()
                     # baseline with no model loaded at all
@@ -358,7 +358,10 @@ def e4(r: Runner) -> None:
                                 ok, why = fc.healthy()
                                 if not ok:
                                     log(f"  ! frame page unhealthy ({why}); bringing Brave forward")
-                                    _activate_browser(); time.sleep(2)
+                                    _activate_browser()
+                                    if not fc.wait_for_page(15):
+                                        raise RuntimeError(f"frame page still not visible ({fc.healthy()[1]}); "
+                                                           "E4 data would be empty, stopping")
                                 fc.set_fake_state("prefill")
                                 row = r.trial(sid, srv, "E4", label, prompt, nt, idx=i,
                                               n_predict=config.E4_GEN_TOKENS,
@@ -388,7 +391,22 @@ def _phase_sleep(fc: FrameCollector, s: float) -> None:
 def _activate_browser() -> None:
     if config.FAKE:
         return
-    subprocess.run(["osascript", "-e", 'tell application "Brave Browser" to activate'], capture_output=True)
+    # activate alone raises the window but leaves whichever tab was active; select the frame page explicitly
+    script = f'''tell application "Brave Browser"
+  activate
+  repeat with w in windows
+    set i to 0
+    repeat with t in tabs of w
+      set i to i + 1
+      if URL of t contains "127.0.0.1:{config.FRAMES_PORT}" then
+        set active tab index of w to i
+        set index of w to 1
+        return
+      end if
+    end repeat
+  end repeat
+end tell'''
+    subprocess.run(["osascript", "-e", script], capture_output=True)
 
 
 # ================================================================ E5: thermal soak

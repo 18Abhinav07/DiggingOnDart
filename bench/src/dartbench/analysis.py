@@ -39,7 +39,8 @@ def ram_mb() -> float:
 
 def session_ids(db: DB, exp: str, scope: str = "auto") -> list[int]:
     """Sessions to analyse. 'auto' prefers full runs and falls back to quick ones."""
-    rows = db.query("SELECT id, params_json FROM sessions WHERE experiment=?", (exp,))
+    # 'invalid' marks a session kept for the record but excluded from analysis (see its notes)
+    rows = db.query("SELECT id, params_json FROM sessions WHERE experiment=? AND IFNULL(status, '') != 'invalid'", (exp,))
     full = [r["id"] for r in rows if not json.loads(r["params_json"] or "{}").get("quick")]
     quick = [r["id"] for r in rows if json.loads(r["params_json"] or "{}").get("quick")]
     if scope == "full":

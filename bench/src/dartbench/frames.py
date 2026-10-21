@@ -87,11 +87,12 @@ class FrameCollector:
             self._fake_stop.set()
 
     def wait_for_page(self, timeout: float = 60) -> bool:
+        """Posting and visible: a hidden tab still posts (setInterval) but records no frames."""
         if config.FAKE:
             return True
         deadline = time.time() + timeout
         while time.time() < deadline:
-            if self.store.last_post and time.time() - self.store.last_post < 2:
+            if self.healthy()[0]:
                 return True
             time.sleep(0.5)
         return False
