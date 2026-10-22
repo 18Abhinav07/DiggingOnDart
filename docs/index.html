@@ -1,0 +1,307 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>Prefill Stutter Report</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#faf8f4; --surface:#ffffff; --fg:#1b1a17; --fg2:#55534c; --muted:#86837a;
+  --rule:#e4e0d6; --grid:#ece8df; --accent:#9a3b12; --chip:#f1ede4;
+  --s1:#2a78d6; --s2:#eb6834; --bad:#b42318; --good:#1d6b3a;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17171a; --surface:#1f1f23; --fg:#efede7; --fg2:#c3c0b6; --muted:#8f8c84;
+  --rule:#34333a; --grid:#2a2a30; --accent:#f08a5d; --chip:#26262b;
+  --s1:#3987e5; --s2:#d95926; --bad:#f07a6e; --good:#6cc48a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17171a; --surface:#1f1f23; --fg:#efede7; --fg2:#c3c0b6; --muted:#8f8c84;
+  --rule:#34333a; --grid:#2a2a30; --accent:#f08a5d; --chip:#26262b;
+  --s1:#3987e5; --s2:#d95926; --bad:#f07a6e; --good:#6cc48a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:860px;margin:0 auto;padding-block:48px 80px;display:grid;gap:56px}
+section{display:grid;gap:16px;min-width:0}
+h1,h2,h3{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(30px,5vw,44px);letter-spacing:-.01em}
+h2{font-size:26px}
+h3{font-size:18px;font-family:"IBM Plex Sans",system-ui,sans-serif}
+p{margin:0;max-width:68ch}
+.mono,code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.88em}
+code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.eyebrow{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:19px;color:var(--fg2);max-width:62ch}
+.byline{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:14px}
+.byline span{user-select:all}
+header{display:grid;gap:18px;border-bottom:1px solid var(--rule);padding-bottom:36px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px;display:grid;gap:4px;min-width:0}
+.stat b{font:500 30px/1.1 "IBM Plex Mono",monospace;letter-spacing:-.02em}
+.stat small{color:var(--fg2);font-size:13.5px;line-height:1.45}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px;display:grid;gap:12px;min-width:0}
+.card .cap{color:var(--fg2);font-size:14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--fg2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legend i.tri{border-radius:0;background:none!important;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid var(--s2)}
+.legend i.dot{border-radius:50%}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:"IBM Plex Sans",system-ui,sans-serif;fill:var(--fg2);font-size:12px}
+svg .val{font-family:"IBM Plex Mono",monospace;fill:var(--fg);font-size:11.5px}
+svg .row{fill:var(--fg);font-size:13px}
+svg .axis{fill:var(--muted);font-size:11px;font-family:"IBM Plex Mono",monospace}
+.tip{position:fixed;pointer-events:none;background:var(--fg);color:var(--bg);font:13px/1.45 "IBM Plex Sans",sans-serif;
+  padding:8px 10px;border-radius:6px;max-width:260px;z-index:20;opacity:0;transition:opacity .08s}
+.tip b{font-weight:600}
+ol,ul{margin:0;padding-left:1.2em;display:grid;gap:10px;max-width:68ch}
+li::marker{color:var(--muted)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:12px}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.steps li::before{counter-increment:s;content:counter(s,decimal-leading-zero);font:500 13px/1 "IBM Plex Mono",monospace;
+  color:var(--accent);border:1px solid var(--rule);border-radius:6px;padding:8px 0;text-align:center;background:var(--surface)}
+.steps li div{min-width:0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.tbl{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--grid);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:500;color:var(--fg2);font-size:12.5px}
+td{font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+td:first-child{font-family:"IBM Plex Sans",sans-serif;font-size:13.5px}
+tr:last-child td{border-bottom:0}
+details summary{cursor:pointer;color:var(--fg2);font-size:14px}
+details[open] summary{margin-bottom:10px}
+.note{border-left:3px solid var(--accent);padding:4px 0 4px 14px;color:var(--fg2);max-width:68ch}
+.crit{display:grid;gap:8px}
+.crit div{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline}
+.crit span.k{font:500 12px "IBM Plex Mono",monospace;color:var(--accent);border:1px solid var(--rule);border-radius:4px;padding:1px 6px;background:var(--surface)}
+footer{color:var(--muted);font-size:13.5px;border-top:1px solid var(--rule);padding-top:20px;display:grid;gap:6px}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Application · SDE-1 · Dart Browser</div>
+  <h1>Local inference makes GPU-heavy pages stutter. Here is the measurement, and the scheduler I'd build.</h1>
+  <p class="lede">I reran the performance claims of DBR-2026-05 and DBR-2025-01 on a fifth machine and added the measurement neither paper has: what the browser feels like while the model runs. On a GPU-heavy page, prefill at llama.cpp's default batch drops up to 83% of frames. A fixed small batch fixes 7B but not 14B, and it slows down pages that were already smooth. Stage 2 is a frame-aware prefill scheduler.</p>
+  <div class="byline"><strong style="color:var(--fg)">Abhinav Pangaria</strong><span>abhinavpangaria2003@gmail.com</span><span class="mono">Apple M4 Pro · 24 GB · 120 Hz · llama.cpp 0.7.0 · Brave 1.97</span></div>
+</header>
+
+<section>
+  <div class="eyebrow">Stage 1 in numbers</div>
+  <div class="stats">
+    <div class="stat"><b>717</b><small>measured trials over 6.2 h, 19 sessions, 0 errors</small></div>
+    <div class="stat"><b>82.7%</b><small>frames dropped on WebGL Aquarium during 7B prefill (0% idle)</small></div>
+    <div class="stat"><b>0%</b><small>dropped on BBC News and the light page, at the same setting</small></div>
+    <div class="stat"><b>30.1%</b><small>dropped on a CPU-bound page when 7B decodes on the CPU instead of the GPU</small></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Finding 1</div>
+  <h2>The stutter is real, on third-party pages, and only during prefill</h2>
+  <p>Each page was calibrated to idle at 120 fps with no model loaded. A frame counts as dropped when its interval exceeds 1.5× the page's own idle median (8.3 ms here). The model is Qwen 2.5 7B Q4_K_M prefilling a 4,000-token page, with Brave in front.</p>
+  <div class="card">
+    <div class="legend"><span><i style="background:var(--s1)"></i>ubatch 512 (llama.cpp default)</span><span><i style="background:var(--s2)"></i>ubatch 64</span></div>
+    <div id="chartPages" role="img" aria-label="Frames dropped during prefill by page, ubatch 512 versus 64"></div>
+    <div class="cap">The default is fine on light pages and BBC News, and drops 30–83% of frames on GPU-heavy ones. Decode drops nothing on any GPU-heavy page. CPU-only prefill keeps the shader page at 0.1% but takes 104 s instead of 11.5 s, so the cause is GPU contention.</div>
+  </div>
+  <p class="note">MotionMark Multiply, a CPU-bound DOM test, is the exception. It drops 4% at idle and about 9.5% in decode at every GPU setting. Finding 4 follows that up.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Finding 2</div>
+  <h2>The size of each GPU submission is what matters. Pauses between submissions don't help.</h2>
+  <p>I tried every mitigation that works without touching the browser. Gaps between 128-token chunks don't help, because each chunk is still one long GPU submission. At 64 tokens it is smooth with or without a gap. Cutting the chunk size per request works, but it costs about twice the TTFT of setting the size inside the runtime.</p>
+  <div class="card">
+    <div class="legend"><span><i class="dot" style="background:var(--s1)"></i>ubatch, fixed when the model loads</span><span><i class="tri"></i>paced chunks, one request each (c = tokens, g = gap ms)</span></div>
+    <div id="chartFrontier" role="img" aria-label="Time to first token versus frames dropped, for each mitigation on the shader page"></div>
+    <div class="cap">7B on the shader page. Bottom-left is best. ubatch 64 is the cheapest smooth point (+11% TTFT). Per-request chunking gets there at +23% (c64, no gap). CPU-only, at 104 s and 0.1%, is off the chart.</div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Finding 3</div>
+  <h2>No single fixed setting works for every model</h2>
+  <div class="card">
+    <div class="legend"><span><i style="background:var(--s1)"></i>ubatch 512</span><span><i style="background:var(--s2)"></i>ubatch 64</span></div>
+    <div id="chartModels" role="img" aria-label="Frames dropped during prefill on the shader page by model size"></div>
+    <div class="cap">Shader page. ubatch 64 makes 3B and 7B smooth but not 14B. A fixed value safe for 14B would be 32 or less, and ubatch 32 costs 7B about 17% TTFT on every page, including pages that never needed it.</div>
+  </div>
+  <p>This is the case for a scheduler over a constant. A constant small enough for the heaviest model on the weakest Mac taxes every other combination all the time. On BBC News the default is already smooth, and a fixed 64 adds 5.5% TTFT there for nothing. A controller only pays that cost while a GPU-heavy page is in front.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Finding 4</div>
+  <h2>A second engine agrees. Moving inference to the CPU is worse, not safer.</h2>
+  <p>Two follow-ups, both with 7B Q4 prefilling 4,000 tokens. <strong>Safari</strong> (WebKit) ran the same shader page. Safari renders at 60 Hz here, so its budget is 17 ms and it has half as many deadlines to miss as Brave at 120 Hz. <strong>CPU-only inference</strong> (<code>-ngl 0</code>) ran against MotionMark Multiply, a page bound by the main thread rather than the GPU.</p>
+  <div class="tbl"><table><thead><tr><th>Condition</th><th>Prefill dropped</th><th>Decode dropped</th><th>TTFT</th></tr></thead><tbody>
+    <tr><td>Safari · shader page · ubatch 512</td><td><strong>14.5%</strong> (p95 32 ms)</td><td>0%</td><td>12.1 s</td></tr>
+    <tr><td>Safari · shader page · ubatch 64</td><td><strong>0%</strong></td><td>0%</td><td>12.8 s (+6%)</td></tr>
+    <tr><td>Safari · light page · ubatch 512</td><td>0.1%</td><td>0%</td><td>11.5 s</td></tr>
+    <tr><td>Multiply · GPU inference (idle 2.8–4%)</td><td>5.8%</td><td>9.5%</td><td>11.1 s</td></tr>
+    <tr><td>Multiply · CPU-only, 8 threads (default)</td><td><strong>22.4%</strong></td><td><strong>30.1%</strong></td><td>127 s</td></tr>
+    <tr><td>Multiply · CPU-only, 4 threads</td><td>8.2%</td><td>18.1%</td><td>186 s (+46%)</td></tr>
+  </tbody></table></div>
+  <p>WebKit shows the same mechanism: prefill drops frames, decode doesn't, and a 64-token batch removes the drops. The CPU result changes the design. CPU inference competes with the page's main thread in <em>both</em> phases, and halving the threads still leaves 18% dropped while adding 46% to TTFT. That fits DBT-2026-09's cap of 12% of a core for background embedding. So "fall back to CPU" isn't a mitigation. The scheduler needs a CPU budget alongside the GPU one.</p>
+</section>
+
+<section>
+  <div class="eyebrow">Proposal</div>
+  <h2>Stage 2: a frame-aware prefill scheduler</h2>
+  <p>This is a component between the browser and the local runtime. It decides how many tokens each prefill step submits to the GPU, based on whether the frontmost tab is meeting its frame deadlines.</p>
+  <ol class="steps">
+    <li><div><h3>Knob: tokens per <code>llama_decode</code> call</h3><p>Embedded in-process, the caller chooses k for each step, so no model reload is needed. llama-server can't do this because ubatch is fixed when the model loads. The first measurement is whether in-process chunking closes the gap between +23% (per-request) and +11% (ubatch 64).</p></div></li>
+    <li><div><h3>Signal: missed frame deadlines in the visible tab</h3><p>In the product this comes from compositor presentation feedback. In the prototype it comes from the rAF recorder this harness already injects over DevTools, read in 250 ms windows.</p></div></li>
+    <li><div><h3>Controller: AIMD on k</h3><p>k starts at the ceiling. It halves when a window drops more than the page's idle rate and grows additively while frames stay clean. The floor and ceiling come from a per-device, per-model table measured by this harness. On this M4 Pro the floor is 64 for 3B and 7B and below 64 for 14B. The ceiling is 1024, because ubatch 2048 drops 2.9% even on the light page.</p></div></li>
+    <li><div><h3>Policy: leave decode and hidden tabs alone</h3><p>Only the frontmost visible tab counts. GPU decode is never throttled because it never caused drops on GPU-heavy pages. When the window is hidden, prefill runs at the ceiling. Work that has to use CPU cores, such as embedding or CPU fallback, gets a thread budget from the same signal, never llama.cpp's default of every performance core.</p></div></li>
+  </ol>
+  <div class="two">
+    <div class="card">
+      <h3>Deliverables</h3>
+      <ul>
+        <li><code>dartsched</code>: a small C++ library over llama.cpp with chunked prefill, the controller, a pluggable frame signal and the device/model table.</li>
+        <li>A frame-signal prototype feeding the controller over a local socket. Where the production hook goes in Dart's compositor is Dart's call.</li>
+        <li>This harness as the regression suite (light, shader, Aquarium, MotionMark, BBC) with a CI quick mode.</li>
+        <li>A report comparing static 512, static 64 and the scheduler on at least two Macs, one of them a base M-series.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Success criteria, fixed before building</h3>
+      <div class="crit">
+        <div><span class="k">smooth</span><span>On every GPU-heavy page, prefill drops ≤ 2 points above idle, for 3B, 7B and 14B</span></div>
+        <div><span class="k">free</span><span>On light pages, TTFT within 2% of ubatch 512</span></div>
+        <div><span class="k">cheap</span><span>On heavy pages, TTFT no worse than the smallest fixed ubatch that is smooth for that model</span></div>
+        <div><span class="k">fast</span><span>When a heavy page comes to the front mid-prefill, drops recover within 500 ms</span></div>
+        <div><span class="k">fallback</span><span>If in-process chunking costs as much as the HTTP version, say so and switch between two or three preloaded contexts instead</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Also from Stage 1</div>
+  <h2>What the rerun says about the papers' limits</h2>
+  <ul>
+    <li><strong>The 640 ms TTFT only fits a cached prefix.</strong> 7B at 4k is 11.4 s cold and 79 ms when the page is already in the KV cache (3B: 5.1 s vs 45 ms; 14B: 23.7 s vs 159 ms). No model tested gets a cold 4k prefill under 900 ms on this machine. Decode and memory limits pass easily.</li>
+    <li><strong>No 2.3× swap cliff on 24 GB.</strong> 18 GB of other memory slows 7B decode by 6%. Swapping starts between 8 and 14 GB of ballast.</li>
+    <li><strong>Low-bit quants save memory, not speed.</strong> Q8_0 prefills faster than Q2_K (410 vs 374 tok/s at pp512) on this GPU.</li>
+    <li><strong>Not rerun:</strong> accuracy, because it needs Dart's 640-item set. Speculative decoding (E3) and energy (E6) weren't run either. E6 needs root for powermetrics.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="eyebrow">Read this before trusting the numbers</div>
+  <h2>Limits</h2>
+  <ul>
+    <li>One machine. Brave stands in for Dart, since both are Chromium. Safari is the second engine, at 60 Hz rather than 120 Hz. Qwen 2.5 on llama.cpp 0.7.0, while Dart used b4021. rAF intervals are a proxy for compositor frames.</li>
+    <li><strong>The decision rule was amended after seeing data.</strong> As written before E4, it read only the light page and said "build the capability gate". I changed it to "worst page decides" once the heavy page showed 64% drops. Both verdicts are printed in the report.</li>
+    <li>One 4-minute condition ran while something outside the benchmark halved the machine's decode speed. It is kept and labelled "disturbed", and I reran it.</li>
+  </ul>
+</section>
+
+<section>
+  <details>
+    <summary>Table view: every E4 condition behind the charts</summary>
+    <div class="tbl"><table id="tbl"><thead><tr><th>Condition</th><th>Prefill dropped</th><th>Prefill fps</th><th>p95 ms</th><th>Decode dropped</th><th>TTFT s</th><th>Decode tok/s</th></tr></thead><tbody></tbody></table></div>
+  </details>
+</section>
+
+<footer>
+  <span>Code, raw SQLite data, design and decision rule: <code>dart-application/</code>. <code>./reproduce.sh</code> reruns the core experiment on any Apple Silicon Mac in about 15 min. The full dashboard is <code>docs/dashboard.html</code>, the report is <code>bench/reports/report.md</code>, and the Stage 2 plan is <code>docs/stage2.md</code>.</span>
+  <span>Every number on this page comes from that report, generated 22 Oct 2026.</span>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const tip=document.getElementById("tip");
+function showTip(e,html){tip.innerHTML=html;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-tip.offsetWidth-8);tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px"}
+function hideTip(){tip.style.opacity=0}
+
+// paired horizontal bars: rows of [label, a, b, note]
+function pairs(id,rows,names){
+  const host=document.getElementById(id), W=Math.max(320,host.clientWidth||760), lab=W<520?108:150, right=50, rowH=46, top=8, H=top+rows.length*rowH+24;
+  host.textContent="";
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`},host), x=v=>lab+(W-lab-right)*v/100;
+  [0,25,50,75,100].forEach(t=>{el("line",{x1:x(t),x2:x(t),y1:top,y2:H-20,stroke:"var(--grid)"},s);
+    el("text",{x:x(t),y:H-4,"text-anchor":"middle",class:"axis"},s).textContent=t+"%"});
+  rows.forEach((r,i)=>{const y=top+i*rowH+6;
+    el("text",{x:0,y:y+18,class:"row"},s).textContent=r[0];
+    [r[1],r[2]].forEach((v,j)=>{const by=y+j*16, w=Math.max(x(v)-x(0),2);
+      el("rect",{x:x(0),y:by,width:w,height:14,rx:3,fill:j?"var(--s2)":"var(--s1)"},s);
+      el("text",{x:x(0)+w+6,y:by+11,class:"val"},s).textContent=v.toFixed(1)+"%";});
+    const hit=el("rect",{x:0,y:y-6,width:W,height:rowH,fill:"transparent"},s);
+    hit.addEventListener("pointermove",e=>showTip(e,`<b>${r[0]}</b><br>${names[0]}: ${r[1]}% dropped<br>${names[1]}: ${r[2]}% dropped${r[3]?"<br>"+r[3]:""}`));
+    hit.addEventListener("pointerleave",hideTip);
+  });
+}
+function draw(){
+pairs("chartPages",[
+  ["WebGL Aquarium",82.7,0.0,"TTFT 11.4 s → 12.4 s (+9%)"],
+  ["Shader page",63.7,1.3,"TTFT 11.5 s → 12.8 s (+11%)"],
+  ["MotionMark Arcs",30.4,0.0,"TTFT 11.3 s → 11.8 s (+4%)"],
+  ["BBC News",0.0,0.0,"TTFT 11.0 s → 11.6 s (+5.5%), for nothing"],
+  ["Light page",0.0,0.0,"TTFT +4.5%, for nothing"],
+],["ubatch 512","ubatch 64"]);
+pairs("chartModels",[
+  ["Qwen 2.5 3B",69.0,0.0,"TTFT 5.5 s → 6.5 s (+18%)"],
+  ["Qwen 2.5 7B",63.7,1.3,"TTFT 11.5 s → 12.8 s (+11%)"],
+  ["Qwen 2.5 14B",72.3,31.0,"TTFT 25.0 s → 26.6 s, still 90 fps"],
+],["ubatch 512","ubatch 64"]);
+
+frontier();
+}
+// TTFT vs dropped, shader page 7B
+function frontier(){
+  const pts=[
+    ["ub512",11.5,63.7,0],["ub128",11.8,63.0,0],["ub64",12.8,1.3,0],
+    ["c128 g16",12.7,38.4,1],["c128 g50",13.8,34.1,1],["c64 g0",14.1,1.8,1],
+    ["c64 g16",14.5,0.0,1],["c32 g0",15.4,0.0,1],["c64 g50",16.7,0.0,1]];
+  const lbl={"ub512":[8,-8,"start"],"ub128":[8,14,"start"],"ub64":[-8,-10,"end"],"c128 g16":[8,4,"start"],
+    "c128 g50":[8,4,"start"],"c64 g0":[0,-12,"middle"],"c64 g16":[0,18,"middle"],"c32 g0":[0,18,"middle"],"c64 g50":[0,18,"middle"]};
+  const host=document.getElementById("chartFrontier"),W=Math.max(320,host.clientWidth||760),H=W<520?300:340,L=46,R=20,T=12,B=40;
+  host.textContent="";
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`},host);
+  const x=v=>L+(W-L-R)*(v-11)/(17-11), y=v=>T+(H-T-B)*(1-v/70);
+  [0,10,20,30,40,50,60,70].forEach(t=>{el("line",{x1:L,x2:W-R,y1:y(t),y2:y(t),stroke:"var(--grid)"},s);
+    el("text",{x:L-8,y:y(t)+4,"text-anchor":"end",class:"axis"},s).textContent=t+"%"});
+  [11,12,13,14,15,16,17].forEach(t=>el("text",{x:x(t),y:H-B+18,"text-anchor":"middle",class:"axis"},s).textContent=t+" s");
+  el("text",{x:W-R,y:H-4,"text-anchor":"end"},s).textContent="time to first token (4k tokens) →";
+  el("text",{x:L,y:T-0,"text-anchor":"start",dy:"-2"},s).textContent="";
+  el("text",{x:L+4,y:y(70)+14},s).textContent="↑ frames dropped in prefill";
+  pts.forEach(p=>{const cx=x(p[1]),cy=y(p[2]);
+    if(p[3]) el("path",{d:`M${cx} ${cy-7}L${cx+7} ${cy+5}L${cx-7} ${cy+5}Z`,fill:"var(--s2)",stroke:"var(--surface)","stroke-width":2},s);
+    else el("circle",{cx,cy,r:6,fill:"var(--s1)",stroke:"var(--surface)","stroke-width":2},s);
+    const o=lbl[p[0]];el("text",{x:cx+o[0],y:cy+o[1],"text-anchor":o[2],class:"val"},s).textContent=p[0];
+    const hit=el("circle",{cx,cy,r:16,fill:"transparent"},s);
+    hit.addEventListener("pointermove",e=>showTip(e,`<b>${p[3]?"paced "+p[0]:"ubatch "+p[0].slice(2)}</b><br>${p[2]}% dropped · TTFT ${p[1]} s (${p[1]>11.5?"+":""}${Math.round((p[1]/11.5-1)*100)}%)`));
+    hit.addEventListener("pointerleave",hideTip);
+  });
+}
+draw();
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(draw,150)});
+
+// table view
+const T=[
+ ["7B ub512 · shader page",63.7,41,48.2,0.0,11.5,36.9],["7B ub128 · shader page",63.0,72,18.3,0.0,11.8,38.9],
+ ["7B ub64 · shader page",1.3,118,10.0,0.0,12.8,39.0],["7B paced c128 g16 · shader",38.4,85,17.8,0.0,12.7,38.9],
+ ["7B paced c128 g50 · shader",34.1,88,17.9,0.9,13.8,38.9],["7B paced c64 g0 · shader",1.8,118,9.2,0.0,14.1,36.0],
+ ["7B paced c64 g16 · shader",0.0,120,9.3,0.0,14.5,38.9],["7B paced c32 g0 · shader",0.0,120,9.5,0.0,15.4,36.7],
+ ["7B paced c64 g50 · shader",0.0,120,9.3,0.0,16.7,38.9],["7B cpu-only · shader",0.1,120,8.4,0.0,104.4,20.9],
+ ["3B ub512 · shader",69.0,65,25.0,0.0,5.5,67.7],["3B ub64 · shader",0.0,120,9.6,0.0,6.5,68.1],
+ ["14B ub512 · shader",72.3,36,58.0,0.0,25.0,18.2],["14B ub64 · shader",31.0,90,17.1,0.0,26.6,19.6],
+ ["7B ub512 · Aquarium",82.7,39,43.6,0.1,11.4,38.7],["7B ub64 · Aquarium",0.0,120,9.9,0.0,12.4,38.8],
+ ["7B ub512 · MM Arcs",30.4,81,27.4,0.0,11.3,42.5],["7B ub64 · MM Arcs",0.0,120,8.7,0.0,11.8,42.9],
+ ["7B ub512 · MM Multiply (idle 4.0%)",5.8,113,15.9,9.5,11.1,43.3],["7B ub64 · MM Multiply",5.4,114,15.1,9.2,11.6,43.3],
+ ["7B ub512 · BBC News",0.0,120,8.8,0.0,11.0,43.5],["7B ub64 · BBC News",0.0,120,9.3,0.0,11.6,43.4],
+ ["7B ub512 · Safari shader (60 Hz)",14.5,59,32.0,0.0,12.1,40.2],["7B ub64 · Safari shader (60 Hz)",0.0,60,18.0,0.0,12.8,40.1],
+ ["7B ub512 · Safari light (60 Hz)",0.1,60,18.0,0.0,11.5,42.7],["7B cpu-only · MM Multiply",22.4,96,17.0,30.1,127.3,13.3],
+ ["7B cpu-only t4 · MM Multiply",8.2,111,16.7,18.1,186.1,12.5],
+];
+const tb=document.querySelector("#tbl tbody");
+T.forEach(r=>{const tr=document.createElement("tr");
+  tr.innerHTML=`<td>${r[0]}</td><td>${r[1].toFixed(1)}%</td><td>${r[2]}</td><td>${r[3].toFixed(1)}</td><td>${r[4].toFixed(1)}%</td><td>${r[5].toFixed(1)}</td><td>${r[6].toFixed(1)}</td>`;tb.appendChild(tr)});
+</script>
+
+</body></html>

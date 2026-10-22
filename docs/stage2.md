@@ -13,8 +13,24 @@ Every page below idles at 0% dropped with no model loaded.
 | BBC News (scrolling) | 0.0% | 0.0% | +5.5%, for nothing |
 | Light page (WebGL + scroll) | 0.0% | 0.0% | +4.5%, for nothing |
 
-MotionMark Multiply (CPU-bound DOM) already drops 4% at idle; inference adds little in prefill and about
-5 points in decode, at every setting. That is a separate CPU effect and is left as an open question.
+**Safari (WebKit, 60 Hz) shows the same pattern.** On the shader page at ubatch 512, 7B prefill drops 14.5%
+(p95 32 ms against a 17 ms budget). Decode drops 0%. At ubatch 64 it drops 0% for +6% TTFT. The light page
+stays at 0.1%. The number is smaller than Brave's partly because a 60 Hz display has half as many deadlines
+to miss.
+
+**CPU-bound pages are a second, separate resource.** MotionMark Multiply (CPU-bound DOM) drops 3–4% at idle.
+With GPU inference it drops 5.8% in prefill and 9.5% in decode. Moving inference to the CPU makes it worse:
+
+| 7B on Multiply | Prefill drops | Decode drops | TTFT |
+|---|---:|---:|---:|
+| GPU (Metal) | 5.8% | 9.5% | 11.1 s |
+| CPU-only, 8 threads (llama.cpp default) | 22.4% | 30.1% | 127 s |
+| CPU-only, 4 threads | 8.2% | 18.1% | 186 s |
+
+CPU inference competes with the main thread in both phases. The GPU's prefill problem doesn't have that shape.
+Capping threads helps but doesn't fix it, and it costs 46% TTFT. This matches DBT-2026-09's cap on
+background embedding (12% of a core). So the scheduler needs a CPU budget alongside the GPU one, and
+"fall back to CPU" isn't a safe mitigation.
 
 Three more facts shape the design:
 - **It is GPU contention.** CPU-only prefill keeps the heavy page at 0.1% dropped but takes 104 s.
@@ -40,8 +56,9 @@ step submits, from the browser's own frame timing.
    shows drops above the page's idle rate. Grow k additively while frames stay clean. Floor and ceiling
    come from a per-device, per-model table that this harness measures (on this M4 Pro: 64 for 3B and 7B,
    below 64 for 14B; ceiling 1024, since ubatch 2048 makes even the light page drop 2.9%).
-4. **Policy.** Only the frontmost visible tab counts. Decode runs untouched. When the window is hidden,
-   prefill runs at the ceiling.
+4. **Policy.** Only the frontmost visible tab counts. Decode runs untouched on the GPU. When the window
+   is hidden, prefill runs at the ceiling. Work that has to run on CPU cores (embedding, CPU fallback) gets
+   a thread budget from the same signal. It never takes the llama.cpp default of every performance core.
 
 ## The baseline it has to beat
 A fixed small ubatch is the obvious alternative, and on this machine 64 is a strong one for 7B. The
@@ -80,7 +97,7 @@ scheduler earns its place in two ways the data shows:
   not speed, on this GPU.
 
 ## Limits
-One machine. Brave stands in for Dart. Qwen 2.5 on llama.cpp 0.7.0. rAF intervals are a proxy for
+One machine. Brave stands in for Dart; Safari (60 Hz) is the second engine. Qwen 2.5 on llama.cpp 0.7.0. rAF intervals are a proxy for
 compositor frames. The Stage 2 rule was amended after the first E4 run (see design.md); the original
 verdict ("gate", from the light page alone) is still printed in the report. One 4-minute condition ran
 while something else slowed the whole machine (decode at half speed); it is kept, labelled "disturbed",

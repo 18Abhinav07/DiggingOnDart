@@ -11,6 +11,9 @@ M4 Pro with 24 GB, and adds E4: does local inference make the browser drop frame
 | E2 | decode and TTFT under incompressible memory ballast: where does paging start and what does it cost? |
 | E3 | speculative decoding (0.5B/1.5B drafts, draft length 4 and 16) per task and memory level |
 | E4 | rAF frame intervals and long animation frames in Brave during prefill and decode |
+| E4x | E4 on real pages (WebGL Aquarium, MotionMark Multiply/Arcs, BBC) plus paced-prefill chunk/gap sweeps |
+| E4y | the shader page in Safari (WebKit), and CPU-only inference against the CPU-bound Multiply page, 8 vs 4 threads |
+| core | the four conditions `reproduce.sh` runs: 7B at batch 512 vs 64, shader page and Aquarium |
 | E5 | 12 min back-to-back: thermal sustain |
 | E6 | joules per token (powermetrics) |
 
@@ -31,6 +34,8 @@ uv run dartbench run all --quick        # 15-30 min smoke test; check the dashbo
 - The run resumes. Ctrl-C (or a crash) keeps every finished trial; rerun the same command to continue.
 - `uv run dartbench dashboard` serves http://127.0.0.1:8600 while a run writes (refreshes every 5 s).
 - `uv run dartbench report` writes `reports/report.md`, `trials.csv` and `frames_summary.csv`.
+- `uv run dartbench export --out ../docs/dashboard.html` writes the dashboard as one static file (no server).
+- `DARTBENCH_DB=results/other.db` points every command at another database; `reproduce.sh` uses `results/mine.db`.
 - `--allow-missing` runs with only the models downloaded so far; `--allow-battery` skips the AC check.
   Use both only for previews: battery throttles the GPU.
 
