@@ -211,3 +211,8 @@ def test_e4_view_budget_per_real_page(db):
     row = next(r for r in v["conditions"] if r["condition"] == f"7B-Q4 gpu ub512 @{key}")
     assert row["budget_ms"] == pytest.approx(16.7)
     assert row["phases"]["idle"]["dropped_pct"] == 0
+
+
+def test_test_page_not_opened_twice():
+    b = Browser(extra_urls=["https://www.bbc.com/news"])
+    assert b.urls.count("https://www.bbc.com/news") == 1 and b.urls[0] == "https://www.bbc.com/news"

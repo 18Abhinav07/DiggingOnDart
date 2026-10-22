@@ -23,7 +23,9 @@ FLAGS = [
 class Browser:
     def __init__(self, extra_urls: list[str] | None = None, tabs: bool = True, debug_port: int | None = None):
         # Chromium makes the first URL the active tab; the frame page must be it, or it renders hidden and rAF stops
-        self.urls = (extra_urls or []) + (list(config.TABS) if tabs else [])
+        # a test page that is also one of the five tabs (BBC) would open twice, and the DevTools pump could attach to
+        # the hidden copy
+        self.urls = (extra_urls or []) + [u for u in (config.TABS if tabs else []) if u not in (extra_urls or [])]
         self.debug_port = debug_port  # DevTools, to inject the frame recorder into third-party pages
         self.proc: subprocess.Popen | None = None
 

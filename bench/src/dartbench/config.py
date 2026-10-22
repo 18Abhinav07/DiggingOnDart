@@ -135,10 +135,12 @@ E4_PRIMARY = "7B-Q4 gpu ub512"  # the condition the Stage 2 decision rule reads
 # Follow-up after the first E4: the heavy page dropped 64% of frames in prefill while the light page dropped none,
 # so the mitigations are rerun where the problem is, and on third-party pages instead of only our own.
 MM = "https://browserbench.org/MotionMark1.3.1/developer.html?suite-name=MotionMark&controller=fixed&test-interval=1800&system-frame-rate=120&frame-rate=120"
-E4_REAL_PAGES = {  # load key -> URL; complexities calibrated to hold 120 fps idle on the M4 Pro
-    "aquarium": "https://webglsamples.org/aquarium/aquarium.html?numFish=10000",
-    "mm-multiply": MM + "&test-name=Multiply&complexity=1500",
-    "mm-arcs": MM + "&test-name=CanvasArcs&complexity=1500",
+# load key -> URL. Each is the heaviest setting that still idles at 120 fps on the M4 Pro (calibrated with no model
+# loaded: aquarium 30k fish drops 9.7% idle, Multiply 2500 drops 17%; CanvasArcs holds 120 fps even at 10000)
+E4_REAL_PAGES = {
+    "aquarium": "https://webglsamples.org/aquarium/aquarium.html?numFish=20000",
+    "mm-multiply": MM + "&test-name=Multiply&complexity=2000",
+    "mm-arcs": MM + "&test-name=CanvasArcs&complexity=10000",
     "bbc": "https://www.bbc.com/news",
 }
 E4_DEBUG_PORT = 9223
@@ -150,6 +152,14 @@ E4X_CONDITIONS = [
     ("7B-Q4 paced c64 g50 heavy-page", "7B-Q4_K_M", 99, 512, "heavy", (64, 50)),
     ("7B-Q4 paced c128 g50 heavy-page", "7B-Q4_K_M", 99, 512, "heavy", (128, 50)),
     ("7B-Q4 cpu-only heavy-page", "7B-Q4_K_M", 0, 512, "heavy"),
+    # second pass. A fixed ub64 already fixed every GPU-heavy page, so a scheduler has to beat it: does the safe size
+    # move with model size, and are gapless per-request chunks (changeable per request, unlike ubatch) as cheap?
+    ("7B-Q4 paced c64 g0 heavy-page", "7B-Q4_K_M", 99, 512, "heavy", (64, 0)),
+    ("7B-Q4 paced c32 g0 heavy-page", "7B-Q4_K_M", 99, 512, "heavy", (32, 0)),
+    ("3B-Q4 gpu ub512 heavy-page", "3B-Q4_K_M", 99, 512, "heavy"),
+    ("3B-Q4 gpu ub64 heavy-page", "3B-Q4_K_M", 99, 64, "heavy"),
+    ("14B-Q4 gpu ub512 heavy-page", "14B-Q4_K_M", 99, 512, "heavy"),
+    ("14B-Q4 gpu ub64 heavy-page", "14B-Q4_K_M", 99, 64, "heavy"),
 ] + [c for p in E4_REAL_PAGES for c in [
     (f"7B-Q4 gpu ub512 @{p}", "7B-Q4_K_M", 99, 512, p),
     (f"7B-Q4 gpu ub64 @{p}", "7B-Q4_K_M", 99, 64, p),

@@ -26,6 +26,24 @@ If inference pushes p95 frame time past the display's frame budget, or the dropp
 goes from about 1% idle to more than 5%, Stage 2 is the frame-aware scheduler. Otherwise Stage 2 is the
 capability gate, and "no stutter on M4 Pro" is reported as a finding.
 
+### Amendment after the first E4 run (disclosed, not hidden)
+The rule as written read one condition: 7B Q4_K_M at the default ubatch 512, on the light page. That
+condition was smooth (0% dropped in prefill) and the automatic verdict said "gate". The same model on the
+heavy page dropped 64% of frames in prefill. A rule that ignores the page users are on is the wrong rule,
+so it was amended after seeing the data: it now applies to the default setting on every page that ran
+(light, heavy, and the third-party pages below) and the worst page decides. The original verdict is
+still printed in the report next to the amended one.
+
+### E4 follow-up (E4x)
+Two questions the first run left open, run as experiment `e4x` and stored as E4 so the views merge:
+1. Do the mitigations that exist without touching the browser (smaller ubatch, paced prefill with gaps
+   between chunks, CPU-only) fix the heavy page, and at what TTFT cost?
+2. Is the stutter an artefact of our own shader page? Three third-party benchmark pages, each at the
+   heaviest setting that still idles at 120 fps with no model loaded, plus BBC News:
+   WebGL Aquarium (20,000 fish), MotionMark 1.3.1 Multiply (complexity 2000) and CanvasArcs
+   (complexity 10000) in fixed-complexity mode. Third-party pages can't post to the local collector, so
+   the same frame recorder is injected over the DevTools protocol and pulled once a second.
+
 ## Definitions
 - TTFT: wall time from sending the request to the first streamed token. Server-reported prompt time is
   stored alongside it. Prompt cache is off unless the experiment says otherwise.

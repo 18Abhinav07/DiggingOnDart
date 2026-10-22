@@ -338,7 +338,11 @@ def _e4(r: Runner, conds: list[tuple]) -> None:
     try:
         with FrameCollector() as fc:
             for load in dict.fromkeys(c[4] for c in conds):  # page loads in condition order
-                group = [c for c in conds if c[4] == load]
+                # resume: skip conditions whose runs are already stored
+                group = [c for c in conds if c[4] == load
+                         and r.remaining("E4", c[0], r.runs(config.E4_RUNS_OVERRIDE.get(c[0], config.E4_RUNS)))]
+                if not group:
+                    continue
                 real = load in config.E4_REAL_PAGES
                 url = fc.url(load)
                 match = url.split("/")[2] if real else f"127.0.0.1:{config.FRAMES_PORT}"
