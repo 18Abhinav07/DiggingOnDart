@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 import signal
 import subprocess
 import time
@@ -34,6 +35,8 @@ class Browser:
             return self
         config.BRAVE_PROFILE.mkdir(parents=True, exist_ok=True)
         self.quit_stale()
+        # quit() kills Brave, so it treats every launch as a crash recovery and restores the old tabs on top of ours
+        shutil.rmtree(config.BRAVE_PROFILE / "Default" / "Sessions", ignore_errors=True)
         cmd = [config.BRAVE, f"--user-data-dir={config.BRAVE_PROFILE}", *FLAGS, *self.urls]
         self.proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                                      start_new_session=True)

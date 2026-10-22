@@ -361,6 +361,7 @@ def e4(r: Runner) -> None:
                                     _activate_browser()
                                     if not fc.wait_for_page(15):
                                         raise RuntimeError(f"frame page still not visible ({fc.healthy()[1]}); "
+                                                           f"on screen above apps: {_overlays() or 'nothing'}; "
                                                            "E4 data would be empty, stopping")
                                 fc.set_fake_state("prefill")
                                 row = r.trial(sid, srv, "E4", label, prompt, nt, idx=i,
@@ -407,6 +408,21 @@ def _activate_browser() -> None:
   end repeat
 end tell'''
     subprocess.run(["osascript", "-e", script], capture_output=True)
+
+
+def _overlays() -> str:
+    """Full-screen windows above normal apps (e.g. the Cmd-Shift-5 Screenshot overlay): they make macOS report Brave
+    as occluded, so the page goes hidden even while Brave is frontmost."""
+    js = '''ObjC.import('CoreGraphics');
+const l = ObjC.castRefToObject($.CGWindowListCopyWindowInfo($.kCGWindowListOptionOnScreenOnly, 0)), out = [];
+for (let i = 0; i < l.count; i++) {
+  const w = ObjC.deepUnwrap(l.objectAtIndex(i)), b = w.kCGWindowBounds;
+  if (w.kCGWindowLayer > 0 && b.Width * b.Height > 200000 && !["Window Server", "Dock"].includes(w.kCGWindowOwnerName))
+    out.push(w.kCGWindowOwnerName);
+}
+out.join(", ");'''
+    p = subprocess.run(["osascript", "-l", "JavaScript", "-e", js], capture_output=True, text=True)
+    return p.stdout.strip()
 
 
 # ================================================================ E5: thermal soak
