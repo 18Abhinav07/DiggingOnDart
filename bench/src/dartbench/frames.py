@@ -46,7 +46,7 @@ class FrameCollector:
     def url(self, load: str = "light") -> str:
         if load in config.E4_REAL_PAGES:
             return config.E4_REAL_PAGES[load]
-        return f"http://127.0.0.1:{self.port}/?load={load}"
+        return f"http://127.0.0.1:{self.port}/?load={load.removeprefix('safari-')}"
 
     def attach(self, debug_port: int, url: str) -> None:
         """Third-party pages can't post to us, so inject the recorder over the DevTools protocol and pull from it."""

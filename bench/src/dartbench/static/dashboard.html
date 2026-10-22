@@ -125,6 +125,14 @@ const SER = ['--s1', '--s2', '--s3'];
 let scope = 'auto';
 try { scope = localStorage.getItem('db-scope') || 'auto'; } catch (e) {}
 async function api(path, params = {}) {
+  // `dartbench export` inlines every response as window.SNAPSHOT, keyed by path and sorted params
+  if (window.SNAPSHOT) {
+    if (path === '/api/trials') return SNAPSHOT[path].filter(t => (!params.exp || t.experiment === params.exp) && (!params.errors || t.error));
+    if (path === '/api/mem') return { trial: {}, samples: [] };
+    const keys = Object.keys(params).filter(k => k !== 'limit').sort();
+    const k = path + (keys.length ? '?' + keys.map(x => `${x}=${params[x]}`).join('&') : '');
+    return SNAPSHOT[k] ?? [];
+  }
   const q = new URLSearchParams({ scope, ...params });
   const r = await fetch(`${path}?${q}`);
   return r.json();
@@ -512,6 +520,11 @@ async function show(t, quiet) {
   if (quiet) scrollTo(0, y);
 }
 async function heartbeat() {
+  if (window.SNAPSHOT) {
+    $('#dbname').textContent = SNAPSHOT._meta.db; $('#scope').hidden = true;
+    $('#livetext').textContent = `snapshot exported ${when(SNAPSHOT._meta.exported)}`;
+    return;
+  }
   try {
     const o = await api('/api/overview');
     $('#dbname').textContent = o.db; $('#fake').hidden = !o.fake;
@@ -528,7 +541,7 @@ $('#scope').value = scope;
 $('#scope').onchange = e => { scope = e.target.value; try { localStorage.setItem('db-scope', scope); } catch (x) {} show(current); };
 let tab = 'overview'; try { tab = localStorage.getItem('db-tab') || 'overview'; } catch (e) {}
 show(views[tab] ? tab : 'overview');
-heartbeat(); setInterval(heartbeat, 5000);
+heartbeat(); if (!window.SNAPSHOT) setInterval(heartbeat, 5000);
 let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => show(current, true), 200); });
 </script>
 </body>

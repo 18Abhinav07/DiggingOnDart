@@ -228,7 +228,8 @@ def build(db: DB | None = None, scope: str = "auto") -> str:
 def write(scope: str = "auto") -> list[str]:
     db = DB()
     config.REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    suffix = "-fake" if config.FAKE else ""
+    # bench.db writes report.md; any other database (fake.db, a reproduction's mine.db) gets its own suffix
+    suffix = "" if config.DB_PATH.stem == "bench" else f"-{config.DB_PATH.stem}"
     md = config.REPORTS_DIR / f"report{suffix}.md"
     md.write_text(build(db, scope))
     tcsv = config.REPORTS_DIR / f"trials{suffix}.csv"

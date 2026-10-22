@@ -165,11 +165,29 @@ E4X_CONDITIONS = [
     (f"7B-Q4 gpu ub64 @{p}", "7B-Q4_K_M", 99, 64, p),
     (f"7B-Q4 paced c64 g16 @{p}", "7B-Q4_K_M", 99, 512, p, (64, 16)),
 ]]
-E4_RUNS_OVERRIDE = {"7B-Q4 cpu-only heavy-page": 3}  # ~100 s prefill each; 3 runs show the effect
-E4_LOAD = {c[0]: c[4] for c in E4_CONDITIONS + E4X_CONDITIONS}
+# Follow-up 2, the two open caveats of Stage 1. Is the stall Brave's or the machine's: the same shader page in Safari
+# (WebKit, its own compositor). Does inference on the CPU starve a CPU-bound page the way GPU prefill starves a
+# GPU-bound one, and does capping the threads help (DBT-2026-09 caps background embedding at a fraction of a core)?
+# A load prefixed "safari-" runs our own page in Safari; Safari can't be driven over DevTools, so only our pages work.
+SAFARI = "/Applications/Safari.app"
+E4Y_CONDITIONS = [
+    ("7B-Q4 gpu ub512 safari-heavy", "7B-Q4_K_M", 99, 512, "safari-heavy"),
+    ("7B-Q4 gpu ub64 safari-heavy", "7B-Q4_K_M", 99, 64, "safari-heavy"),
+    ("7B-Q4 gpu ub512 safari-light", "7B-Q4_K_M", 99, 512, "safari-light"),
+    ("7B-Q4 cpu-only @mm-multiply", "7B-Q4_K_M", 0, 512, "mm-multiply"),
+    ("7B-Q4 cpu-only t4 @mm-multiply", "7B-Q4_K_M", 0, 512, "mm-multiply"),
+]
+E4_SERVER_ARGS = {"7B-Q4 cpu-only t4 @mm-multiply": ["-t", "4", "-tb", "4"]}
+E4_RUNS_OVERRIDE = {"7B-Q4 cpu-only heavy-page": 3,  # ~100 s prefill each; 3 runs show the effect
+                    "7B-Q4 cpu-only @mm-multiply": 3, "7B-Q4 cpu-only t4 @mm-multiply": 2}
+E4_LOAD = {c[0]: c[4] for c in E4_CONDITIONS + E4X_CONDITIONS + E4Y_CONDITIONS}
 # Amended after the first E4 (recorded in docs/design.md): the rule reads the default setting on every page,
 # not only the light one, because users browse heavy pages
 E4_PRIMARIES = [E4_PRIMARY, "7B-Q4 gpu ub512 heavy-page"] + [f"7B-Q4 gpu ub512 @{p}" for p in E4_REAL_PAGES]
+E4_LOADS = ["light", "heavy", *E4_REAL_PAGES, "safari-heavy", "safari-light"]
+# `dartbench run core`: the headline result alone, for reproducing it
+E4_CORE = ["7B-Q4 gpu ub512 heavy-page", "7B-Q4 gpu ub64 heavy-page", "7B-Q4 gpu ub512 @aquarium",
+           "7B-Q4 gpu ub64 @aquarium"]
 E5_MODEL = "7B-Q4_K_M"
 E5_MINUTES = 12
 E5_CTX = 2000

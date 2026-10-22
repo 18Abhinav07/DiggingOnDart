@@ -115,6 +115,34 @@ def route(db: DB, path: str, q: dict):
     return None
 
 
+def export(out: Path, series_points: int = 1200) -> Path:
+    """The dashboard as one static file: every endpoint the page reads, precomputed and inlined, so it opens from
+    disk or GitHub Pages with no server. Per-trial memory traces are left out (they are the bulk of the database)."""
+    db = DB()
+    snap: dict = {}
+
+    def put(path: str, **q):
+        key = path + ("?" + "&".join(f"{k}={v}" for k, v in sorted(q.items())) if q else "")
+        snap[key] = route(db, path, {k: str(v) for k, v in q.items()})
+
+    for p in ("/api/overview", "/api/e0", "/api/e1b", "/api/e2", "/api/e3", "/api/e4", "/api/e5", "/api/e6"):
+        put(p)
+    put("/api/configs", exp="E1")
+    put("/api/compare", exp="E1")
+    for r in snap["/api/configs?exp=E1"]:
+        put("/api/runs", exp="E1", cond=r["condition"])
+    for c in snap["/api/e4"]["conditions"]:
+        snap[f"/api/e4/series?cond={c['condition']}"] = A.frame_series(db, c["condition"], "auto", series_points)
+    snap["/api/trials"] = trials(db, {"limit": "5000", "errors": ""}) + trials(db, {"limit": "5000", "errors": "1"})
+    snap["_meta"] = {"exported": time.time(), "db": config.DB_PATH.name}
+    page = PAGE.read_text().replace("<script>\n", "<script>\nwindow.SNAPSHOT = " +
+                                    json.dumps(_clean(snap), default=str, separators=(",", ":")).replace("</", "<\\/")
+                                    + ";\n", 1)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page)
+    return out
+
+
 def serve(port: int = config.DASHBOARD_PORT, open_browser: bool = True) -> None:
     db = DB()
 

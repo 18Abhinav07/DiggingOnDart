@@ -282,8 +282,8 @@ def e4_view(db: DB, scope="auto") -> dict:
         for ph, vals in c["phases"].items():
             row["phases"][ph] = frame_stats(vals, budget, c["loaf"][ph], c["dur_s"][ph])
         out.append(row)
-    loads = ["light", "heavy", *config.E4_REAL_PAGES]
-    order = [f"no-model {l}" for l in loads] + [c[0] for c in config.E4_CONDITIONS + config.E4X_CONDITIONS]
+    order = [f"no-model {l}" for l in config.E4_LOADS] + [
+        c[0] for c in config.E4_CONDITIONS + config.E4X_CONDITIONS + config.E4Y_CONDITIONS]
     out.sort(key=lambda r: order.index(r["condition"]) if r["condition"] in order else 999)
     return {"conditions": out, "decision": decide_all(out)}
 

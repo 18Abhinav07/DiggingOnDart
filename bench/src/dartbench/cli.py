@@ -134,6 +134,8 @@ def main(argv: list[str] | None = None) -> None:
     d = sub.add_parser("dashboard")
     d.add_argument("--port", type=int, default=config.DASHBOARD_PORT)
     d.add_argument("--no-open", action="store_true")
+    x = sub.add_parser("export", help="write the dashboard as one static HTML file (no server needed)")
+    x.add_argument("--out", default=str(config.REPORTS_DIR / "dashboard.html"))
     a = ap.parse_args(argv)
 
     if a.cmd == "check":
@@ -149,6 +151,11 @@ def main(argv: list[str] | None = None) -> None:
     if a.cmd == "dashboard":
         from .dashboard import serve
         serve(a.port, open_browser=not a.no_open)
+        return
+    if a.cmd == "export":
+        from pathlib import Path
+        from .dashboard import export
+        print(export(Path(a.out)))
         return
 
     names = ORDER if a.experiments == ["all"] else [x.lower() for x in a.experiments]

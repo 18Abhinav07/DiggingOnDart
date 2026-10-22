@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 
 from . import config, prompts, sysinfo
 from .ballast import Ballast
-from .browser import Browser
+from .browser import Browser, Safari
 from .db import DB
 from .energy import PowerSampler
 from .frames import FrameCollector
@@ -321,6 +321,23 @@ def e4x(r: Runner) -> None:
     _e4(r, [c for c in config.E4X_CONDITIONS if not r.quick or c[0] in config.E4_PRIMARIES])
 
 
+def e4y(r: Runner) -> None:
+    """Follow-up 2: the same stall in Safari, and CPU-only inference against a CPU-bound page. Stored as E4."""
+    safari = [c for c in config.E4Y_CONDITIONS if c[4].startswith("safari-")]
+    if safari and not config.FAKE and not Safari.available():
+        log("E4y Safari conditions skipped: Safari not found")
+        r.stats["skipped"].append("E4y Safari (not found)")
+    conds = [c for c in config.E4Y_CONDITIONS if c not in safari or config.FAKE or Safari.available()]
+    _e4(r, [c for c in conds if not r.quick or c[0] == "7B-Q4 gpu ub512 safari-heavy"])
+
+
+def core(r: Runner) -> None:
+    """The headline result alone, for someone reproducing it (~15 min): 7B at the default batch and at 64 on our shader
+    page and on WebGL Aquarium, each against its own no-model baseline. Stored as E4."""
+    every = {c[0]: c for c in config.E4_CONDITIONS + config.E4X_CONDITIONS}
+    _e4(r, [every[k] for k in config.E4_CORE])
+
+
 def _e4(r: Runner, conds: list[tuple]) -> None:
     idle_s = 6 if r.quick else config.E4_IDLE_S
     conds = [c for c in conds if M[c[1]].available or r.stats["skipped"].append(f"E4 {c[0]} (model missing)")]
@@ -346,10 +363,16 @@ def _e4(r: Runner, conds: list[tuple]) -> None:
                 real = load in config.E4_REAL_PAGES
                 url = fc.url(load)
                 match = url.split("/")[2] if real else f"127.0.0.1:{config.FRAMES_PORT}"
-                with Browser(extra_urls=[url], debug_port=config.E4_DEBUG_PORT if real else None):
+                if load.startswith("safari-"):
+                    browser = Safari(url)
+                    activate = browser.activate
+                else:
+                    browser = Browser(extra_urls=[url], debug_port=config.E4_DEBUG_PORT if real else None)
+                    activate = lambda: _activate_browser(match)
+                with browser:
                     if real:
                         fc.attach(config.E4_DEBUG_PORT, url)
-                    _activate_browser(match)
+                    activate()
                     if not fc.wait_for_page():
                         raise RuntimeError(f"frame page not visible ({fc.healthy()[1]}); is Brave showing it in front?")
                     time.sleep(3)
@@ -362,7 +385,8 @@ def _e4(r: Runner, conds: list[tuple]) -> None:
                         pace = rest[0] if rest else None
                         n = r.runs(config.E4_RUNS_OVERRIDE.get(label, config.E4_RUNS))
                         log(f"E4 {label}")
-                        with LlamaServer(M[mkey], ngl=ngl, ubatch=ub, tag="e4") as srv:
+                        with LlamaServer(M[mkey], ngl=ngl, ubatch=ub, extra=config.E4_SERVER_ARGS.get(label),
+                                         tag="e4") as srv:
                             prompt, nt = prompts.build(srv, config.E4_CTX)
                             r.trial(sid, srv, "E4", label, prompt, nt, n_predict=16, idx=-1, warmup=True)
                             time.sleep(2)
@@ -372,8 +396,8 @@ def _e4(r: Runner, conds: list[tuple]) -> None:
                             for i in range(n):
                                 ok, why = fc.healthy()
                                 if not ok:
-                                    log(f"  ! frame page unhealthy ({why}); bringing Brave forward")
-                                    _activate_browser(match)
+                                    log(f"  ! frame page unhealthy ({why}); bringing the browser forward")
+                                    activate()
                                     if not fc.wait_for_page(15):
                                         raise RuntimeError(f"frame page still not visible ({fc.healthy()[1]}); "
                                                            f"on screen above apps: {_overlays() or 'nothing'}; "
@@ -505,9 +529,10 @@ def e6(r: Runner) -> None:
         r.db.end_session(sid, status)
 
 
-EXPERIMENTS = {"e0": e0, "e1": e1, "e1b": e1b, "e2": e2, "e3": e3, "e4": e4, "e4x": e4x, "e5": e5, "e6": e6}
+EXPERIMENTS = {"e0": e0, "e1": e1, "e1b": e1b, "e2": e2, "e3": e3, "e4": e4, "e4x": e4x, "e4y": e4y, "e5": e5,
+               "e6": e6, "core": core}
 # E4 first: it decides Stage 2 and needs a fresh, cool machine. E5 last-but-one: it heats the machine.
-ORDER = ["e4", "e4x", "e0", "e1", "e1b", "e3", "e2", "e6", "e5"]
+ORDER = ["e4", "e4x", "e4y", "e0", "e1", "e1b", "e3", "e2", "e6", "e5"]
 
 
 def run(names: list[str], *, quick: bool, energy: bool, label: str) -> dict:

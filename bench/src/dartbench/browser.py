@@ -87,3 +87,53 @@ class Browser:
             except psutil.Error:
                 pass
         time.sleep(1)
+
+
+def _osa(script: str, lang: str = "AppleScript") -> str:
+    return subprocess.run(["osascript", "-l", lang, "-e", script], capture_output=True, text=True).stdout.strip()
+
+
+class Safari:
+    """One Safari window on our own frame page, sized like Brave's maximised window. Safari has no separate profile
+    and no DevTools protocol, so this opens a window in the user's Safari and closes only that window on exit. No
+    five-tab condition: the comparison is the page itself, against Brave's run of the same page."""
+
+    def __init__(self, url: str):
+        self.url = url
+        self.window_id = ""
+
+    @staticmethod
+    def available() -> bool:
+        return Path(config.SAFARI).exists()
+
+    @staticmethod
+    def bounds() -> str:
+        """The screen's visible frame (minus menu bar and Dock) in AppleScript's top-left coordinates."""
+        js = '''ObjC.import("AppKit"); const f = $.NSScreen.mainScreen.frame, v = $.NSScreen.mainScreen.visibleFrame;
+[v.origin.x, f.size.height - v.origin.y - v.size.height, v.origin.x + v.size.width, f.size.height - v.origin.y].join(",")'''
+        return _osa(js, "JavaScript") or "0,25,1440,900"
+
+    def __enter__(self) -> "Safari":
+        if config.FAKE:
+            return self
+        self.window_id = _osa(f'''tell application "Safari"
+  make new document with properties {{URL:"{self.url}"}}
+  set bounds of front window to {{{self.bounds()}}}
+  activate
+  return id of front window
+end tell''')
+        time.sleep(8)
+        return self
+
+    def __exit__(self, *exc) -> None:
+        if config.FAKE or not self.window_id:
+            return
+        _osa(f'tell application "Safari" to close (every window whose id is {self.window_id})')
+
+    def activate(self) -> None:
+        if config.FAKE or not self.window_id:
+            return
+        _osa(f'''tell application "Safari"
+  set index of (first window whose id is {self.window_id}) to 1
+  activate
+end tell''')
