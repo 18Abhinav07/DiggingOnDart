@@ -289,7 +289,8 @@ def e4_view(db: DB, scope="auto") -> dict:
 
 
 def _in(series, t0, t1) -> list[float]:
-    return [d for t, d in series if t0 <= t <= t1]
+    # half-open, so a frame on the prefill/decode boundary counts once
+    return [d for t, d in series if t0 <= t < t1]
 
 
 def frame_stats(intervals: list[float], budget: float, loaf: list[float] | None = None, dur_s: float = 0) -> dict:
