@@ -1,5 +1,7 @@
 # Local inference vs. the compositor: a Dart Browser replication
 
+**Live site: [prefill-and-the-frame.pages.dev](https://prefill-and-the-frame.pages.dev)**: findings, recorded frame replays, every table, the Stage 2 proposal and my application.
+
 Dart's DBR-2026-05 warns that "a model that starves the compositor" makes a janky browser, and the research
 agenda lists speculative decoding that yields to the compositor as an open problem. This repo measures that effect
 on a MacBook Pro (M4 Pro, 24 GB), reruns Dart's published TTFT and memory numbers, and proposes Stage 2.
@@ -103,7 +105,8 @@ In this order, each step only if the one before it isn't enough
 ## Deploying the site
 
 `site/` is static (HTML, CSS, JS, one `data.js`) with no build step. On Cloudflare Pages, connect this repo with
-build command empty and output directory `site`, or run `npx wrangler pages deploy site`.
+build command empty and output directory `site`, or run `npx wrangler pages deploy site`. The published copy is
+at https://prefill-and-the-frame.pages.dev.
 
 ---
 Abhinav Pangaria · built with Claude Code · an independent experiment, not affiliated with Dart
