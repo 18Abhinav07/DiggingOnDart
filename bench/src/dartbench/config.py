@@ -131,6 +131,35 @@ E4_CONDITIONS = [
     ("7B-Q4 paced c128 g50", "7B-Q4_K_M", 99, 512, "light", (128, 50)),
 ]
 E4_PRIMARY = "7B-Q4 gpu ub512"  # the condition the Stage 2 decision rule reads
+
+# Follow-up after the first E4: the heavy page dropped 64% of frames in prefill while the light page dropped none,
+# so the mitigations are rerun where the problem is, and on third-party pages instead of only our own.
+MM = "https://browserbench.org/MotionMark1.3.1/developer.html?suite-name=MotionMark&controller=fixed&test-interval=1800&system-frame-rate=120&frame-rate=120"
+E4_REAL_PAGES = {  # load key -> URL; complexities calibrated to hold 120 fps idle on the M4 Pro
+    "aquarium": "https://webglsamples.org/aquarium/aquarium.html?numFish=10000",
+    "mm-multiply": MM + "&test-name=Multiply&complexity=1500",
+    "mm-arcs": MM + "&test-name=CanvasArcs&complexity=1500",
+    "bbc": "https://www.bbc.com/news",
+}
+E4_DEBUG_PORT = 9223
+E4X_CONDITIONS = [
+    ("7B-Q4 gpu ub64 heavy-page", "7B-Q4_K_M", 99, 64, "heavy"),
+    ("7B-Q4 gpu ub128 heavy-page", "7B-Q4_K_M", 99, 128, "heavy"),
+    ("7B-Q4 paced c128 g16 heavy-page", "7B-Q4_K_M", 99, 512, "heavy", (128, 16)),
+    ("7B-Q4 paced c64 g16 heavy-page", "7B-Q4_K_M", 99, 512, "heavy", (64, 16)),
+    ("7B-Q4 paced c64 g50 heavy-page", "7B-Q4_K_M", 99, 512, "heavy", (64, 50)),
+    ("7B-Q4 paced c128 g50 heavy-page", "7B-Q4_K_M", 99, 512, "heavy", (128, 50)),
+    ("7B-Q4 cpu-only heavy-page", "7B-Q4_K_M", 0, 512, "heavy"),
+] + [c for p in E4_REAL_PAGES for c in [
+    (f"7B-Q4 gpu ub512 @{p}", "7B-Q4_K_M", 99, 512, p),
+    (f"7B-Q4 gpu ub64 @{p}", "7B-Q4_K_M", 99, 64, p),
+    (f"7B-Q4 paced c64 g16 @{p}", "7B-Q4_K_M", 99, 512, p, (64, 16)),
+]]
+E4_RUNS_OVERRIDE = {"7B-Q4 cpu-only heavy-page": 3}  # ~100 s prefill each; 3 runs show the effect
+E4_LOAD = {c[0]: c[4] for c in E4_CONDITIONS + E4X_CONDITIONS}
+# Amended after the first E4 (recorded in docs/design.md): the rule reads the default setting on every page,
+# not only the light one, because users browse heavy pages
+E4_PRIMARIES = [E4_PRIMARY, "7B-Q4 gpu ub512 heavy-page"] + [f"7B-Q4 gpu ub512 @{p}" for p in E4_REAL_PAGES]
 E5_MODEL = "7B-Q4_K_M"
 E5_MINUTES = 12
 E5_CTX = 2000

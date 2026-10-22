@@ -21,9 +21,10 @@ FLAGS = [
 
 
 class Browser:
-    def __init__(self, extra_urls: list[str] | None = None, tabs: bool = True):
+    def __init__(self, extra_urls: list[str] | None = None, tabs: bool = True, debug_port: int | None = None):
         # Chromium makes the first URL the active tab; the frame page must be it, or it renders hidden and rAF stops
         self.urls = (extra_urls or []) + (list(config.TABS) if tabs else [])
+        self.debug_port = debug_port  # DevTools, to inject the frame recorder into third-party pages
         self.proc: subprocess.Popen | None = None
 
     @staticmethod
@@ -37,7 +38,8 @@ class Browser:
         self.quit_stale()
         # quit() kills Brave, so it treats every launch as a crash recovery and restores the old tabs on top of ours
         shutil.rmtree(config.BRAVE_PROFILE / "Default" / "Sessions", ignore_errors=True)
-        cmd = [config.BRAVE, f"--user-data-dir={config.BRAVE_PROFILE}", *FLAGS, *self.urls]
+        debug = [f"--remote-debugging-port={self.debug_port}", "--remote-allow-origins=http://127.0.0.1"] if self.debug_port else []
+        cmd = [config.BRAVE, f"--user-data-dir={config.BRAVE_PROFILE}", *FLAGS, *debug, *self.urls]
         self.proc = subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                                      start_new_session=True)
         time.sleep(12)  # five real pages; let them load and settle

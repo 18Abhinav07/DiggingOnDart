@@ -313,9 +313,16 @@ def e3(r: Runner) -> None:
 
 # ================================================================ E4: frame time while inference runs
 def e4(r: Runner) -> None:
-    n = r.runs(config.E4_RUNS)
+    _e4(r, [c for c in config.E4_CONDITIONS if not r.quick or c[0] == config.E4_PRIMARY])
+
+
+def e4x(r: Runner) -> None:
+    """Follow-up: mitigations on the heavy page, and third-party heavy pages. Stored as E4 so the views merge it."""
+    _e4(r, [c for c in config.E4X_CONDITIONS if not r.quick or c[0] in config.E4_PRIMARIES])
+
+
+def _e4(r: Runner, conds: list[tuple]) -> None:
     idle_s = 6 if r.quick else config.E4_IDLE_S
-    conds = [c for c in config.E4_CONDITIONS if not r.quick or c[0] == config.E4_PRIMARY]
     conds = [c for c in conds if M[c[1]].available or r.stats["skipped"].append(f"E4 {c[0]} (model missing)")]
     if not conds:
         log("E4 skipped: no models")
@@ -323,19 +330,22 @@ def e4(r: Runner) -> None:
     if not config.FAKE and not Browser.available():
         log("E4 skipped: Brave not found")
         return
-    sid = r.session("E4", {"conditions": conds, "runs": n, "idle_s": idle_s, "ctx": config.E4_CTX,
+    sid = r.session("E4", {"conditions": conds, "runs": r.runs(config.E4_RUNS), "idle_s": idle_s, "ctx": config.E4_CTX,
                            "gen": config.E4_GEN_TOKENS, "drop_factor": config.DROP_FACTOR})
     status = "done"
     t_ms = lambda: time.time() * 1000
 
     try:
         with FrameCollector() as fc:
-            for load in ("light", "heavy"):
+            for load in dict.fromkeys(c[4] for c in conds):  # page loads in condition order
                 group = [c for c in conds if c[4] == load]
-                if not group:
-                    continue
-                with Browser(extra_urls=[fc.url(load)]):
-                    _activate_browser()
+                real = load in config.E4_REAL_PAGES
+                url = fc.url(load)
+                match = url.split("/")[2] if real else f"127.0.0.1:{config.FRAMES_PORT}"
+                with Browser(extra_urls=[url], debug_port=config.E4_DEBUG_PORT if real else None):
+                    if real:
+                        fc.attach(config.E4_DEBUG_PORT, url)
+                    _activate_browser(match)
                     if not fc.wait_for_page():
                         raise RuntimeError(f"frame page not visible ({fc.healthy()[1]}); is Brave showing it in front?")
                     time.sleep(3)
@@ -346,6 +356,7 @@ def e4(r: Runner) -> None:
                     r.db.add_frames(sid, fc.drain())
                     for label, mkey, ngl, ub, _, *rest in group:
                         pace = rest[0] if rest else None
+                        n = r.runs(config.E4_RUNS_OVERRIDE.get(label, config.E4_RUNS))
                         log(f"E4 {label}")
                         with LlamaServer(M[mkey], ngl=ngl, ubatch=ub, tag="e4") as srv:
                             prompt, nt = prompts.build(srv, config.E4_CTX)
@@ -358,7 +369,7 @@ def e4(r: Runner) -> None:
                                 ok, why = fc.healthy()
                                 if not ok:
                                     log(f"  ! frame page unhealthy ({why}); bringing Brave forward")
-                                    _activate_browser()
+                                    _activate_browser(match)
                                     if not fc.wait_for_page(15):
                                         raise RuntimeError(f"frame page still not visible ({fc.healthy()[1]}); "
                                                            f"on screen above apps: {_overlays() or 'nothing'}; "
@@ -377,6 +388,7 @@ def e4(r: Runner) -> None:
                             r.db.add_frames(sid, fc.drain())
                         time.sleep(3)
                         fc.drain()
+                    fc.detach()
     except BaseException:
         status = "aborted"
         raise
@@ -389,7 +401,7 @@ def _phase_sleep(fc: FrameCollector, s: float) -> None:
     time.sleep(s)
 
 
-def _activate_browser() -> None:
+def _activate_browser(match: str = f"127.0.0.1:{config.FRAMES_PORT}") -> None:
     if config.FAKE:
         return
     # activate alone raises the window but leaves whichever tab was active; select the frame page explicitly
@@ -399,7 +411,7 @@ def _activate_browser() -> None:
     set i to 0
     repeat with t in tabs of w
       set i to i + 1
-      if URL of t contains "127.0.0.1:{config.FRAMES_PORT}" then
+      if URL of t contains "{match}" then
         set active tab index of w to i
         set index of w to 1
         return
@@ -489,9 +501,9 @@ def e6(r: Runner) -> None:
         r.db.end_session(sid, status)
 
 
-EXPERIMENTS = {"e0": e0, "e1": e1, "e1b": e1b, "e2": e2, "e3": e3, "e4": e4, "e5": e5, "e6": e6}
+EXPERIMENTS = {"e0": e0, "e1": e1, "e1b": e1b, "e2": e2, "e3": e3, "e4": e4, "e4x": e4x, "e5": e5, "e6": e6}
 # E4 first: it decides Stage 2 and needs a fresh, cool machine. E5 last-but-one: it heats the machine.
-ORDER = ["e4", "e0", "e1", "e1b", "e3", "e2", "e6", "e5"]
+ORDER = ["e4", "e4x", "e0", "e1", "e1b", "e3", "e2", "e6", "e5"]
 
 
 def run(names: list[str], *, quick: bool, energy: bool, label: str) -> dict:

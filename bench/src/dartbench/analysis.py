@@ -266,7 +266,7 @@ def e4_view(db: DB, scope="auto") -> dict:
             c["phases"][p["phase"]] += _in(raf, p["t0_ms"], p["t1_ms"])
             c["loaf"][p["phase"]] += _in(loaf, p["t0_ms"], p["t1_ms"])
             c["dur_s"][p["phase"]] += (p["t1_ms"] - p["t0_ms"]) / 1000
-            load = "heavy" if "heavy" in p["condition"] else "light"
+            load = config.E4_LOAD.get(p["condition"]) or p["condition"].split()[-1]
             c["budget_ms"] = budgets.get(load) or c.get("budget_ms")
     # what each condition costs the model: the other half of the Stage 2 trade-off
     cost = {}
@@ -282,10 +282,25 @@ def e4_view(db: DB, scope="auto") -> dict:
         for ph, vals in c["phases"].items():
             row["phases"][ph] = frame_stats(vals, budget, c["loaf"][ph], c["dur_s"][ph])
         out.append(row)
-    order = ["no-model light", "no-model heavy"] + [c[0] for c in config.E4_CONDITIONS]
-    out.sort(key=lambda r: order.index(r["condition"]) if r["condition"] in order else 99)
-    primary = next((r for r in out if r["condition"] == config.E4_PRIMARY), None)
-    return {"conditions": out, "decision": decide(primary)}
+    loads = ["light", "heavy", *config.E4_REAL_PAGES]
+    order = [f"no-model {l}" for l in loads] + [c[0] for c in config.E4_CONDITIONS + config.E4X_CONDITIONS]
+    out.sort(key=lambda r: order.index(r["condition"]) if r["condition"] in order else 999)
+    return {"conditions": out, "decision": decide_all(out)}
+
+
+def decide_all(rows: list[dict]) -> dict:
+    """The amended rule: decide() on the default setting of every page that ran; the worst page decides.
+    The original rule read only the light page (E4_PRIMARY); its verdict is kept as `original`."""
+    by = {r["condition"]: r for r in rows}
+    per = {c: decide(by[c]) for c in config.E4_PRIMARIES if c in by}
+    original = decide(by.get(config.E4_PRIMARY))
+    ran = {c: d for c, d in per.items() if d["verdict"] != "pending"}
+    if not ran:
+        return {**original, "original": original, "pages": per}
+    rank = {"scheduler": 3, "inconclusive": 2, "gate": 1}
+    worst_c = max(ran, key=lambda c: (rank[ran[c]["verdict"]], ran[c].get("worst_dropped_pct") or 0))
+    d = ran[worst_c]
+    return {**d, "condition": worst_c, "why": f"{worst_c}: {d['why']}", "original": original, "pages": per}
 
 
 def _in(series, t0, t1) -> list[float]:

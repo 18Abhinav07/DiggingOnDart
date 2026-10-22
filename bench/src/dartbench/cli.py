@@ -98,7 +98,11 @@ def estimate(quick: bool) -> None:
     est["e2"] = sum(len(config.E2_BALLAST_GB) * (q(5) + 1) * trial_s(M[k], 4000, 128) * 1.8 + 60 for k in config.E2_MODELS) / 60
     est["e3"] = len(config.E3_BALLAST_GB if not quick else [0]) * (1 + 2 * (1 if quick else len(config.E3_DRAFT_MAX))) * 2 * (q(5) + 1) * trial_s(M["7B-Q4_K_M"], 2000, 220) / 60 + 5
     conds = config.E4_CONDITIONS if not quick else [c for c in config.E4_CONDITIONS if c[0] == config.E4_PRIMARY]
-    est["e4"] = (2 * 15 + sum(config.E4_IDLE_S + 25 + q(5) * (trial_s(M[c[1]], 4000, 256) * (3 if c[2] == 0 else 1) + config.E4_GAP_S) for c in conds)) / 60
+    e4_s = lambda c: config.E4_IDLE_S + 25 + q(config.E4_RUNS_OVERRIDE.get(c[0], 5)) * (
+        trial_s(M[c[1]], 4000, 256) * (12 if c[2] == 0 else 1.5 if len(c) > 5 else 1) + config.E4_GAP_S)
+    est["e4"] = (2 * 15 + sum(e4_s(c) for c in conds)) / 60
+    xconds = config.E4X_CONDITIONS if not quick else [c for c in config.E4X_CONDITIONS if c[0] in config.E4_PRIMARIES]
+    est["e4x"] = (len({c[4] for c in xconds}) * (15 + config.E4_IDLE_S) + sum(e4_s(c) for c in xconds)) / 60
     est["e5"] = 1 if quick else config.E5_MINUTES + 1
     est["e6"] = sum((q(5) + 1) * trial_s(M[k], 4000, 256) + 25 for k in config.E6_MODELS) / 60
     total = 0

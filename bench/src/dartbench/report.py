@@ -66,6 +66,13 @@ def build(db: DB | None = None, scope: str = "auto") -> str:
       f"{config.RULE_DROPPED_PCT:.0f}% of frames, or its p95 frame interval exceeds {config.DROP_FACTOR}× the idle "
       f"budget, build the frame-aware scheduler. If idle itself drops more than {config.RULE_IDLE_MAX_PCT:.0f}%, "
       "the result is inconclusive. Otherwise build the capability gate.\n")
+    if d.get("pages") and len(d["pages"]) > 1:
+        w(f"Amended after the first E4 run: the light page alone read **{d['original']['verdict']}**, while the heavy "
+          "page dropped most of its frames, so the rule now applies to the default setting on every page that ran and "
+          "the worst page decides. Per page:\n")
+        for c, pd in d["pages"].items():
+            w(f"- `{c}`: {pd['verdict']}. {pd['why']}.")
+        w("")
 
     # ---------------------------------------------------------------- headline
     e1 = A.config_table(db, "E1", scope)

@@ -169,3 +169,45 @@ def test_e4_view_reads_phases(db):
     prim = next(r for r in v["conditions"] if r["condition"] == config.E4_PRIMARY)
     assert prim["phases"]["prefill"]["dropped_pct"] == pytest.approx(20.0)
     assert v["decision"]["verdict"] == "scheduler"
+
+
+# ---------------------------------------------------------------- E4 follow-up: real pages, amended rule
+def test_real_page_urls_and_loads():
+    fc = FrameCollector()
+    for key, url in config.E4_REAL_PAGES.items():
+        assert fc.url(key) == url
+        assert config.E4_LOAD[f"7B-Q4 gpu ub512 @{key}"] == key
+    assert fc.url("heavy").startswith("http://127.0.0.1")
+    assert config.E4_LOAD["7B-Q4 paced c64 g16 heavy-page"] == "heavy"
+
+
+def test_decide_all_worst_page_decides():
+    rows = [{"condition": config.E4_PRIMARY, **_primary(idle=0.5, prefill=1.0)},
+            {"condition": "7B-Q4 gpu ub512 heavy-page", **_primary(idle=0.5, prefill=60.0)}]
+    d = analysis.decide_all(rows)
+    assert d["verdict"] == "scheduler" and d["condition"] == "7B-Q4 gpu ub512 heavy-page"
+    assert d["original"]["verdict"] == "gate"
+
+
+def test_decide_all_pending_without_rows():
+    assert analysis.decide_all([])["verdict"] == "pending"
+
+
+def test_e4_view_budget_per_real_page(db):
+    """A real page's conditions take the budget from its own no-model baseline, not the light page's."""
+    sid = db.start_session("E4", "full", {}, {})
+    key = next(iter(config.E4_REAL_PAGES))
+    rows, t = [], 0.0
+    def emit(n, d):
+        nonlocal t
+        for _ in range(n):
+            t += d
+            rows.append((t, d, "raf"))
+    t0 = t; emit(100, 8.33); db.add_phase(sid, None, "no-model light", "idle", t0 + .5, t + .5)
+    t0 = t; emit(100, 16.7); db.add_phase(sid, None, f"no-model {key}", "idle", t0 + .5, t + .5)
+    t0 = t; emit(100, 16.7); db.add_phase(sid, None, f"7B-Q4 gpu ub512 @{key}", "idle", t0 + .5, t + .5)
+    db.add_frames(sid, rows)
+    v = analysis.e4_view(db)
+    row = next(r for r in v["conditions"] if r["condition"] == f"7B-Q4 gpu ub512 @{key}")
+    assert row["budget_ms"] == pytest.approx(16.7)
+    assert row["phases"]["idle"]["dropped_pct"] == 0
