@@ -136,6 +136,8 @@ def main(argv: list[str] | None = None) -> None:
     d.add_argument("--no-open", action="store_true")
     x = sub.add_parser("export", help="write the dashboard as one static HTML file (no server needed)")
     x.add_argument("--out", default=str(config.REPORTS_DIR / "dashboard.html"))
+    w = sub.add_parser("site", help="write site/data.js: every run plus frame replays, for the findings site")
+    w.add_argument("--out", default=str(config.ROOT.parent / "site" / "data.js"))
     a = ap.parse_args(argv)
 
     if a.cmd == "check":
@@ -155,6 +157,11 @@ def main(argv: list[str] | None = None) -> None:
     if a.cmd == "export":
         from pathlib import Path
         from .dashboard import export
+        print(export(Path(a.out)))
+        return
+    if a.cmd == "site":
+        from pathlib import Path
+        from .site import export
         print(export(Path(a.out)))
         return
 

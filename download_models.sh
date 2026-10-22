@@ -1,7 +1,7 @@
 #!/bin/bash
 # Downloads GGUF models in priority order. Tier 1 covers the headline experiments.
 set -u
-DEST="$HOME/llm-models"
+DEST="${DARTBENCH_MODELS:-$HOME/llm-models}"
 dl() { uvx --from huggingface_hub hf download "$1" "$2" --local-dir "$DEST" >/dev/null 2>&1 && echo "OK $2" || echo "FAIL $2"; }
 # tier 1
 dl bartowski/Qwen2.5-7B-Instruct-GGUF  Qwen2.5-7B-Instruct-Q4_K_M.gguf

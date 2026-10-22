@@ -18,5 +18,6 @@ download.log
 
 # a reproduction's own outputs
 bench/reports/*-mine.*
+bench/reports/site-mine/
 bench/reports/*-fake.*
 bench/reports/dashboard-*.html

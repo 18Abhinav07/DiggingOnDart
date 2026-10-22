@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prefill and the Frame</title>
+<meta name="description" content="Abhinav Pangaria: local inference makes GPU-heavy pages stutter during prefill. Stage 1 measurements, a Stage 2 proposal, and an application to Dart.">
+<meta name="author" content="Abhinav Pangaria">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400..700;1,400..700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#findings"><b>Prefill &amp; the Frame</b><span>Abhinav Pangaria · for Dart</span></a>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#findings" data-tab="findings">Findings</a>
+      <a href="#report" data-tab="report">Report</a>
+      <a href="#stage2" data-tab="stage2">Stage 2</a>
+      <a href="#application" data-tab="application">My application</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ───────────────────────── FINDINGS ───────────────────────── -->
+<div class="view" id="v-findings" data-view="findings">
+  <div class="wrap hero">
+    <span class="eyebrow rv"><span class="dot"></span>Stage 1 · measured on an M4 Pro, 24 GB, 120 Hz</span>
+    <h1 class="rv d1">Prefill makes the page stutter. <em>Decode doesn't.</em></h1>
+    <p class="lede rv d2">I reran the performance claims in DBR-2026-05 and DBR-2025-01 on a fifth machine. I also measured something neither paper does: how the browser feels while the model runs. When a local 7B model reads a 4,000-token page at llama.cpp's default batch size, a GPU-heavy page drops most of its frames for the whole 11 seconds. A 64-token batch fixes that for about 10% more time to first token. That fix doesn't carry over to 14B, and the data suggests it won't carry over to smaller Macs either.</p>
+    <div class="row rv d3">
+      <a class="btn" href="#findings-demo">Watch the recorded frames <span class="arr">→</span></a>
+      <a class="btn ghost" href="#stage2">Read the Stage 2 proposal <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="marquee"></div></div>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="grid g4" id="headline-stats"></div>
+    </div>
+  </section>
+
+  <section class="band alt" id="findings-demo">
+    <div class="wrap">
+      <div class="head">
+        <span class="label rv">Recorded, not simulated</span>
+        <h2 class="rv d1">A browser that slows down while the model reads</h2>
+        <p class="lede rv d2">The page below repaints only when the benchmark's real frames did. Each replay is one measured trial: 2 seconds idle, then the prefill of a 4,000-token page, then the start of decode. Gaps in the motion are real dropped frames from the run.</p>
+      </div>
+      <div class="demo">
+        <div class="browser rv">
+          <div class="chrome">
+            <div class="lights"><i></i><i></i><i></i></div>
+            <div class="url" id="d-url">bench/pages/heavy.html</div>
+            <div class="fpsbadge" id="d-fps">— fps</div>
+          </div>
+          <div class="viewport">
+            <canvas class="scene" id="d-scene" aria-label="Animated page that repaints on the recorded frame times"></canvas>
+            <aside class="agent" aria-live="polite">
+              <span class="label">Local agent</span>
+              <div class="status" id="d-status"><i></i><span>Idle</span></div>
+              <div class="prog" aria-hidden="true"><b id="d-prog"></b></div>
+              <div class="small muted" id="d-tokens">0 / 4,000 tokens read</div>
+              <div class="out" id="d-out"></div>
+            </aside>
+          </div>
+          <div class="timeline">
+            <canvas id="d-tl" aria-label="Frame intervals over time"></canvas>
+            <div class="tl-legend">
+              <span><i style="background:var(--idle)"></i>Idle</span>
+              <span><i style="background:var(--prefill)"></i>Prefill</span>
+              <span><i style="background:var(--decode)"></i>Decode</span>
+              <span><i style="background:var(--bad)"></i>Dropped frame (over 1.5× the idle interval)</span>
+              <span><i style="background:var(--ink-3)"></i>On-time frame</span>
+            </div>
+          </div>
+        </div>
+        <div class="controls rv d1">
+          <div class="ctl"><span class="label">Machine</span>
+            <div class="seg" data-ctl="machine">
+              <button data-v="m4">M4 Pro · measured</button><button data-v="m2">Base M2 · predicted</button>
+            </div>
+          </div>
+          <div class="ctl"><span class="label">Page</span>
+            <div class="seg" data-ctl="page">
+              <button data-v="heavy">Shader</button><button data-v="aquarium">Aquarium</button><button data-v="safari">Safari</button>
+            </div>
+          </div>
+          <div class="ctl"><span class="label">Model</span>
+            <div class="seg" data-ctl="model">
+              <button data-v="3B">3B</button><button data-v="7B">7B</button><button data-v="14B">14B</button>
+            </div>
+          </div>
+          <div class="ctl"><span class="label">Prefill batch</span>
+            <div class="seg" data-ctl="batch">
+              <button data-v="512">512 · default</button><button data-v="128">128</button><button data-v="64">64</button><button data-v="cpu">CPU only</button>
+            </div>
+          </div>
+          <div class="note-pred" id="d-pred" hidden></div>
+          <dl class="readout">
+            <dt>Phase</dt><dd id="r-phase">idle</dd>
+            <dt>Frames dropped, this prefill</dt><dd id="r-drop">—</dd>
+            <dt>Worst frame so far</dt><dd id="r-worst">—</dd>
+            <dt>Whole-condition median</dt><dd id="r-cond">—</dd>
+            <dt>Time to first token</dt><dd id="r-ttft">—</dd>
+          </dl>
+          <div class="row">
+            <button class="btn" id="d-play" style="padding:11px 16px">Replay <span class="arr">↻</span></button>
+            <div class="seg" data-ctl="speed" style="flex:1"><button data-v="1">1×</button><button data-v="2">2×</button></div>
+          </div>
+        </div>
+      </div>
+      <p class="cap" id="d-cap"></p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head">
+        <span class="label rv">What the data says</span>
+        <h2 class="rv d1">Five findings</h2>
+      </div>
+      <div class="grid g2">
+        <article class="card rv">
+          <span class="label">01 · Prefill, on GPU-heavy pages</span>
+          <h3>Third-party pages stutter. Text pages don't.</h3>
+          <p class="muted">Every page idles at 0% dropped with no model loaded. At the default batch, 7B prefill drops 83% of frames on WebGL Aquarium, 64% on the shader page and 30% on MotionMark Arcs. It drops 0% on BBC News and on a light page. Decode drops nothing on any GPU-heavy page.</p>
+        </article>
+        <article class="card rv d1">
+          <span class="label">02 · The cause is the GPU</span>
+          <h3>Size of each GPU submission matters. Pauses don't.</h3>
+          <p class="muted">CPU-only prefill keeps the shader page smooth (0.1%) but takes 104 s instead of 11.5 s. Pausing 16 or 50 ms between 128-token chunks still drops 34–38%. 64-token chunks are smooth with no pause at all. What matters is how long each GPU kernel holds the GPU, not whether the queue has gaps.</p>
+        </article>
+        <article class="card rv">
+          <span class="label">03 · The fix moves with the model</span>
+          <h3>Batch 64 fixes 3B and 7B. It doesn't fix 14B.</h3>
+          <p class="muted">On the shader page batch 64 takes 3B from 69% to 0% and 7B from 64% to 1.3%. 14B still drops 31% at 64. A fixed value safe for 14B (32 or less) costs 7B about 17% TTFT on every page, including pages that never needed it.</p>
+        </article>
+        <article class="card rv d1">
+          <span class="label">04 · A second engine agrees</span>
+          <h3>Safari shows the same pattern at 60 Hz.</h3>
+          <p class="muted">Safari drops 14.5% during 7B prefill on the shader page (p95 32 ms against a 17 ms budget). Decode drops 0%, and batch 64 brings it to 0% for 6% more TTFT. At 60 Hz each frame has twice the time budget, so the same GPU stalls miss fewer deadlines.</p>
+        </article>
+        <article class="card rv">
+          <span class="label">05 · CPU is a second resource</span>
+          <h3>Falling back to the CPU is worse, not safer.</h3>
+          <p class="muted">On MotionMark Multiply, a CPU-bound page, GPU inference drops 6–10%. CPU inference drops 22% in prefill and 30% in decode, and four threads still drops 18%. Anything that runs on CPU cores needs its own budget, which matches DBT-2026-09's 12%-of-a-core cap on background embedding.</p>
+        </article>
+        <article class="card rv d1">
+          <span class="label">And the paper's limits</span>
+          <h3>Cold TTFT is 11 s, not 640 ms.</h3>
+          <p class="muted">7B at 4k tokens takes 11.4 s cold and 79 ms when the page is already in the KV cache, so the 640 ms figure only fits a cached prefix. No model gets a cold 4k prefill under 900 ms here. Decode and memory pass easily. 24 GB shows no swap cliff, and Q8 prefills faster than Q2_K.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="wrap">
+      <div class="head">
+        <span class="label rv">7B prefill, 4,000 tokens</span>
+        <h2 class="rv d1">Frames dropped per page</h2>
+        <div class="legend rv d2"><span><i style="background:var(--bad)"></i>batch 512, llama.cpp default</span><span><i style="background:var(--good)"></i>batch 64</span></div>
+      </div>
+      <div class="bars rv" id="page-bars"></div>
+      <p class="cap">A frame is dropped when its interval is more than 1.5× the page's own idle median (8.3 ms at 120 Hz, 17 ms in Safari at 60 Hz). Each bar is the median over 5 trials of a full prefill. The numbers are requestAnimationFrame intervals, which track the page's own rendering rather than the compositor.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="grid g2" style="align-items:center">
+        <div class="prose rv">
+          <span class="label">Why this matters for Dart</span>
+          <p class="quote">“A model that starves the compositor produces a janky browser, which testers blamed on the browser rather than the model.”<cite>DBR-2026-05</cite></p>
+        </div>
+        <div class="prose rv d1">
+          <p>Dart's own paper names the failure. Its research agenda asks for local inference “without the browser becoming unusable while they do”. This is that failure measured, narrowed down to one phase, and given a cheap first fix.</p>
+          <p>The fix isn't the whole answer. It holds for 3B and 7B on this machine, and the 14B run suggests a base M1 or M2 behaves like this machine running a bigger model. Stage 2 starts with the fix and builds only as much scheduler as the slower machines need.</p>
+          <div class="row"><a class="btn" href="#stage2">Stage 2 proposal <span class="arr">→</span></a><a class="btn ghost" href="#report">Every number <span class="arr">→</span></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ───────────────────────── REPORT ───────────────────────── -->
+<div class="view" id="v-report" data-view="report" hidden>
+  <div class="wrap hero">
+    <span class="eyebrow rv"><span class="dot"></span>Full report · generated from the SQLite results</span>
+    <h1 class="rv d1">Every run, <em>every number</em></h1>
+    <p class="lede rv d2" id="rep-lede"></p>
+  </div>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head"><span class="label rv">Method</span><h2 class="rv d1">How it was measured</h2></div>
+      <div class="grid g2">
+        <div class="prose rv">
+          <p><strong>Inference.</strong> Qwen 2.5 Instruct GGUF (bartowski quants) on llama-server, all layers on the Metal GPU unless noted. Every E4 trial prefills a fresh 4,000-token page with the prompt cache off, then decodes 256 tokens.</p>
+          <p><strong>Frames.</strong> Brave opens its own profile and a calibrated page, which idles at 120 fps with no model loaded. A recorder injected over DevTools logs every requestAnimationFrame interval and every long animation frame. The harness marks idle, prefill, decode and gap phases on the same clock.</p>
+          <p><strong>Dropped frame.</strong> A frame whose interval is more than 1.5× the page's own idle median. Each condition gets 5 measured trials after a warm-up. Conditions run in an interleaved order, and the machine stays on AC with nobody touching it.</p>
+        </div>
+        <div class="prose rv d1">
+          <dl class="kv" id="machine-kv"></dl>
+          <p class="small muted">Pages: a light page (WebGL + scroll), the shader page (raymarch + scroll), WebGL Aquarium with 20,000 fish, MotionMark CanvasArcs (complexity 10,000) and Multiply (2,000), BBC News scrolling, and Safari on the light and shader pages.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="wrap">
+      <div class="head"><span class="label rv">E4 · frame drops</span><h2 class="rv d1">Pages, batches and models</h2>
+        <p class="muted rv d2">Prefill and decode columns are the share of frames dropped in that phase. p95 is the 95th-percentile frame interval during prefill. TTFT is the median time to first token.</p></div>
+      <h3 class="rv" style="margin-bottom:14px">By page, 7B Q4_K_M</h3>
+      <div class="tbl-wrap rv" id="t-pages"></div>
+      <h3 class="rv" style="margin:40px 0 14px">By model, shader page</h3>
+      <div class="tbl-wrap rv" id="t-models"></div>
+      <h3 class="rv" style="margin:40px 0 14px">Batch and pacing sweeps, 7B</h3>
+      <div class="tbl-wrap rv" id="t-sweep"></div>
+      <p class="cap">ubatch is fixed when llama-server loads the model. "paced cN gM" sends the prompt as separate N-token requests that reuse the cached prefix, waiting M ms between them. That version works without touching the runtime, but it costs about twice the TTFT of setting ubatch.</p>
+      <h3 class="rv" style="margin:40px 0 14px">Safari and CPU-only inference</h3>
+      <div class="tbl-wrap rv" id="t-engines"></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head"><span class="label rv">E1 · against Dart's limits</span><h2 class="rv d1">Time to first token, decode speed, memory</h2>
+        <p class="muted rv d2">These are cold prompts with Brave open. The limits come from DBR-2026-05: 900 ms TTFT, 18 tok/s decode and 60% of RAM. Every model passes decode and memory. None passes TTFT at 2k tokens or more.</p></div>
+      <div class="tbl-wrap rv" id="t-e1"></div>
+      <div class="grid g2" style="margin-top:40px">
+        <div class="rv">
+          <h3 style="margin-bottom:14px">E1b · cold prompt vs cached prefix, 4k</h3>
+          <div class="tbl-wrap" id="t-e1b"></div>
+          <p class="cap">The paper's 640 ms at 4k only fits a prefix that's already cached.</p>
+        </div>
+        <div class="rv d1">
+          <h3 style="margin-bottom:14px">E0 · llama-bench, raw throughput</h3>
+          <div class="tbl-wrap" id="t-e0"></div>
+          <p class="cap">Prompt (pp) and generation (tg) tokens per second. Q8_0 prefills faster than Q2_K, so on this GPU low-bit quants save memory, not speed.</p>
+        </div>
+      </div>
+      <h3 class="rv" style="margin:40px 0 14px">E2 · memory pressure (incompressible ballast)</h3>
+      <div class="tbl-wrap rv" id="t-e2"></div>
+      <p class="cap">With 24 GB, 18 GB of other memory slows 7B decode by 6%. Swapping starts between 8 and 14 GB of ballast, and the 2.3× cliff the paper describes never appears.</p>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="wrap">
+      <div class="grid g2">
+        <div class="prose rv">
+          <span class="label">The decision rule, and its amendment</span>
+          <h3>Verdict: <span id="dec-verdict">scheduler</span></h3>
+          <p id="dec-why"></p>
+          <p class="muted">The rule I fixed before E4 read only the light page, and on that page it said “build the capability gate” (<span id="dec-orig"></span>). After the shader page showed 64% drops, I changed it so the worst page decides. Both verdicts are printed in the report.</p>
+        </div>
+        <div class="prose rv d1">
+          <span class="label">Limits, read before trusting the numbers</span>
+          <ul class="clean small">
+            <li>One machine. Brave stands in for Dart (both Chromium), and Safari is the second engine at 60 Hz.</li>
+            <li>Qwen 2.5 on llama.cpp 0.7.0, while Dart used b4021.</li>
+            <li>rAF intervals track page rendering, not compositor presentation.</li>
+            <li>Not run: accuracy (it needs Dart's 640-item set), speculative decoding (E3; only an invalid battery preview exists), thermal sustain (E5) and energy (E6, which needs root for powermetrics).</li>
+            <li>One 4-minute condition ran while something outside the benchmark halved decode speed. It is kept, labelled “disturbed”, and was rerun.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head"><span class="label rv">Appendix</span><h2 class="rv d1">All E4 conditions</h2></div>
+      <div class="tbl-wrap rv" id="t-all" style="max-height:640px"></div>
+      <p class="cap">The raw database, the harness and the generated report are in the repository: <a href="https://github.com/18Abhinav07/DiggingOnDart" target="_blank" rel="noopener">github.com/18Abhinav07/DiggingOnDart</a> (<code>bench/results/m4pro-24gb.db.gz</code>, SQLite, and <code>bench/reports/report.md</code>). Running <code>./reproduce.sh</code> reruns the core result on any Apple Silicon Mac.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ───────────────────────── STAGE 2 ───────────────────────── -->
+<div class="view" id="v-stage2" data-view="stage2" hidden>
+  <div class="wrap hero">
+    <span class="eyebrow rv"><span class="dot"></span>Stage 2 · proposal</span>
+    <h1 class="rv d1">Ship the fix now. <em>Build the scheduler</em> only as far as small Macs need.</h1>
+    <p class="lede rv d2">Stage 1 found a cheap fix that works on this machine. It also found evidence that the fix stops working as the GPU gets slower relative to the model. The plan below is in that order: ship the fix, test the small-Mac prediction, and add machinery only when a measurement says the simpler step failed.</p>
+  </div>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="phase-list">
+
+        <div class="phase rv">
+          <div class="k">Step 1<br>This week</div>
+          <div class="body">
+            <h3>The immediate fix: prefill in 64-token batches</h3>
+            <p>Set <code>n_ubatch = 64</code> for 3B and 7B. On the M4 Pro this takes every GPU-heavy page to about 0% dropped. It costs 9–11% TTFT on heavy pages and about 5% on pages that were already smooth. 14B needs 32 or less.</p>
+            <div class="tbl-wrap" id="t-fix"></div>
+            <p class="muted small">Decode is left alone. It never dropped frames on a GPU-heavy page at any setting.</p>
+          </div>
+        </div>
+
+        <div class="phase rv">
+          <div class="k">Step 2<br>The thesis</div>
+          <div class="body">
+            <h3>Why 64 probably fails on a base M1 or M2</h3>
+            <p>Batch 64 works on the M4 Pro because each GPU kernel finishes quickly enough for the page to get the GPU back in time. A 7B batch-64 step there takes about 200 ms in total (4,000 tokens in 12.8 s at 64 per step), and the page still stays smooth. So the total length of a step isn't what matters. The length of each kernel inside it is, and that scales with tokens per batch times model width, divided by GPU speed.</p>
+            <p>14B prefills 2.07× slower than 7B on this machine (23.7 s vs 11.4 s cold at 4k). That is the same ratio as the M4 Pro to a base M2 with 10 GPU cores in llama.cpp's own Apple Silicon numbers. So <strong>14B on the M4 Pro is a stand-in for 7B on a base M2 or M3</strong>, and at batch 64 it still drops 31%.</p>
+            <div class="tbl-wrap" id="t-chips"></div>
+            <p class="cap">7B Q4_0 prompt processing (pp512), from the llama.cpp Apple Silicon benchmark thread (ggml-org/llama.cpp discussion #4167). The prediction is what I'd expect for 7B Q4_K_M from the proxy ratio. It hasn't been measured.</p>
+            <div class="callout warn small">
+              <strong>Two effects pull in opposite directions, so treat this as a prediction to test.</strong> Base MacBook Airs have 60 Hz displays, which gives twice the frame budget (Safari at 60 Hz dropped 14.5% where Brave at 120 Hz dropped 64%). A smaller GPU also renders the page itself more slowly, which leaves less headroom. <code>./reproduce.sh</code> settles it on a real Air in 15 minutes.
+            </div>
+            <p>Small fixed values cost a lot more on slow machines. Batch 32 already costs 7B 17% TTFT on the M4 Pro. A cold 4k prefill on an M1 takes 35–40 s before any penalty, so a constant small enough for the slowest machine taxes every other machine all the time.</p>
+          </div>
+        </div>
+
+        <div class="phase rv">
+          <div class="k">Step 3<br>Weeks 2–4</div>
+          <div class="body">
+            <h3>A per-device, per-model table, plus a mode switch</h3>
+            <ul class="clean">
+              <li><strong>Table.</strong> The largest safe batch for each chip class and model, measured by this harness. On this M4 Pro that is 64 for 3B and 7B and ≤32 for 14B. For unknown chips, start from a feedforward estimate: time one batch at startup, then divide a per-kernel time budget by the measured per-token cost.</li>
+              <li><strong>Mode switch.</strong> Use the small batch only while a GPU-heavy page is in front, and the full batch (up to 1,024; 2,048 drops 2.9% even on the light page) when the window is hidden or the page is light. BBC News and the light page then stop paying the 5% for nothing.</li>
+              <li><strong>The knob.</strong> In-process, the caller hands <code>llama_decode</code> k tokens per call, so k can change every step with no reload. llama-server can't do this, because ubatch is fixed at load. My HTTP version (one request per chunk) costs +23% at 64 tokens, against +11% for ubatch 64. The first measurement is whether in-process chunking closes that gap.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase rv">
+          <div class="k">Step 4<br>Only if needed</div>
+          <div class="body">
+            <h3>An adaptive controller, with a stop rule</h3>
+            <p>If a table entry still drops frames on real pages, add feedback: read missed deadlines for the frontmost tab in 250 ms windows, halve k when drops rise above the page's idle rate, and grow it back additively while frames stay clean. The table gives the floor and ceiling.</p>
+            <p class="callout"><strong>Stop rule:</strong> if the table alone is safe on a base M1 for less than 10% extra TTFT, ship the table and don't build the controller.</p>
+          </div>
+        </div>
+
+        <div class="phase rv">
+          <div class="k">Step 5<br>Same signal</div>
+          <div class="body">
+            <h3>Everything else that competes with the frame</h3>
+            <ul class="clean">
+              <li><strong>Speculative decoding.</strong> Verify batches of 4–16 tokens are well under the safe size, so I predict they're safe. That's worth checking, because Dart's agenda lists “speculative decoding schedules that yield to the compositor under load” as open.</li>
+              <li><strong>Background embedding.</strong> Index maintenance that “never competes with rendering” gets the same frame signal. DBT-2026-09 caps it at 12% of a core.</li>
+              <li><strong>A CPU thread budget.</strong> CPU fallback is worse than the GPU problem (22–30% drops on a CPU-bound page). Any CPU-side work gets a thread budget instead of llama.cpp's default of every performance core.</li>
+              <li><strong>Alternative to compare against:</strong> prefill on the Neural Engine, which doesn't share the GPU at all, if the model and tooling allow it.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phase rv">
+          <div class="k">Done when</div>
+          <div class="body">
+            <h3>Success criteria, fixed before building</h3>
+            <dl class="kv">
+              <dt>Smooth</dt><dd>On every GPU-heavy page, prefill drops at most 2 points more than idle, for 3B, 7B and 14B, on the M4 Pro and on a base M-series Air.</dd>
+              <dt>Free</dt><dd>On light pages, TTFT within 2% of batch 512.</dd>
+              <dt>Cheap</dt><dd>On heavy pages, TTFT no worse than the smallest fixed batch that is smooth for that model and machine.</dd>
+              <dt>Fast</dt><dd>When a heavy page comes to the front mid-prefill, drops recover within 500 ms.</dd>
+              <dt>Honest</dt><dd>If in-process chunking costs as much as the HTTP version, the report says so, and the design switches between two or three preloaded contexts instead.</dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="phase rv">
+          <div class="k">Deliverables</div>
+          <div class="body">
+            <ul class="clean">
+              <li>The batch-64 change, with this harness as its regression test.</li>
+              <li>The device/model table, measured on at least two Macs, one of them a base M-series Air.</li>
+              <li><code>dartsched</code>, a small C++ layer over llama.cpp: chunked prefill through <code>llama_decode</code>, the mode switch, a pluggable frame signal, and the controller only if step 4 is triggered.</li>
+              <li>A frame-signal prototype built on the rAF recorder this harness already injects. The production hook belongs in Dart's compositor, and where it goes is Dart's call.</li>
+              <li>A report comparing batch 512, fixed 64, the table and (if built) the controller.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ───────────────────────── APPLICATION ───────────────────────── -->
+<div class="view" id="v-application" data-view="application" hidden>
+  <div class="wrap hero" style="padding-bottom:28px">
+    <span class="eyebrow rv"><span class="dot"></span>To careers@dartbrowser.com</span>
+    <h1 class="rv d1">Hi Dart, <em>this is my why.</em></h1>
+  </div>
+
+  <section class="band" style="border-top:0;padding-top:0">
+    <div class="wrap app-grid">
+      <div class="letter">
+        <p class="quote rv">“We hire slowly and deliberately, and every person here shapes both the product and the culture. If none of these fit but you think you belong here, write to careers@dartbrowser.com and tell us why.”<cite>dartbrowser.com/careers</cite></p>
+        <p class="rv">I saw an SDE 1 opening on LinkedIn and started researching the browser. The more I read, the clearer it got: Dart wants to run real models on the user's own machine, inside a browser that still has to feel fast. That's the problem I want to work on.</p>
+        <p class="rv">My background sits on both sides of it. I've worked with privacy cryptography in blockchain systems, and I've built AI evaluation, inference, data pipelines and verification systems. Keeping data on the user's side and making inference actually work are the two things I've spent my time on, and a browser that runs AI locally is where they meet.</p>
+        <p class="rv">Rather than only write to you, I wanted to show you how I work. I spent a couple of days with your papers and picked one sentence from DBR-2026-05: a model that starves the compositor makes a janky browser, and testers blame the browser. Then I set out to measure it. This site is what came out of it: where the jank comes from, a fix that works today, and where that fix will break next.</p>
+        <p class="rv">I won't claim I'm a browser builder. What I love is engaging with a problem, digging into it, finding the creative angle, and keeping at it until the solution works for the people it's meant for, from many surfaces, not just tech.</p>
+        <p class="rv"><strong>Give me a chance and I'll deliver the results, even if that means breaking Chromium down to its bits and studying it from scratch.</strong> I'm confident I can do that.</p>
+      </div>
+      <aside class="forge-col">
+        <figure class="forge rv d1">
+          <canvas id="forge" width="128" height="104" aria-label="Pixel-art Abhinav hammering a Chromium block into a Dart browser window"></canvas>
+          <figcaption><span class="label">Work in progress</span><span class="small muted">Me, hammering Chromium into something that feels like Dart.</span></figcaption>
+        </figure>
+        <div class="me rv d2">
+          <img src="assets/me-pixel.png" alt="Pixelated portrait of Abhinav Pangaria" width="40" height="40">
+          <div><b>Abhinav Pangaria</b><span class="small muted">Applying for the fit</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head"><span class="label rv">Why I think I fit</span><h2 class="rv d1">Three things this experiment shows <em>about how I work</em></h2></div>
+      <div class="grid g3">
+        <div class="card flat rv"><span class="label">01 · Start from the user</span><h3>Measure what it feels like</h3><p class="muted">The papers measure tokens per second. I measured the frames a person actually sees, because that is what gets blamed on the browser.</p></div>
+        <div class="card flat rv d1"><span class="label">02 · Say what would prove me wrong</span><h3>Rules before results</h3><p class="muted">The decision rule was written before the frame runs. When the data forced an amendment, both verdicts stayed in the report, and every prediction here is labelled as one.</p></div>
+        <div class="card flat rv d2"><span class="label">03 · Go where the problem is</span><h3>Any layer it takes</h3><p class="muted">From cryptography to inference pipelines to the frame loop of a browser, I follow the failure down to wherever it lives and learn that layer.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="wrap">
+      <div class="head"><span class="label rv">How I engineer</span><h2 class="rv d1">Find the failure, instrument it, <em>measure before and after</em></h2>
+        <p class="lede rv d2">It's the same habit I used in my SDP work, which this walkthrough shows.</p></div>
+      <div class="grid g2" style="align-items:start">
+        <a class="video rv" href="https://youtu.be/-jAFntReQLY" target="_blank" rel="noopener">
+          <span class="play" aria-hidden="true"></span>
+          <span class="grid" style="gap:6px"><span class="label">Video · YouTube</span><b style="font:600 19px/1.3 var(--serif)">Technical Depth and The Way Ahead</b><span class="small muted">Polaris Round 3 detail video: the SDP walkthrough</span></span>
+        </a>
+        <ul class="clean rv d1">
+          <li><strong>An 8-state lifecycle</strong> that fixed payments being reported complete too early.</li>
+          <li><strong>Throughput from 8 to 120 transactions per block</strong> with Soroban authorization trees.</li>
+          <li><strong>A recovery service and an audit trail.</strong></li>
+        </ul>
+      </div>
+      <div class="grid g3" style="margin-top:44px">
+        <div class="card flat rv"><span class="label">01 · Find the failure</span><p>Here it was the jank DBR-2026-05 describes. I reproduced it on third-party pages and pinned it to one phase: prefill, not decode.</p></div>
+        <div class="card flat rv d1"><span class="label">02 · Instrument it</span><p>A harness that records every frame next to every inference phase on one clock, with 717 trials and 0 errors, all stored in SQLite.</p></div>
+        <div class="card flat rv d2"><span class="label">03 · Before and after</span><p>64% → 1.3% dropped for +11% TTFT, plus the cases where that fix stops working, written down before building anything bigger.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head"><span class="label rv">What I'll do next</span><h2 class="rv d1">The first weeks, if you'll have me</h2></div>
+      <div class="grid g2">
+        <div class="step rv"><span class="n">01</span><h3>Run it on a base Air</h3><p class="muted">Run <code>./reproduce.sh</code> on an M1 or M2 to confirm or refute the small-Mac prediction, then take Metal GPU traces to check the kernel-length explanation directly.</p></div>
+        <div class="step rv d1"><span class="n">02</span><h3>Measure in-process chunking</h3><p class="muted">Feed <code>llama_decode</code> k tokens per call and find out whether it closes the gap between the +23% of my HTTP version and the +11% of ubatch 64.</p></div>
+        <div class="step rv"><span class="n">03</span><h3>Table and mode switch</h3><p class="muted">Build the per-device, per-model table and switch batch size on page weight, then check it against the success criteria on both machines.</p></div>
+        <div class="step rv d1"><span class="n">04</span><h3>Controller, only if the table fails</h3><p class="muted">Follow the stop rule. Then point the same signal at speculative decoding, background embedding and CPU thread budgets.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="wrap">
+      <div class="grid g2" style="align-items:end">
+        <div class="sig rv">
+          <span class="label">Thank you for reading</span>
+          <b>Abhinav Pangaria</b>
+          <div class="copyline" style="margin-top:10px"><span class="addr" id="email">abhinavpangaria2003@gmail.com</span><button type="button" id="copy-email">Copy</button></div>
+        </div>
+        <div class="row rv d1" style="justify-content:flex-end">
+          <a class="btn" href="https://github.com/18Abhinav07/DiggingOnDart" target="_blank" rel="noopener">Code and raw data <span class="arr">→</span></a>
+          <a class="btn ghost" href="#findings">Back to findings <span class="arr">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Built by Abhinav Pangaria as an application to Dart. An independent experiment, not affiliated with Dart.</span>
+    <span id="foot-gen" class="mono small"></span>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="forge.js"></script>
+</body>
+</html>
