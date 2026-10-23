@@ -52,6 +52,7 @@ fi
 [ "$(uname -m)" = arm64 ] || { echo "Apple Silicon only (the effect is Metal GPU contention)."; exit 1; }
 [ -d "/Applications/Brave Browser.app" ] || { echo "Install Brave: https://brave.com/download/ (the harness drives its own profile, not yours)"; exit 1; }
 if ! need llama-server; then
+  need brew || { echo "llama.cpp not found, and Homebrew isn't installed to fetch it: https://brew.sh"; exit 1; }
   read -r -p "llama.cpp not found. Install it with Homebrew now? [y/N] " a
   [ "$a" = y ] || [ "$a" = Y ] || exit 1
   brew install llama.cpp

@@ -152,6 +152,15 @@
       ms(ph(c, "prefill", "p95")), ms(ph(c, "prefill", "max")), tps(ph(c, "prefill", "loaf_per_s")), pct(ph(c, "decode", "dropped_pct")),
       secs(ttft(c)), tps(c.gen_tps?.median)]), numFrom(2));
   $("#foot-gen").textContent = `data generated ${D.generated} · ${D.db}`;
+  // a reproduction's copy: tables and replays are its own, the prose still quotes the published M4 Pro run
+  if (D.db !== "bench.db") {
+    const n = document.createElement("div");
+    n.className = "note-pred";
+    n.style.cssText = "border-radius:0;text-align:center;padding:10px 16px";
+    n.textContent = `Your run (${D.db}, ${D.machine?.chip || "this Mac"}): the tables, bars and replays use your results. `
+      + "The written text still quotes the published M4 Pro run, so compare the two.";
+    document.querySelector("main").prepend(n);
+  }
 
   // ── stage 2 ──
   const fix = [
