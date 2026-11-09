@@ -100,11 +100,5 @@ In this order, each step only if the one before it isn't enough
 5. **The same signal for everything else that competes with the frame**: speculative decoding's verify batches,
    background embedding, and a CPU thread budget.
 
-## Deploying the site
-
-`site/` is static (HTML, CSS, JS, one `data.js`) with no build step. On Cloudflare Pages, connect this repo with
-build command empty and output directory `site`, or run `npx wrangler pages deploy site`. The published copy is
-at https://prefill-and-the-frame.pages.dev.
-
 ---
-Abhinav Pangaria · built with Claude Code · an independent experiment, not affiliated with Dart
+Abhinav Pangaria · an independent experiment, not affiliated with Dart
